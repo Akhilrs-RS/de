@@ -15,8 +15,8 @@ export default function Navbar() {
         <Link to="/about" className="hover:text-[#431C75] transition-colors">About</Link>
         <Link to="/services" className="hover:text-[#431C75] transition-colors">Services</Link>
         <Link to="/clinic-tour" className="hover:text-[#431C75] transition-colors">Clinic Tour</Link>
-        <Link to="#" className="hover:text-[#431C75] transition-colors">Our Story</Link>
-        <Link to="#" className="hover:text-[#431C75] transition-colors">Contact</Link>
+        <Link to="/our-story" className="hover:text-[#431C75] transition-colors">Our Story</Link>
+        <Link to="/contact" className="hover:text-[#431C75] transition-colors">Contact</Link>
       </div>
 
       {/* CTA */}
