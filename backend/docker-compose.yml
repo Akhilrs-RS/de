@@ -1,0 +1,46 @@
+name: manick_dental
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: manick_dental_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: manick_dental_db
+      MYSQL_USER: dental_user
+      MYSQL_PASSWORD: dental_password
+    ports:
+      # Port 3306 exposed to host so DBeaver can connect to localhost:3306
+      - "3306:3306"
+    volumes:
+      - manick_dental_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+  api:
+    build:
+      context: ./ManickDentalApi
+      dockerfile: Dockerfile
+    container_name: manick_dental_api
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Server=db;Port=3306;Database=manick_dental_db;User=root;Password=rootpassword;TreatTinyAsBoolean=true;"
+    ports:
+      - "5055:8080"
+    volumes:
+      - manick_dental_uploads:/app/wwwroot/uploads
+
+volumes:
+  manick_dental_data:
+    name: manick_dental_data
+  manick_dental_uploads:
+    name: manick_dental_uploads

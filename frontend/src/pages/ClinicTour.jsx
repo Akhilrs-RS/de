@@ -1,4 +1,5 @@
 import React from 'react';
+import { useMedia } from '../context/MediaContext';
 import ch from '../assets/ch.png';
 import c1 from '../assets/c1.png';
 import c2 from '../assets/c2.png';
@@ -8,6 +9,8 @@ import c5 from '../assets/c5.png';
 import c6 from '../assets/c6.png';
 
 export default function ClinicTour() {
+  const { getImage } = useMedia();
+
   return (
     <div className="w-full bg-white">
       {/* Hero Section */}
@@ -30,7 +33,11 @@ export default function ClinicTour() {
           {/* Right Column - Large Image */}
           <div className="relative w-full flex justify-end">
             <div className="w-full max-w-[450px] lg:max-w-[500px] aspect-[4/5] rounded-[2rem] overflow-hidden shadow-sm bg-gray-100">
-              <img src={ch} alt="Clinic Tour" className="w-full h-full object-cover" />
+              <img 
+                src={getImage('clinic-tour', 'hero', ch)} 
+                alt="Clinic Tour" 
+                className="w-full h-full object-cover" 
+              />
             </div>
           </div>
           
@@ -51,11 +58,19 @@ export default function ClinicTour() {
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-center">
               {/* Left Image (Landscape) */}
               <div className="md:col-span-6 w-full rounded-2xl overflow-hidden shadow-sm">
-                <img src={c1} alt="Waiting Area" className="w-full h-auto object-cover" />
+                <img 
+                  src={getImage('clinic-tour', 'c1', c1)} 
+                  alt="Waiting Area" 
+                  className="w-full h-auto object-cover" 
+                />
               </div>
               {/* Right Image (Portrait) */}
               <div className="md:col-span-6 w-full rounded-2xl overflow-hidden shadow-sm">
-                <img src={c2} alt="Reception" className="w-full h-auto object-cover" />
+                <img 
+                  src={getImage('clinic-tour', 'c2', c2)} 
+                  alt="Reception" 
+                  className="w-full h-auto object-cover" 
+                />
               </div>
             </div>
           </div>
@@ -70,15 +85,27 @@ export default function ClinicTour() {
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 h-auto md:h-[600px]">
               {/* Left Image (Square/Portrait) */}
               <div className="md:col-span-6 w-full h-full rounded-2xl overflow-hidden shadow-sm">
-                <img src={c3} alt="Treatment Room" className="w-full h-full object-cover" />
+                <img 
+                  src={getImage('clinic-tour', 'c3', c3)} 
+                  alt="Treatment Room" 
+                  className="w-full h-full object-cover" 
+                />
               </div>
               {/* Right Images (Two stacked landscape) */}
               <div className="md:col-span-6 flex flex-col gap-6 md:gap-8 h-full">
                 <div className="w-full flex-1 rounded-2xl overflow-hidden shadow-sm">
-                  <img src={c4} alt="Treatment Room View 2" className="w-full h-full object-cover" />
+                  <img 
+                    src={getImage('clinic-tour', 'c4', c4)} 
+                    alt="Treatment Room View 2" 
+                    className="w-full h-full object-cover" 
+                  />
                 </div>
                 <div className="w-full flex-1 rounded-2xl overflow-hidden shadow-sm">
-                  <img src={c5} alt="Treatment Room View 3" className="w-full h-full object-cover" />
+                  <img 
+                    src={getImage('clinic-tour', 'c5', c5)} 
+                    alt="Treatment Room View 3" 
+                    className="w-full h-full object-cover" 
+                  />
                 </div>
               </div>
             </div>
@@ -92,7 +119,11 @@ export default function ClinicTour() {
             </div>
             
             <div className="w-full md:w-2/3 lg:w-1/2 rounded-2xl overflow-hidden shadow-sm">
-              <img src={c6} alt="Sterilization Room" className="w-full h-auto object-cover" />
+              <img 
+                src={getImage('clinic-tour', 'c6', c6)} 
+                alt="Sterilization Room" 
+                className="w-full h-auto object-cover" 
+              />
             </div>
           </div>
 

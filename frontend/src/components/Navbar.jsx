@@ -21,9 +21,12 @@ export default function Navbar() {
 
       {/* CTA */}
       <div className="hidden md:block">
-        <button className="bg-[#3b1866] text-white px-8 py-3 rounded-lg text-sm font-medium hover:bg-[#2A114B] transition-colors">
+        <Link 
+          to="/book-appointment" 
+          className="bg-[#3b1866] text-white px-8 py-3 rounded-lg text-sm font-medium hover:bg-[#2A114B] transition-colors inline-block text-center"
+        >
           Book Appointment
-        </button>
+        </Link>
       </div>
     </nav>
   );

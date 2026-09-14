@@ -1,0 +1,6 @@
+@ManickDentalApi_HostAddress = http://localhost:5122
+
+GET {{ManickDentalApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

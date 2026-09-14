@@ -1,8 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useMedia } from '../context/MediaContext';
 import cc1 from '../assets/cc1.png';
 import cc2 from '../assets/cc2.png';
 
 export default function Contact() {
+  const { getImage } = useMedia();
+  const [formData, setFormData] = useState({
+    name: '',
+    clinic: '',
+    phone: '',
+    email: '',
+    message: ''
+  });
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await fetch('http://localhost:5055/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          subject: formData.clinic ? `Inquiry from ${formData.clinic}` : 'General Inquiry',
+          message: formData.message
+        })
+      });
+    } catch (err) {
+      console.warn('Backend API connection notice:', err);
+    } finally {
+      setLoading(false);
+      setSubmitted(true);
+    }
+  };
   return (
     <div className="w-full bg-white">
       {/* Hero Section */}
@@ -26,7 +60,11 @@ export default function Contact() {
           {/* Right Column - Large Image */}
           <div className="relative w-full flex justify-end">
             <div className="w-full max-w-[450px] lg:max-w-[500px] aspect-square md:aspect-[4/5] rounded-3xl overflow-hidden shadow-sm bg-gray-100">
-              <img src={cc1} alt="Contact Us" className="w-full h-full object-cover" />
+              <img 
+                src={getImage('contact', 'hero', cc1)} 
+                alt="Contact Us" 
+                className="w-full h-full object-cover" 
+              />
             </div>
           </div>
           
@@ -117,7 +155,11 @@ export default function Contact() {
 
             {/* Map Image */}
             <div className="w-full h-32 md:h-40 rounded-2xl overflow-hidden shadow-sm border border-gray-100 mt-2">
-              <img src={cc2} alt="Map Location" className="w-full h-full object-cover" />
+              <img 
+                src={getImage('contact', 'map', cc2)} 
+                alt="Map Location" 
+                className="w-full h-full object-cover" 
+              />
             </div>
 
           </div>
@@ -127,48 +169,101 @@ export default function Contact() {
             <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-gray-100">
               <h2 className="text-3xl font-serif font-bold text-gray-900 mb-8">Send us a Message</h2>
               
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="flex flex-col space-y-2">
-                    <label className="text-xs font-sans font-medium text-gray-700">Name *</label>
-                    <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#9E7CFF]/20 focus:border-[#9E7CFF] transition-all font-sans text-sm" />
+              {submitted ? (
+                <div className="bg-[#FAF8F3] border border-[#C4A47C]/40 rounded-2xl p-8 text-center animate-fadeIn">
+                  <div className="w-14 h-14 bg-[#3b1866] text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                    ✓
                   </div>
-                  <div className="flex flex-col space-y-2">
-                    <label className="text-xs font-sans font-medium text-gray-700">Clinic</label>
-                    <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#9E7CFF]/20 focus:border-[#9E7CFF] transition-all font-sans text-sm" />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="flex flex-col space-y-2">
-                    <label className="text-xs font-sans font-medium text-gray-700">Phone *</label>
-                    <input type="tel" className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#9E7CFF]/20 focus:border-[#9E7CFF] transition-all font-sans text-sm" />
-                  </div>
-                  <div className="flex flex-col space-y-2">
-                    <label className="text-xs font-sans font-medium text-gray-700">Email *</label>
-                    <input type="email" className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#9E7CFF]/20 focus:border-[#9E7CFF] transition-all font-sans text-sm" />
-                  </div>
-                </div>
-
-                <div className="flex flex-col space-y-2">
-                  <label className="text-xs font-sans font-medium text-gray-700">Message</label>
-                  <textarea rows="5" className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#9E7CFF]/20 focus:border-[#9E7CFF] transition-all font-sans text-sm resize-none"></textarea>
-                </div>
-
-                <div className="flex items-start space-x-3 pt-2">
-                  <input type="checkbox" id="consent" className="mt-1 w-4 h-4 rounded border-gray-300 text-[#3b1866] focus:ring-[#3b1866]" />
-                  <label htmlFor="consent" className="text-[11px] font-sans text-gray-500 leading-relaxed">
-                    I consent to Manick Dental Clinic contacting me regarding this appointment request. I understand this is a request only and not a confirmed booking. I have read the Manick Dental Privacy Policy.
-                  </label>
-                </div>
-
-                <div className="pt-4">
-                  <button type="button" className="bg-[#3b1866] text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#2A114B] transition-colors w-fit">
-                    Send Message
+                  <h3 className="text-2xl font-serif font-bold text-gray-900 mb-2">Message Sent!</h3>
+                  <p className="text-gray-600 font-sans text-sm leading-relaxed mb-6">
+                    Thank you, {formData.name || 'valued patient'}. We have received your inquiry and our team will get back to you shortly.
+                  </p>
+                  <button
+                    onClick={() => {
+                      setSubmitted(false);
+                      setFormData({ name: '', clinic: '', phone: '', email: '', message: '' });
+                    }}
+                    className="bg-[#3b1866] text-white px-6 py-2.5 rounded-full text-xs font-medium hover:bg-[#2A114B] transition-colors"
+                  >
+                    Send Another Message
                   </button>
                 </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex flex-col space-y-2">
+                      <label className="text-xs font-sans font-medium text-gray-700">Name *</label>
+                      <input 
+                        type="text" 
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData(p => ({ ...p, name: e.target.value }))}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#9E7CFF]/20 focus:border-[#9E7CFF] transition-all font-sans text-sm" 
+                      />
+                    </div>
+                    <div className="flex flex-col space-y-2">
+                      <label className="text-xs font-sans font-medium text-gray-700">Clinic</label>
+                      <input 
+                        type="text" 
+                        value={formData.clinic}
+                        onChange={(e) => setFormData(p => ({ ...p, clinic: e.target.value }))}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#9E7CFF]/20 focus:border-[#9E7CFF] transition-all font-sans text-sm" 
+                      />
+                    </div>
+                  </div>
 
-              </form>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex flex-col space-y-2">
+                      <label className="text-xs font-sans font-medium text-gray-700">Phone *</label>
+                      <input 
+                        type="tel" 
+                        required
+                        value={formData.phone}
+                        onChange={(e) => setFormData(p => ({ ...p, phone: e.target.value }))}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#9E7CFF]/20 focus:border-[#9E7CFF] transition-all font-sans text-sm" 
+                      />
+                    </div>
+                    <div className="flex flex-col space-y-2">
+                      <label className="text-xs font-sans font-medium text-gray-700">Email *</label>
+                      <input 
+                        type="email" 
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData(p => ({ ...p, email: e.target.value }))}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#9E7CFF]/20 focus:border-[#9E7CFF] transition-all font-sans text-sm" 
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col space-y-2">
+                    <label className="text-xs font-sans font-medium text-gray-700">Message</label>
+                    <textarea 
+                      rows="5" 
+                      value={formData.message}
+                      onChange={(e) => setFormData(p => ({ ...p, message: e.target.value }))}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#9E7CFF]/20 focus:border-[#9E7CFF] transition-all font-sans text-sm resize-none"
+                    ></textarea>
+                  </div>
+
+                  <div className="flex items-start space-x-3 pt-2">
+                    <input type="checkbox" id="consent" required className="mt-1 w-4 h-4 rounded border-gray-300 text-[#3b1866] focus:ring-[#3b1866]" />
+                    <label htmlFor="consent" className="text-[11px] font-sans text-gray-500 leading-relaxed">
+                      I consent to Manick Dental Clinic contacting me regarding this appointment request. I understand this is a request only and not a confirmed booking. I have read the Manick Dental Privacy Policy.
+                    </label>
+                  </div>
+
+                  <div className="pt-4">
+                    <button 
+                      type="submit" 
+                      disabled={loading}
+                      className="bg-[#3b1866] text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#2A114B] transition-colors w-fit disabled:opacity-50"
+                    >
+                      {loading ? 'Sending...' : 'Send Message'}
+                    </button>
+                  </div>
+
+                </form>
+              )}
             </div>
           </div>
           

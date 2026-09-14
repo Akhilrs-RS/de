@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useMedia } from '../context/MediaContext';
 
 // Image assets
 import homeImage from '../assets/home.png';
@@ -53,6 +55,7 @@ const AnimatedWord = ({ word, delayIndex }) => {
 };
 
 export default function Home() {
+  const { getImage } = useMedia();
   const scrollRef = useRef(null);
 
   const scrollLeft = () => {
@@ -75,7 +78,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0 flex justify-end">
           <div 
             className="w-full md:w-[85%] h-full bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(${homeImage})` }}
+            style={{ backgroundImage: `url(${getImage('home', 'hero', homeImage)})` }}
           />
         </div>
         
@@ -95,12 +98,12 @@ export default function Home() {
           </p>
           
           <div className="flex flex-wrap items-center gap-5">
-            <button className="flex items-center space-x-3 border-2 border-gray-900 bg-white text-gray-900 px-8 py-3.5 rounded-[2rem] font-medium hover:bg-gray-50 transition-all shadow-sm">
+            <Link to="/book-appointment" className="flex items-center space-x-3 border-2 border-gray-900 bg-white text-gray-900 px-8 py-3.5 rounded-[2rem] font-medium hover:bg-gray-50 transition-all shadow-sm">
               <span className="text-base">Book Appointment</span>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="ml-1">
                 <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-            </button>
+            </Link>
             <button className="border-2 border-gray-300 bg-white/20 backdrop-blur-sm text-gray-900 px-8 py-3.5 rounded-[2rem] font-medium hover:bg-white/40 hover:border-gray-400 transition-all">
               Explore Our Care
             </button>
@@ -202,7 +205,10 @@ export default function Home() {
           >
             {/* Card 1 */}
             <div className="relative flex-none w-[85vw] md:w-[480px] lg:w-[500px] aspect-[4/5] rounded-[2.5rem] overflow-hidden snap-start group bg-gray-200">
-              <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style={{ backgroundImage: `url(${haImage})` }} />
+              <div 
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" 
+                style={{ backgroundImage: `url(${getImage('home', 'about', haImage)})` }} 
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
               <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-between">
                 <div className="text-white font-serif text-[4rem] leading-none font-bold">01</div>
@@ -211,11 +217,15 @@ export default function Home() {
                     <h3 className="text-white font-serif text-3xl md:text-4xl font-bold mb-4 leading-[1.1]">General Checkup &<br/>Consultation</h3>
                     <p className="text-white/90 font-sans text-base leading-relaxed font-light">A bespoke, full-arch artistic<br/>transformation crafted to your<br/>facial harmony</p>
                   </div>
-                  <button className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0 backdrop-blur-sm">
+                  <Link 
+                    to="/general-checkup" 
+                    className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0 backdrop-blur-sm"
+                    aria-label="View General Checkup & Consultation"
+                  >
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -231,11 +241,15 @@ export default function Home() {
                     <h3 className="text-white font-serif text-3xl md:text-4xl font-bold mb-4 leading-[1.1]">Smile Makeover</h3>
                     <p className="text-white/90 font-sans text-base leading-relaxed font-light">A bespoke, full-arch artistic<br/>transformation crafted to your<br/>facial harmony</p>
                   </div>
-                  <button className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0 backdrop-blur-sm">
+                  <Link 
+                    to="/smile-makeover" 
+                    className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0 backdrop-blur-sm"
+                    aria-label="View Smile Makeover"
+                  >
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -251,11 +265,15 @@ export default function Home() {
                     <h3 className="text-white font-serif text-3xl md:text-4xl font-bold mb-4 leading-[1.1]">Invisible Aligners</h3>
                     <p className="text-white/90 font-sans text-base leading-relaxed font-light">Invisible Aligners<br/>Discreet, precision-engineered<br/>alignment with zero compromise to<br/>lifestyle</p>
                   </div>
-                  <button className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0 backdrop-blur-sm">
+                  <Link 
+                    to="/invisible-aligners" 
+                    className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0 backdrop-blur-sm"
+                    aria-label="View Invisible Aligners"
+                  >
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -271,11 +289,15 @@ export default function Home() {
                     <h3 className="text-white font-serif text-3xl md:text-4xl font-bold mb-4 leading-[1.1]">Cosmetic Dentistry</h3>
                     <p className="text-white/90 font-sans text-base leading-relaxed font-light">Micro-refinements — veneers,<br/>whitening, contouring — for<br/>luminous detail.</p>
                   </div>
-                  <button className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0 backdrop-blur-sm">
+                  <Link 
+                    to="/cosmetic-dentistry" 
+                    className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0 backdrop-blur-sm"
+                    aria-label="View Cosmetic Dentistry"
+                  >
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -306,7 +328,11 @@ export default function Home() {
           {/* Left Column - Image */}
           <div className="relative">
             <div className="rounded-3xl overflow-hidden aspect-[3/4] w-full max-w-md mx-auto">
-              <img src={h5Image} alt="Dr. Elena Marchetti" className="w-full h-full object-cover" />
+              <img 
+                src={getImage('home', 'doctor', h5Image)} 
+                alt="Dr. Elena Marchetti" 
+                className="w-full h-full object-cover" 
+              />
             </div>
             {/* Floating Badge */}
             <div className="absolute -bottom-6 -right-6 md:right-0 lg:-right-10 bg-[#242424] text-white w-32 h-32 rounded-full flex flex-col items-center justify-center p-4 shadow-xl border-4 border-[#FAF8F3]">
@@ -457,12 +483,12 @@ export default function Home() {
           Begin your journey toward a healthier, more confident smile.
         </p>
 
-        <button className="bg-[#3b1866] text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#2A114B] transition-colors shadow-lg flex items-center space-x-3">
+        <Link to="/book-appointment" className="bg-[#3b1866] text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#2A114B] transition-colors shadow-lg flex items-center space-x-3">
           <span>Book Appointment</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
-        </button>
+        </Link>
       </section>
     </div>
   );

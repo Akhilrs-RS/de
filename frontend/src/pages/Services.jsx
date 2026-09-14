@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useMedia } from '../context/MediaContext';
 import s1 from '../assets/s1.png';
 import s2 from '../assets/s2.png';
 import s3 from '../assets/s3.png';
@@ -17,6 +18,7 @@ import s14 from '../assets/s14.png';
 
 const servicesData = [
   {
+    key: "s2",
     image: s2,
     title: "General Checkup & Consultation",
     description: "A thorough oral examination is the foundation of good dental health. Our dentist will assess your teeth, gums, and overall oral condition, identify any concerns early, and create a personalised care plan.",
@@ -24,6 +26,7 @@ const servicesData = [
     disclaimer: "Checkup findings are specific to each patient. Results may vary."
   },
   {
+    key: "s3",
     image: s3,
     title: "Scaling & Cleaning",
     description: "Professional scaling and polishing removes hardened plaque (tartar) and surface stains that regular brushing cannot eliminate. Regular cleaning helps prevent gum disease, bad breath, and cavities.",
@@ -31,6 +34,7 @@ const servicesData = [
     disclaimer: "Results depend on individual oral hygiene and dental condition."
   },
   {
+    key: "s4",
     image: s4,
     title: "Tooth Filling (Restoration)",
     description: "Cavities are treated with modern, tooth-coloured composite fillings that blend naturally with your tooth. We remove the decayed portion and restore the tooth to its proper shape and function.",
@@ -38,6 +42,7 @@ const servicesData = [
     disclaimer: "Information provided is general. Your dentist will advise on the best option for your situation."
   },
   {
+    key: "s5",
     image: s5,
     title: "Root Canal Treatment",
     description: "When decay or infection reaches the nerve of the tooth, root canal treatment can save the tooth and relieve pain. Modern techniques and anaesthesia make the procedure far more comfortable than many patients expect.",
@@ -45,6 +50,7 @@ const servicesData = [
     disclaimer: "Root canal treatment outcomes vary by case. Your dentist will evaluate and advise accordingly."
   },
   {
+    key: "s6",
     image: s6,
     title: "Tooth Extraction",
     description: "When a tooth cannot be saved by other means, extraction is performed gently and precisely. We ensure your comfort throughout with appropriate anaesthesia and provide post-extraction care instructions.",
@@ -52,6 +58,7 @@ const servicesData = [
     disclaimer: "Information provided is general. Your dentist will advise on the best option for your situation."
   },
   {
+    key: "s7",
     image: s7,
     title: "Cosmetic Dentistry",
     description: "Enhance your smile with cosmetic dental treatments tailored to your aesthetic goals. Whether it's whitening, reshaping, or other cosmetic procedures, we help you achieve a smile you feel confident about.",
@@ -59,6 +66,7 @@ const servicesData = [
     disclaimer: "Information provided is general. Your dentist will advise on the best option for your situation."
   },
   {
+    key: "s8",
     image: s8,
     title: "Teeth Whitening",
     description: "Brighten your smile with safe and effective professional teeth whitening treatments designed to remove stains and restore a naturally radiant appearance.",
@@ -66,6 +74,7 @@ const servicesData = [
     disclaimer: "Information provided is general. Your dentist will advise on the best option for your situation."
   },
   {
+    key: "s9",
     image: s9,
     title: "Dental Implants",
     description: "Restore missing teeth with durable and natural-looking dental implants designed to improve your smile, comfort, and overall oral function.",
@@ -73,6 +82,7 @@ const servicesData = [
     disclaimer: "Information provided is general. Your dentist will advise on the best option for your situation."
   },
   {
+    key: "s10",
     image: s10,
     title: "Crowns & Bridges",
     description: "Restore damaged or missing teeth with custom-made crowns and bridges that blend seamlessly with your natural smile, providing both strength and aesthetic appeal.",
@@ -80,6 +90,7 @@ const servicesData = [
     disclaimer: "Information provided is general. Your dentist will advise on the best option for your situation."
   },
   {
+    key: "s11",
     image: s11,
     title: "Mouth Guards",
     description: "Custom-fitted mouth guards to protect your teeth from grinding (bruxism) while sleeping, and specialized sports guards to prevent injuries during physical activities.",
@@ -87,6 +98,7 @@ const servicesData = [
     disclaimer: "Information provided is general. Your dentist will advise on the best option for your situation."
   },
   {
+    key: "s12",
     image: s12,
     title: "Tooth Reshaping",
     description: "Minor adjustments to the shape, length, or surface of your teeth to create a more balanced and even smile. A quick and painless way to improve dental aesthetics.",
@@ -94,6 +106,7 @@ const servicesData = [
     disclaimer: "Information provided is general. Your dentist will advise on the best option for your situation."
   },
   {
+    key: "s13",
     image: s13,
     title: "Veneers & Crowns",
     description: "Transform your smile with ultra-thin porcelain veneers and high-quality crowns designed to cover imperfections, improve colour, and restore the shape of your teeth.",
@@ -101,6 +114,7 @@ const servicesData = [
     disclaimer: "Information provided is general. Your dentist will advise on the best option for your situation."
   },
   {
+    key: "s14",
     image: s14,
     title: "X-Ray",
     description: "Advanced digital X-rays provide detailed, high-resolution images of your teeth and jaw bone, allowing for accurate diagnosis and precise treatment planning with minimal radiation.",
@@ -110,6 +124,8 @@ const servicesData = [
 ];
 
 export default function Services() {
+  const { getImage } = useMedia();
+
   return (
     <div className="w-full bg-white">
       
@@ -134,7 +150,11 @@ export default function Services() {
           {/* Right Column - Large Image */}
           <div className="relative w-full flex justify-end">
             <div className="w-full max-w-[500px] lg:max-w-[550px] aspect-[4/5] rounded-[2rem] overflow-hidden bg-gray-100 shadow-sm">
-              <img src={s1} alt="Comprehensive Dental Care" className="w-full h-full object-cover" />
+              <img 
+                src={getImage('services', 's1', s1)} 
+                alt="Comprehensive Dental Care" 
+                className="w-full h-full object-cover" 
+              />
             </div>
           </div>
           
@@ -149,7 +169,11 @@ export default function Services() {
             <div key={index} className="bg-white rounded-3xl overflow-hidden flex flex-col shadow-sm border border-[#E6E1D6]">
               {/* Image */}
               <div className="w-full aspect-[4/3] bg-gray-100 relative">
-                <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
+                <img 
+                  src={getImage('services', service.key, service.image)} 
+                  alt={service.title} 
+                  className="w-full h-full object-cover" 
+                />
               </div>
               
               {/* Content */}
