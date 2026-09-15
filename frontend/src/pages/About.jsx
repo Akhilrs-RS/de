@@ -1,10 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { useMedia } from '../context/MediaContext';
 import abImage from '../assets/ab.png';
 import a1Image from '../assets/a1.png';
 import h5Image from '../assets/h5.png';
 import h12Image from '../assets/h12.png';
 
 export default function About() {
+  const { getImage } = useMedia();
+
   return (
     <div className="w-full">
       {/* Section 1: About Us */}
@@ -29,7 +33,7 @@ export default function About() {
           {/* Right Column - Large Arch Image */}
           <div className="relative w-full flex justify-end">
             <div className="w-full max-w-[500px] lg:max-w-[550px] aspect-[4/5] rounded-t-full overflow-hidden bg-gray-100 shadow-sm">
-              <img src={a1Image} alt="About Us" className="w-full h-full object-cover" />
+              <img src={getImage('about', 'hero-main', a1Image)} alt="About Us" className="w-full h-full object-cover" />
             </div>
           </div>
           
@@ -43,7 +47,7 @@ export default function About() {
           {/* Left Column - Image */}
           <div className="relative w-full flex justify-center md:justify-start order-2 md:order-1">
             <div className="w-full max-w-[500px] aspect-square">
-              <img src={abImage} alt="Tooth and Pearls" className="w-full h-full object-contain" />
+              <img src={getImage('about', 'hero-secondary', abImage)} alt="Tooth and Pearls" className="w-full h-full object-contain" />
             </div>
           </div>
 
@@ -64,12 +68,15 @@ export default function About() {
               </p>
             </div>
             <div className="pt-6">
-              <button className="bg-[#3b1866] text-white px-8 py-3.5 rounded-full text-[15px] font-medium hover:bg-[#2A114B] transition-colors flex items-center space-x-3 w-fit">
+              <Link 
+                to="/book-appointment"
+                className="bg-[#3b1866] text-white px-8 py-3.5 rounded-full text-[15px] font-medium hover:bg-[#2A114B] transition-colors flex items-center space-x-3 w-fit"
+              >
                 <span>Book Appointment</span>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-              </button>
+              </Link>
             </div>
           </div>
           
@@ -252,7 +259,7 @@ export default function About() {
               {/* Doctor 1 */}
               <div className="flex flex-col items-center text-center">
                 <div className="w-full aspect-[4/5] rounded-3xl overflow-hidden mb-6 bg-gray-200">
-                  <img src={h5Image} alt="Dr. James Bennett, DDS" className="w-full h-full object-cover" />
+                  <img src={getImage('about', 'team-james', h5Image)} alt="Dr. James Bennett, DDS" className="w-full h-full object-cover" />
                 </div>
                 <h3 className="font-serif font-bold text-[#3b1866] text-xl mb-1">DR. James Bennett, DDS</h3>
                 <p className="font-sans text-xs text-gray-500 uppercase tracking-wider">Lead Dental Surgeon</p>
@@ -261,7 +268,7 @@ export default function About() {
               {/* Doctor 2 */}
               <div className="flex flex-col items-center text-center">
                 <div className="w-full aspect-[4/5] rounded-3xl overflow-hidden mb-6 bg-gray-200">
-                  <img src={h12Image} alt="Amelia Carter" className="w-full h-full object-cover" />
+                  <img src={getImage('about', 'team-amelia', h12Image)} alt="Amelia Carter" className="w-full h-full object-cover" />
                 </div>
                 <h3 className="font-serif font-bold text-[#3b1866] text-xl mb-1">Amelia Carter</h3>
                 <p className="font-sans text-xs text-gray-500 uppercase tracking-wider">Senior Dental Nurse</p>

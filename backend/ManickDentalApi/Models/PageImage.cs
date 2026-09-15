@@ -29,6 +29,11 @@ namespace ManickDentalApi.Models
         [MaxLength(500)]
         public string? CustomImageUrl { get; set; } // Set when uploaded via admin, e.g. "/uploads/img_123.jpg"
 
+        public byte[]? ImageData { get; set; } // Stores raw image binary
+        
+        [MaxLength(100)]
+        public string? ContentType { get; set; } // e.g. "image/jpeg"
+
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     }
 }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ManickDentalApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fac64cd15c4e0de5741acfcef7be4030e0174ee8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+664f9af2941b1a780812c842c38441adf148c543")]
 [assembly: System.Reflection.AssemblyProductAttribute("ManickDentalApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ManickDentalApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

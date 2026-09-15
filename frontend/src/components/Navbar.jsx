@@ -1,13 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import loImage from '../assets/lo.png';
+import { useMedia } from '../context/MediaContext';
+import marvicLogo from '../assets/marvic.png';
 
 export default function Navbar() {
+  const { getImage } = useMedia();
   return (
     <nav className="flex items-center justify-between px-6 md:px-12 lg:px-24 py-5 bg-white relative z-20">
       {/* Logo */}
       <Link to="/" className="flex items-center cursor-pointer">
-        <img src={loImage} alt="Manick Dental" className="h-10 md:h-12 object-contain" />
+        <img src={getImage('global', 'navbar-logo', marvicLogo)} alt="Manick Dental" className="h-16 lg:h-[72px] w-auto object-contain" />
       </Link>
 
       {/* Links */}

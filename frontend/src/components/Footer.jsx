@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import loImage from '../assets/lo.png';
+import { useMedia } from '../context/MediaContext';
+import marvicLogo from '../assets/marvic.png';
 import mapImage from '../assets/map.png';
 
 export default function Footer() {
+  const { getImage } = useMedia();
   return (
     <footer className="w-full bg-[#2A114B] text-white py-16 relative overflow-hidden">
       {/* Background Watermark */}
@@ -20,8 +22,8 @@ export default function Footer() {
         
         {/* Left Column - Branding & Hours */}
         <div className="md:col-span-5 flex flex-col space-y-8">
-          <Link to="/" className="bg-white rounded p-2 inline-block w-48">
-            <img src={loImage} alt="Manick Dental" className="w-full h-auto object-contain" />
+          <Link to="/" className="bg-white rounded p-3 inline-block w-64 md:w-72">
+            <img src={getImage('global', 'footer-logo', marvicLogo)} alt="Manick Dental" className="w-full h-auto object-contain" />
           </Link>
           
           <p className="text-white/80 font-sans text-sm max-w-sm leading-relaxed">
@@ -92,7 +94,7 @@ export default function Footer() {
 
           {/* Map */}
           <div className="mt-4 rounded-xl overflow-hidden shadow-lg border border-white/10 w-full h-32 md:h-40">
-            <img src={mapImage} alt="Clinic Location Map" className="w-full h-full object-cover" />
+            <img src={getImage('global', 'footer-map', mapImage)} alt="Clinic Location Map" className="w-full h-full object-cover" />
           </div>
         </div>
       </div>

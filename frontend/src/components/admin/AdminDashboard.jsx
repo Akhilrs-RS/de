@@ -1,6 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useMedia } from '../../context/MediaContext';
+import marvicLogo from '../../assets/marvic.png';
 
 const PAGE_TABS = [
   { id: 'all', label: 'All Pages' },
@@ -9,7 +10,8 @@ const PAGE_TABS = [
   { id: 'services', label: 'Services (13)' },
   { id: 'clinic-tour', label: 'Clinic Tour' },
   { id: 'treatments', label: 'Treatments' },
-  { id: 'booking-contact', label: 'Book & Contact' }
+  { id: 'book-appointment', label: 'Book Appointment' },
+  { id: 'contact', label: 'Contact' }
 ];
 
 export default function AdminDashboard({ user, onLogout }) {
@@ -21,6 +23,36 @@ export default function AdminDashboard({ user, onLogout }) {
   const [selectedFiles, setSelectedFiles] = useState({}); // slotId -> File
   const [previewUrls, setPreviewUrls] = useState({}); // slotId -> objectURL
   const [toast, setToast] = useState(null); // { type: 'success' | 'error', message: '' }
+
+  const [mainView, setMainView] = useState('media'); // 'media', 'appointments', 'messages'
+  const [appointments, setAppointments] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [loadingData, setLoadingData] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoadingData(true);
+      try {
+        if (mainView === 'appointments') {
+          const res = await fetch('http://localhost:5055/api/appointments');
+          const data = await res.json();
+          setAppointments(data);
+        } else if (mainView === 'messages') {
+          const res = await fetch('http://localhost:5055/api/contact');
+          const data = await res.json();
+          setMessages(data);
+        }
+      } catch (err) {
+        setToast({ type: 'error', message: 'Failed to load data.' });
+      } finally {
+        setLoadingData(false);
+      }
+    };
+
+    if (mainView !== 'media') {
+      fetchData();
+    }
+  }, [mainView]);
 
   const showToast = (message, type = 'success') => {
     setToast({ message, type });
@@ -35,9 +67,7 @@ export default function AdminDashboard({ user, onLogout }) {
     return mediaList.filter((item) => {
       // Tab filter
       let matchesTab = true;
-      if (activeTab === 'booking-contact') {
-        matchesTab = item.pageKey === 'book-appointment' || item.pageKey === 'contact';
-      } else if (activeTab !== 'all') {
+      if (activeTab !== 'all') {
         matchesTab = item.pageKey === activeTab;
       }
 
@@ -156,19 +186,34 @@ export default function AdminDashboard({ user, onLogout }) {
       <header className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-xl bg-[#2D1E40] text-[#C4A47C] flex items-center justify-center shadow-md">
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C8.5 2 6 4.5 6 7.5C6 9.8 7.2 11.8 9 13V20C9 21.1 9.9 22 11 22H13C14.1 22 15 21.1 15 20V13C16.8 11.8 18 9.8 18 7.5C18 4.5 15.5 2 12 2ZM10.5 5.5C10.5 4.7 11.2 4 12 4C12.8 4 13.5 4.7 13.5 5.5C13.5 6.3 12.8 7 12 7C11.2 7 10.5 6.3 10.5 5.5Z" />
-              </svg>
-            </div>
-            <div>
+            <Link to="/" className="flex items-center">
+              <img src={marvicLogo} alt="Manick Dental" className="h-14 lg:h-16 w-auto object-contain py-1" />
+            </Link>
+            <div className="border-l border-gray-200 pl-4 hidden sm:block">
               <div className="flex items-center gap-2">
-                <h1 className="text-lg font-serif font-bold text-gray-900">Manick Dental</h1>
                 <span className="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-full bg-[#C4A47C]/15 text-[#8f7149]">
                   Admin CMS
                 </span>
               </div>
-              <p className="text-xs text-gray-500">Website Media & Asset Management</p>
+            </div>
+
+            {/* Main Tabs */}
+            <div className="ml-6 hidden md:flex items-center space-x-6 h-full">
+              <button 
+                onClick={() => setMainView('media')}
+                className={`font-semibold text-sm h-full flex items-center border-b-2 transition-colors ${mainView === 'media' ? 'text-[#2D1E40] border-[#C4A47C]' : 'text-gray-500 border-transparent hover:text-gray-900'}`}>
+                Media Manager
+              </button>
+              <button 
+                onClick={() => setMainView('appointments')}
+                className={`font-semibold text-sm h-full flex items-center border-b-2 transition-colors ${mainView === 'appointments' ? 'text-[#2D1E40] border-[#C4A47C]' : 'text-gray-500 border-transparent hover:text-gray-900'}`}>
+                Appointments
+              </button>
+              <button 
+                onClick={() => setMainView('messages')}
+                className={`font-semibold text-sm h-full flex items-center border-b-2 transition-colors ${mainView === 'messages' ? 'text-[#2D1E40] border-[#C4A47C]' : 'text-gray-500 border-transparent hover:text-gray-900'}`}>
+                Messages
+              </button>
             </div>
           </div>
 
@@ -210,8 +255,11 @@ export default function AdminDashboard({ user, onLogout }) {
 
       {/* Main Content Area */}
       <main className="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Metric Summary Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
+        
+        {mainView === 'media' && (
+          <>
+            {/* Metric Summary Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
           <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between">
             <div>
               <p className="text-xs uppercase font-semibold text-gray-500 tracking-wider">Total Managed Slots</p>
@@ -462,6 +510,105 @@ export default function AdminDashboard({ user, onLogout }) {
             })}
           </div>
         )}
+        </>
+        )}
+
+        {/* Appointments View */}
+        {mainView === 'appointments' && (
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div className="p-6 border-b border-gray-200 flex justify-between items-center">
+              <h2 className="text-lg font-bold text-[#2D1E40]">Appointments List</h2>
+              <span className="text-xs font-semibold px-2 py-1 bg-purple-50 text-purple-700 rounded-lg">{appointments.length} Total</span>
+            </div>
+            
+            {loadingData ? (
+              <div className="p-8 text-center text-gray-500">Loading appointments...</div>
+            ) : appointments.length === 0 ? (
+              <div className="p-8 text-center text-gray-500">No appointments booked yet.</div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm whitespace-nowrap">
+                  <thead className="bg-gray-50 text-gray-500 font-semibold uppercase text-xs">
+                    <tr>
+                      <th className="px-6 py-4">Date / Time</th>
+                      <th className="px-6 py-4">Patient Name</th>
+                      <th className="px-6 py-4">Phone</th>
+                      <th className="px-6 py-4">Service</th>
+                      <th className="px-6 py-4">Status</th>
+                      <th className="px-6 py-4">Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    {appointments.map(app => (
+                      <tr key={app.id} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-6 py-4 font-medium text-gray-900">
+                          {app.preferredDate || 'N/A'}<br/>
+                          <span className="text-xs text-gray-500 font-normal">{app.preferredTime || 'Any Time'}</span>
+                        </td>
+                        <td className="px-6 py-4">{app.fullName}</td>
+                        <td className="px-6 py-4">{app.phoneNumber}</td>
+                        <td className="px-6 py-4">{app.service}</td>
+                        <td className="px-6 py-4">
+                          <span className={`px-2 py-1 text-[10px] font-bold uppercase rounded-full ${
+                            app.status === 'Confirmed' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'
+                          }`}>
+                            {app.status || 'Pending'}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 text-xs text-gray-500 max-w-xs truncate" title={app.notes}>
+                          {app.notes || '-'}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Messages View */}
+        {mainView === 'messages' && (
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div className="p-6 border-b border-gray-200 flex justify-between items-center">
+              <h2 className="text-lg font-bold text-[#2D1E40]">Contact Messages</h2>
+              <span className="text-xs font-semibold px-2 py-1 bg-purple-50 text-purple-700 rounded-lg">{messages.length} Total</span>
+            </div>
+            
+            {loadingData ? (
+              <div className="p-8 text-center text-gray-500">Loading messages...</div>
+            ) : messages.length === 0 ? (
+              <div className="p-8 text-center text-gray-500">No contact messages received yet.</div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+                {messages.map(msg => (
+                  <div key={msg.id} className="bg-gray-50 border border-gray-200 p-5 rounded-2xl flex flex-col h-full shadow-sm">
+                    <div className="flex justify-between items-start mb-3">
+                      <div>
+                        <h3 className="font-bold text-gray-900">{msg.name}</h3>
+                        <p className="text-xs text-gray-500">{new Date(msg.createdAt).toLocaleDateString()}</p>
+                      </div>
+                      {!msg.isRead && (
+                        <span className="h-2.5 w-2.5 bg-blue-500 rounded-full" title="Unread"></span>
+                      )}
+                    </div>
+                    
+                    <div className="text-sm mb-4">
+                      <p><a href={`mailto:${msg.email}`} className="text-[#8f7149] hover:underline">{msg.email}</a></p>
+                      {msg.phone && <p><a href={`tel:${msg.phone}`} className="text-[#8f7149] hover:underline">{msg.phone}</a></p>}
+                    </div>
+
+                    <div className="flex-grow">
+                      {msg.subject && <h4 className="text-sm font-semibold text-gray-800 mb-1">{msg.subject}</h4>}
+                      <p className="text-sm text-gray-600 bg-white p-3 rounded-lg border border-gray-100">{msg.message}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
       </main>
 
       {/* Footer info bar */}

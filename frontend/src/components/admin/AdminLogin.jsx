@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ForgotPasswordModal from './ForgotPasswordModal';
+import marvicLogo from '../../assets/marvic.png';
 
 const API_BASE_URL = 'http://localhost:5055';
 
@@ -82,10 +83,8 @@ export default function AdminLogin({ onLoginSuccess }) {
       <div className="w-full max-w-md bg-white rounded-3xl shadow-xl shadow-[#2D1E40]/5 border border-gray-100 p-8 sm:p-10 relative z-10">
         {/* Brand Header */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-2xl bg-[#2D1E40] text-[#C4A47C] flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[#2D1E40]/20">
-            <svg className="w-9 h-9" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2C8.5 2 6 4.5 6 7.5C6 9.8 7.2 11.8 9 13V20C9 21.1 9.9 22 11 22H13C14.1 22 15 21.1 15 20V13C16.8 11.8 18 9.8 18 7.5C18 4.5 15.5 2 12 2ZM10.5 5.5C10.5 4.7 11.2 4 12 4C12.8 4 13.5 4.7 13.5 5.5C13.5 6.3 12.8 7 12 7C11.2 7 10.5 6.3 10.5 5.5Z" />
-            </svg>
+          <div className="flex justify-center mb-4">
+            <img src={marvicLogo} alt="Manick Dental" className="h-20 lg:h-24 w-auto object-contain" />
           </div>
           <h2 className="text-2xl sm:text-3xl font-serif font-bold text-gray-900 tracking-tight">
             Admin <span className="text-[#C4A47C]">Portal</span>

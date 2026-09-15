@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import s1 from '../assets/s1.png';
+import { Link } from 'react-router-dom';
+import { useMedia } from '../context/MediaContext';
+import s from '../assets/s.png';
 import ab from '../assets/ab.png';
-import g from '../assets/g.jpg';
+import g from '../assets/g.png';
 
 const roadmapSteps = [
   {
@@ -69,6 +71,7 @@ const faqItems = [
 ];
 
 export default function CosmeticDentistry() {
+  const { getImage } = useMedia();
   const [openFaq, setOpenFaq] = useState(null);
 
   const toggleFaq = (index) => {
@@ -93,12 +96,15 @@ export default function CosmeticDentistry() {
               Transform your teeth with advanced cosmetic dental treatments tailored to your unique features. Experience world-class care that combines artistry and technology for a flawless smile.
             </p>
             <div className="pt-2">
-              <button className="bg-[#3b1866] text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#2A114B] transition-colors flex items-center space-x-3 shadow-sm w-fit">
+              <Link 
+                to="/book-appointment"
+                className="bg-[#3b1866] text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#2A114B] transition-colors flex items-center space-x-3 shadow-sm w-fit"
+              >
                 <span>Book Appointment</span>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -106,7 +112,7 @@ export default function CosmeticDentistry() {
           <div className="relative w-full flex justify-center md:justify-end">
             <div className="w-full max-w-[480px] lg:max-w-[520px] aspect-[4/5] rounded-[2rem] overflow-hidden bg-gray-100 shadow-sm">
               <img 
-                src={s1} 
+                src={getImage('cosmetic-dentistry', 'hero-image', s)} 
                 alt="Cosmetic Dentistry Studio" 
                 className="w-full h-full object-cover" 
               />
@@ -167,8 +173,8 @@ export default function CosmeticDentistry() {
           <div className="lg:col-span-6 relative flex items-center space-x-6 md:space-x-8">
             <div className="w-36 md:w-48 lg:w-56 shrink-0 opacity-40 select-none pointer-events-none">
               <img 
-                src={ab} 
-                alt="Tooth graphic" 
+                src={getImage('cosmetic-dentistry', 'section-2-image', ab)} 
+                alt="Tooth graphic"
                 className="w-full h-auto object-contain filter drop-shadow-sm" 
               />
             </div>
@@ -198,7 +204,7 @@ export default function CosmeticDentistry() {
       {/* 4. Banner Section: Image g.jpg */}
       <section className="w-full relative h-[260px] md:h-[340px] lg:h-[400px] overflow-hidden flex items-center justify-center">
         <img 
-          src={g} 
+          src={getImage('cosmetic-dentistry', 'footer-banner', g)} 
           alt="Radiant Smile" 
           className="absolute inset-0 w-full h-full object-cover object-[center_35%]" 
         />

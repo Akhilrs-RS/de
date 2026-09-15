@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useMedia } from '../context/MediaContext';
 import s from '../assets/s.png';
 import ab from '../assets/ab.png';
 import ss from '../assets/ss.png';
@@ -69,6 +71,7 @@ const faqItems = [
 ];
 
 export default function SmileMakeover() {
+  const { getImage } = useMedia();
   const [openFaq, setOpenFaq] = useState(null);
 
   const toggleFaq = (index) => {
@@ -93,12 +96,15 @@ export default function SmileMakeover() {
               Transform your smile with a personalized combination of advanced cosmetic dental treatments, designed to enhance your confidence and bring out your best smile.
             </p>
             <div className="pt-2">
-              <button className="bg-[#3b1866] text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#2A114B] transition-colors flex items-center space-x-3 shadow-sm w-fit">
+              <Link 
+                to="/book-appointment"
+                className="bg-[#3b1866] text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#2A114B] transition-colors flex items-center space-x-3 shadow-sm w-fit"
+              >
                 <span>Book Appointment</span>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -106,8 +112,8 @@ export default function SmileMakeover() {
           <div className="relative w-full flex justify-center md:justify-end">
             <div className="w-full max-w-[480px] lg:max-w-[520px] aspect-[4/5] rounded-[2rem] overflow-hidden bg-gray-100 shadow-sm">
               <img 
-                src={s} 
-                alt="Patient admiring smile in mirror" 
+                src={getImage('smile-makeover', 'hero-image', s)} 
+                alt="Patient smiling in dental suite" 
                 className="w-full h-full object-cover" 
               />
             </div>
@@ -167,7 +173,7 @@ export default function SmileMakeover() {
           <div className="lg:col-span-6 relative flex items-center space-x-6 md:space-x-8">
             <div className="w-36 md:w-48 lg:w-56 shrink-0 opacity-40 select-none pointer-events-none">
               <img 
-                src={ab} 
+                src={getImage('smile-makeover', 'section-2-image', ab)} 
                 alt="Tooth graphic" 
                 className="w-full h-auto object-contain filter drop-shadow-sm" 
               />
@@ -195,12 +201,12 @@ export default function SmileMakeover() {
         </div>
       </section>
 
-      {/* 4. Banner Section: Image ss.png */}
+      {/* 4. Banner Section: Image g.png */}
       <section className="w-full relative h-[260px] md:h-[340px] lg:h-[400px] overflow-hidden flex items-center justify-center">
         <img 
-          src={ss} 
-          alt="Close up beautiful smile" 
-          className="absolute inset-0 w-full h-full object-cover object-center" 
+          src={getImage('smile-makeover', 'footer-banner', ss)} 
+          alt="Radiant Smile" 
+          className="absolute inset-0 w-full h-full object-cover object-[center_35%]" 
         />
         <div className="absolute inset-0 bg-black/35" />
         <div className="relative z-10 text-center px-6">

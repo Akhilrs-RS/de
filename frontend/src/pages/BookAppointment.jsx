@@ -133,11 +133,10 @@ export default function BookAppointment() {
                     Preferred Date
                   </label>
                   <input
-                    type="text"
+                    type="date"
                     name="preferredDate"
                     value={formData.preferredDate}
                     onChange={handleChange}
-                    placeholder="dd-mm-yyyy"
                     className="w-full border border-gray-200 rounded-xl px-4 py-3.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#3b1866] focus:ring-1 focus:ring-[#3b1866] transition-all"
                   />
                 </div>

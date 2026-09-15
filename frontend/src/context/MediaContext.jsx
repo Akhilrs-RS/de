@@ -37,7 +37,7 @@ export function MediaProvider({ children }) {
     if (!item) return fallbackAsset;
 
     if (item.customImageUrl) {
-      if (item.customImageUrl.startsWith('/uploads')) {
+      if (item.customImageUrl.startsWith('/uploads') || item.customImageUrl.startsWith('/api')) {
         return `${API_BASE_URL}${item.customImageUrl}`;
       }
       return item.customImageUrl;

@@ -88,26 +88,12 @@ namespace ManickDentalApi.Controllers
 
             try
             {
-                // Ensure wwwroot/uploads directory exists
-                var uploadsDir = Path.Combine(_env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"), "uploads");
-                if (!Directory.Exists(uploadsDir))
+                byte[] fileBytes;
+                using (var ms = new MemoryStream())
                 {
-                    Directory.CreateDirectory(uploadsDir);
+                    await dto.File.CopyToAsync(ms);
+                    fileBytes = ms.ToArray();
                 }
-
-                // Generate sanitized unique filename
-                var safePageKey = dto.PageKey.ToLower().Replace(" ", "_");
-                var safeSectionKey = dto.SectionKey.ToLower().Replace(" ", "_");
-                var uniqueFileName = $"{safePageKey}_{safeSectionKey}_{DateTime.UtcNow:yyyyMMddHHmmssfff}_{Guid.NewGuid().ToString("N")[..6]}{extension}";
-                var filePath = Path.Combine(uploadsDir, uniqueFileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await dto.File.CopyToAsync(stream);
-                }
-
-                // Public URL served by ASP.NET Core Static Files
-                var publicUrl = $"/uploads/{uniqueFileName}";
 
                 // Update or create database record
                 var pageImage = await _context.PageImages
@@ -115,7 +101,8 @@ namespace ManickDentalApi.Controllers
 
                 if (pageImage != null)
                 {
-                    pageImage.CustomImageUrl = publicUrl;
+                    pageImage.ImageData = fileBytes;
+                    pageImage.ContentType = dto.File.ContentType;
                     pageImage.UpdatedAt = DateTime.UtcNow;
                 }
                 else
@@ -125,13 +112,19 @@ namespace ManickDentalApi.Controllers
                         PageKey = dto.PageKey.ToLower(),
                         SectionKey = dto.SectionKey.ToLower(),
                         Label = $"{dto.PageKey} - {dto.SectionKey}",
-                        DefaultAssetUrl = publicUrl,
-                        CustomImageUrl = publicUrl,
+                        DefaultAssetUrl = "",
+                        ImageData = fileBytes,
+                        ContentType = dto.File.ContentType,
                         UpdatedAt = DateTime.UtcNow
                     };
                     _context.PageImages.Add(pageImage);
                 }
 
+                await _context.SaveChangesAsync();
+
+                // Generate public URL pointing to the new endpoint
+                var publicUrl = $"/api/media/image/{pageImage.Id}";
+                pageImage.CustomImageUrl = publicUrl;
                 await _context.SaveChangesAsync();
 
                 return Ok(new
@@ -178,6 +171,18 @@ namespace ManickDentalApi.Controllers
                 message = "Image reset to default asset.",
                 effectiveUrl = pageImage.DefaultAssetUrl
             });
+        }
+
+        [HttpGet("image/{id}")]
+        public async Task<IActionResult> GetImageFile(int id)
+        {
+            var image = await _context.PageImages.FindAsync(id);
+            if (image == null || image.ImageData == null)
+            {
+                return NotFound();
+            }
+
+            return File(image.ImageData, image.ContentType ?? "image/jpeg");
         }
     }
 }

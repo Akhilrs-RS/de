@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useMedia } from '../context/MediaContext';
@@ -56,19 +56,6 @@ const AnimatedWord = ({ word, delayIndex }) => {
 
 export default function Home() {
   const { getImage } = useMedia();
-  const scrollRef = useRef(null);
-
-  const scrollLeft = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: -400, behavior: 'smooth' });
-    }
-  };
-
-  const scrollRight = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: 400, behavior: 'smooth' });
-    }
-  };
 
   return (
     <div className="w-full">
@@ -104,9 +91,9 @@ export default function Home() {
                 <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </Link>
-            <button className="border-2 border-gray-300 bg-white/20 backdrop-blur-sm text-gray-900 px-8 py-3.5 rounded-[2rem] font-medium hover:bg-white/40 hover:border-gray-400 transition-all">
+            <Link to="/services" className="border-2 border-gray-300 bg-white/20 backdrop-blur-sm text-gray-900 px-8 py-3.5 rounded-[2rem] font-medium hover:bg-white/40 hover:border-gray-400 transition-all inline-block text-center">
               Explore Our Care
-            </button>
+            </Link>
           </div>
         </div>
       </main>
@@ -139,9 +126,8 @@ export default function Home() {
         {/* Two-Column Content */}
         <div className="relative z-10 w-full max-w-5xl px-6 md:px-12 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
           
-          {/* Image */}
           <div className="col-span-1 md:col-span-5">
-            <img src={h1Image} alt="Dental treatment" className="w-full h-auto aspect-square object-cover rounded-3xl" />
+            <img src={getImage('home', 'section-2-image', h1Image)} alt="Dental treatment" className="w-full h-auto aspect-square object-cover rounded-3xl" />
           </div>
 
           {/* Card */}
@@ -159,12 +145,12 @@ export default function Home() {
               <span className="font-bold text-[#C4A47C] italic text-[1.1rem] block">A New Way To Feel Confident.</span>
             </div>
 
-            <button className="bg-[#3b1866] text-white px-6 py-2.5 rounded-full text-xs font-medium hover:bg-[#2A114B] transition-colors flex items-center space-x-2">
+            <Link to="/about" className="bg-[#3b1866] text-white px-6 py-2.5 rounded-full text-xs font-medium hover:bg-[#2A114B] transition-colors inline-flex items-center space-x-2 w-max cursor-pointer">
               <span>Learn More</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-            </button>
+            </Link>
           </div>
 
         </div>
@@ -196,10 +182,8 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Carousel Container */}
         <div className="relative w-full pl-6 md:pl-12 lg:pl-24">
           <div 
-            ref={scrollRef}
             className="flex gap-6 md:gap-8 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-8 pr-6 md:pr-12 lg:pr-24"
             style={{ scrollBehavior: 'smooth' }}
           >
@@ -219,11 +203,11 @@ export default function Home() {
                   </div>
                   <Link 
                     to="/general-checkup" 
-                    className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0 backdrop-blur-sm"
+                    className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white border-[3px] border-black flex items-center justify-center text-black hover:bg-gray-50 transition-colors shrink-0"
                     aria-label="View General Checkup & Consultation"
                   >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </Link>
                 </div>
@@ -232,7 +216,7 @@ export default function Home() {
 
             {/* Card 2 */}
             <div className="relative flex-none w-[85vw] md:w-[480px] lg:w-[500px] aspect-[4/5] rounded-[2.5rem] overflow-hidden snap-start group bg-gray-200">
-              <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style={{ backgroundImage: `url(${h2Image})` }} />
+              <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style={{ backgroundImage: `url(${getImage('home', 'treatment-1', h2Image)})` }} />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
               <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-between">
                 <div className="text-white font-serif text-[4rem] leading-none font-bold">02</div>
@@ -243,11 +227,11 @@ export default function Home() {
                   </div>
                   <Link 
                     to="/smile-makeover" 
-                    className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0 backdrop-blur-sm"
+                    className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white border-[3px] border-black flex items-center justify-center text-black hover:bg-gray-50 transition-colors shrink-0"
                     aria-label="View Smile Makeover"
                   >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </Link>
                 </div>
@@ -256,7 +240,7 @@ export default function Home() {
 
             {/* Card 3 */}
             <div className="relative flex-none w-[85vw] md:w-[480px] lg:w-[500px] aspect-[4/5] rounded-[2.5rem] overflow-hidden snap-start group bg-gray-200">
-              <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style={{ backgroundImage: `url(${h3Image})` }} />
+              <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style={{ backgroundImage: `url(${getImage('home', 'treatment-2', h3Image)})` }} />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
               <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-between">
                 <div className="text-white font-serif text-[4rem] leading-none font-bold">03</div>
@@ -267,11 +251,11 @@ export default function Home() {
                   </div>
                   <Link 
                     to="/invisible-aligners" 
-                    className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0 backdrop-blur-sm"
+                    className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white border-[3px] border-black flex items-center justify-center text-black hover:bg-gray-50 transition-colors shrink-0"
                     aria-label="View Invisible Aligners"
                   >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </Link>
                 </div>
@@ -280,7 +264,7 @@ export default function Home() {
 
             {/* Card 4 */}
             <div className="relative flex-none w-[85vw] md:w-[480px] lg:w-[500px] aspect-[4/5] rounded-[2.5rem] overflow-hidden snap-start group bg-gray-200">
-              <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style={{ backgroundImage: `url(${h4Image})` }} />
+              <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style={{ backgroundImage: `url(${getImage('home', 'treatment-3', h4Image)})` }} />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
               <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-between">
                 <div className="text-white font-serif text-[4rem] leading-none font-bold">04</div>
@@ -291,11 +275,11 @@ export default function Home() {
                   </div>
                   <Link 
                     to="/cosmetic-dentistry" 
-                    className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0 backdrop-blur-sm"
+                    className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white border-[3px] border-black flex items-center justify-center text-black hover:bg-gray-50 transition-colors shrink-0"
                     aria-label="View Cosmetic Dentistry"
                   >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </Link>
                 </div>
@@ -304,20 +288,7 @@ export default function Home() {
             
           </div>
 
-          {/* Navigation Controls (Bottom Right) */}
-          <div className="absolute bottom-[-20px] right-6 md:right-12 lg:right-24 flex items-center bg-[#2A114B] rounded-[2rem] p-1.5 shadow-lg">
-            <button onClick={scrollLeft} className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-white/70 hover:text-white rounded-full transition-colors">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
-            <div className="w-[1px] h-5 bg-white/20 mx-1"></div>
-            <button onClick={scrollRight} className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-white/70 hover:text-white rounded-full transition-colors">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
-          </div>
+          {/* Navigation Controls (Bottom Right) Removed as requested */}
         </div>
       </section>
 
@@ -335,12 +306,15 @@ export default function Home() {
               />
             </div>
             {/* Floating Badge */}
-            <div className="absolute -bottom-6 -right-6 md:right-0 lg:-right-10 bg-[#242424] text-white w-32 h-32 rounded-full flex flex-col items-center justify-center p-4 shadow-xl border-4 border-[#FAF8F3]">
+            <Link 
+              to="/our-story"
+              className="absolute -bottom-6 -right-6 md:right-0 lg:-right-10 bg-[#242424] text-white w-32 h-32 rounded-full flex flex-col items-center justify-center p-4 shadow-xl border-4 border-[#FAF8F3] hover:bg-black hover:scale-105 transition-all cursor-pointer"
+            >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#C4A47C] mb-2">
                 <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
               <span className="text-[10px] uppercase tracking-widest text-center font-sans">Discover OUR<br/>TEAM</span>
-            </div>
+            </Link>
           </div>
 
           {/* Right Column - Content */}
@@ -450,23 +424,53 @@ export default function Home() {
       <section className="w-full bg-[#8A63A5] py-32 relative overflow-hidden flex flex-col items-center justify-center">
         {/* Floating Faces */}
         <div className="absolute inset-0 pointer-events-none">
-          <img src={h6Image} alt="Patient" className="absolute top-[20%] left-[10%] w-24 h-24 md:w-32 md:h-32 object-cover rounded-full border-4 border-white/20 opacity-80" />
-          <img src={h7Image} alt="Patient" className="absolute top-[10%] left-[30%] w-20 h-20 md:w-28 md:h-28 object-cover rounded-full border-4 border-white/20 opacity-60" />
-          <img src={h8Image} alt="Patient" className="absolute bottom-[10%] left-[35%] w-24 h-24 md:w-36 md:h-36 object-cover rounded-full border-4 border-white/20 opacity-90" />
-          <img src={h9Image} alt="Patient" className="absolute top-[15%] right-[25%] w-20 h-20 md:w-24 md:h-24 object-cover rounded-full border-4 border-white/20 opacity-70" />
-          <img src={h10Image} alt="Patient" className="absolute bottom-[20%] right-[15%] w-24 h-24 md:w-32 md:h-32 object-cover rounded-full border-4 border-white/20 opacity-80" />
-          <img src={h11Image} alt="Patient" className="absolute top-[40%] right-[5%] w-28 h-28 md:w-40 md:h-40 object-cover rounded-full border-4 border-white/20 opacity-90" />
+          <motion.img 
+            src={getImage('home', 'patient-story-1', h6Image)} alt="Patient" 
+            className="absolute top-[15%] left-[5%] w-24 h-24 md:w-48 md:h-48 object-cover rounded-full opacity-60"
+            animate={{ y: [0, -15, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0 }}
+          />
+          <motion.img 
+            src={getImage('home', 'patient-story-2', h7Image)} alt="Patient" 
+            className="absolute top-[10%] left-[25%] w-20 h-20 md:w-40 md:h-40 object-cover rounded-full opacity-50"
+            animate={{ y: [0, -20, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          />
+          <motion.img 
+            src={getImage('home', 'patient-story-3', h8Image)} alt="Patient" 
+            className="absolute bottom-[10%] left-[30%] w-24 h-24 md:w-44 md:h-44 object-cover rounded-full opacity-70"
+            animate={{ y: [0, -15, 0] }}
+            transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+          />
+          <motion.img 
+            src={getImage('home', 'patient-story-4', h9Image)} alt="Patient" 
+            className="absolute top-[5%] right-[30%] w-20 h-20 md:w-44 md:h-44 object-cover rounded-full opacity-60"
+            animate={{ y: [0, -25, 0] }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          />
+          <motion.img 
+            src={getImage('home', 'patient-story-5', h10Image)} alt="Patient" 
+            className="absolute bottom-[10%] right-[15%] w-24 h-24 md:w-56 md:h-56 object-cover rounded-full opacity-60"
+            animate={{ y: [0, -20, 0] }}
+            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+          />
+          <motion.img 
+            src={getImage('home', 'patient-story-6', h11Image)} alt="Patient" 
+            className="absolute top-[20%] right-[2%] w-28 h-28 md:w-48 md:h-48 object-cover rounded-full opacity-70"
+            animate={{ y: [0, -15, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+          />
         </div>
 
         {/* Content */}
-        <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-          <div className="text-white/80 font-sans text-xs md:text-sm uppercase tracking-widest font-semibold mb-8">
+        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
+          <div className="text-white font-sans text-sm md:text-base mb-8">
             Patient Stories
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-[4rem] font-serif font-bold italic text-white leading-tight">
-            "From the first consultation to my <br className="hidden md:block"/>
-            final smile, <br className="block md:hidden"/>
-            <span className="text-[#F1DAC4]">every detail felt exceptional.</span>"
+          <h2 className="text-4xl md:text-[3.5rem] lg:text-[4.5rem] font-serif font-bold text-white leading-[1.2]">
+            “From the first consultation to my <br/>
+            final smile,<br/>
+            <span className="text-[#C4A47C] italic">every detail felt exceptional.”</span>
           </h2>
         </div>
       </section>

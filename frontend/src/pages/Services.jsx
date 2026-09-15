@@ -211,9 +211,12 @@ export default function Services() {
                 </div>
 
                 <div className="mt-auto pt-2">
-                  <button className="w-full border border-[#3b1866] text-[#3b1866] hover:bg-[#3b1866] hover:text-white transition-colors rounded-xl py-3.5 text-sm font-medium flex justify-center items-center">
+                  <Link 
+                    to="/book-appointment"
+                    className="w-full border border-[#3b1866] text-[#3b1866] hover:bg-[#3b1866] hover:text-white transition-colors rounded-xl py-3.5 text-sm font-medium flex justify-center items-center"
+                  >
                     Book Appointment
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -234,12 +237,15 @@ export default function Services() {
         <p className="text-gray-600 font-sans text-lg mb-10">
           Begin your journey toward a healthier, more confident smile.
         </p>
-        <button className="bg-[#3b1866] text-white px-8 py-4 rounded-full text-[15px] font-medium hover:bg-[#2A114B] transition-colors flex items-center space-x-3">
+        <Link 
+          to="/book-appointment"
+          className="bg-[#3b1866] text-white px-8 py-4 rounded-full text-[15px] font-medium hover:bg-[#2A114B] transition-colors flex items-center space-x-3"
+        >
           <span>Book Appointment</span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
-        </button>
+        </Link>
       </section>
       
     </div>
