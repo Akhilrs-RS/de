@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useMedia } from '../context/MediaContext';
@@ -57,11 +57,40 @@ const AnimatedWord = ({ word, delayIndex }) => {
 export default function Home() {
   const { getImage } = useMedia();
   const section3Ref = useRef(null);
+  const cardsTrackRef = useRef(null);
+  const [scrollRange, setScrollRange] = useState(0);
+
+  useEffect(() => {
+    const calculateScrollRange = () => {
+      if (cardsTrackRef.current) {
+        const totalTrackWidth = cardsTrackRef.current.scrollWidth;
+        const viewportWidth = window.innerWidth;
+        const maxScroll = totalTrackWidth - viewportWidth;
+        setScrollRange(Math.max(0, maxScroll));
+      }
+    };
+
+    calculateScrollRange();
+    window.addEventListener('resize', calculateScrollRange);
+    let ro;
+    if (cardsTrackRef.current && typeof ResizeObserver !== 'undefined') {
+      ro = new ResizeObserver(calculateScrollRange);
+      ro.observe(cardsTrackRef.current);
+    }
+    const timer = setTimeout(calculateScrollRange, 200);
+    return () => {
+      window.removeEventListener('resize', calculateScrollRange);
+      if (ro) ro.disconnect();
+      clearTimeout(timer);
+    };
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: section3Ref,
     offset: ["start start", "end end"]
   });
-  const xTransform = useTransform(scrollYProgress, [0, 1], ["0%", "-65%"]);
+
+  const xTransform = useTransform(scrollYProgress, [0, 1], [0, -scrollRange]);
 
   return (
     <div className="w-full">
@@ -80,7 +109,7 @@ export default function Home() {
 
         {/* Content */}
         <div className="relative z-10 px-6 md:px-12 lg:px-24 max-w-3xl pt-10 pb-20">
-          <h1 className="text-5xl md:text-6xl lg:text-[5.5rem] font-serif font-bold text-gray-900 leading-[1.05] mb-8">
+          <h1 className="text-4xl md:text-5xl lg:text-[5.5rem] font-serif font-bold text-gray-900 leading-[1.05] mb-8">
             Where Every <br />
             Smile <span className="text-[#3b1866]">Becomes a</span> <br />
             <span className="text-[#3b1866]">Masterpiece</span>
@@ -112,19 +141,19 @@ export default function Home() {
           
           {/* Faint Background Text */}
           <div className="absolute inset-0 w-full flex flex-col items-center justify-center pointer-events-none select-none z-0 opacity-40">
-            <div className="text-[4rem] md:text-[7rem] lg:text-[9rem] font-serif text-[#E6E1D6] leading-[0.85] tracking-[0.2em] md:tracking-[0.3em]">SMILE</div>
-            <div className="text-[3.5rem] md:text-[6rem] lg:text-[8rem] font-serif text-[#E6E1D6] leading-[0.9] tracking-[0.2em] md:tracking-[0.4em] my-4">CONFIDENCE</div>
-            <div className="text-[4rem] md:text-[7rem] lg:text-[9rem] font-serif text-[#E6E1D6] leading-[0.85] tracking-[0.2em] md:tracking-[0.3em]">CARE</div>
+            <div className="text-[3rem] md:text-[7rem] lg:text-[9rem] font-serif text-[#E6E1D6] leading-[0.85] tracking-[0.2em] md:tracking-[0.3em]">SMILE</div>
+            <div className="text-3xl md:text-[6rem] lg:text-[8rem] font-serif text-[#E6E1D6] leading-[0.9] tracking-[0.2em] md:tracking-[0.4em] my-4">CONFIDENCE</div>
+            <div className="text-[3rem] md:text-[7rem] lg:text-[9rem] font-serif text-[#E6E1D6] leading-[0.85] tracking-[0.2em] md:tracking-[0.3em]">CARE</div>
           </div>
 
           {/* Foreground Title */}
           <div className="relative z-10 w-full max-w-4xl px-6 text-center flex flex-col items-center justify-center mt-6">
-            <h2 className="text-4xl md:text-5xl lg:text-[4rem] font-serif font-bold italic text-gray-900 mb-2 flex flex-wrap justify-center leading-tight">
+            <h2 className="text-3xl md:text-5xl lg:text-[4rem] font-serif font-bold italic text-gray-900 mb-2 flex flex-wrap justify-center leading-tight">
               <AnimatedWord word="Beautiful" delayIndex={0} />
               <AnimatedWord word="smiles" delayIndex={1} />
               <AnimatedWord word="begin" delayIndex={2} />
             </h2>
-            <div className="text-4xl md:text-5xl lg:text-[4rem] font-serif font-bold italic text-[#C4A47C] leading-tight">with extraordinary care.</div>
+            <div className="text-3xl md:text-5xl lg:text-[4rem] font-serif font-bold italic text-[#C4A47C] leading-tight">with extraordinary care.</div>
           </div>
 
         </div>
@@ -163,50 +192,55 @@ export default function Home() {
       </section>
 
       {/* Section 3: Signature Treatments */}
-      <section ref={section3Ref} className="w-full bg-[#FAF8F3] h-[300vh] relative">
-        <div className="sticky top-0 h-screen py-16 md:py-24 overflow-hidden flex flex-col justify-center">
-          <div className="px-6 md:px-12 lg:px-24 mb-12 md:mb-16">
+      <section 
+        ref={section3Ref} 
+        className="w-full bg-[#FAF8F3] relative"
+        style={{ height: scrollRange > 0 ? `calc(100vh + ${scrollRange}px)` : 'auto' }}
+      >
+        <div className="sticky top-0 h-screen overflow-hidden pt-8 md:pt-12 pb-6 md:pb-8 flex flex-col justify-between">
+          <div className="px-6 md:px-12 lg:px-24 mb-4 md:mb-6 shrink-0">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 md:gap-8">
               {/* Left Header */}
               <div>
-                <div className="text-[#C4A47C] font-sans text-lg md:text-xl mb-2 md:mb-4 font-medium">Signature Treatments</div>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-gray-900 leading-tight">
+                <div className="text-[#C4A47C] font-sans text-base md:text-lg mb-2 font-medium">Signature Treatments</div>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-gray-900 leading-tight">
                   The Art of Transformation
                 </h2>
               </div>
               
               {/* Right Header */}
               <div className="md:max-w-md text-left md:text-right flex flex-col items-start md:items-end w-full md:w-auto">
-                <p className="text-[#C4A47C] font-sans text-base md:text-lg lg:text-xl leading-[1.6] mb-6 md:mb-8 font-light">
+                <p className="text-[#C4A47C] font-sans text-sm md:text-base leading-relaxed mb-4 font-light">
                   Four disciplines, one philosophy — <br className="hidden md:block" />
                   each treatment is a study in precision <br className="hidden md:block" />
                   and aesthetic harmony.
                 </p>
-                <button className="text-gray-900 font-sans font-medium text-base md:text-lg hover:text-[#C4A47C] transition-colors">
+                <button className="text-gray-900 font-sans font-medium text-sm md:text-base hover:text-[#C4A47C] transition-colors">
                   View More
                 </button>
               </div>
             </div>
           </div>
 
-          <div className="relative w-full pl-6 md:pl-12 lg:pl-24">
+          <div className="w-full overflow-hidden">
             <motion.div 
-              className="flex gap-6 md:gap-8 w-max pr-6 md:pr-12 lg:pr-24"
+              ref={cardsTrackRef}
+              className="flex gap-6 md:gap-8 w-max px-6 md:px-12 lg:px-24"
               style={{ x: xTransform }}
             >
               {/* Card 1 */}
-              <div className="relative flex-none w-[85vw] md:w-[480px] lg:w-[500px] aspect-[4/5] rounded-[2.5rem] overflow-hidden group bg-gray-200">
+              <div className="relative flex-none w-[80vw] sm:w-[380px] md:w-[420px] lg:w-[460px] aspect-[4/5] max-h-[calc(100vh-210px)] rounded-[2.5rem] overflow-hidden group bg-gray-200">
                 <div 
                   className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" 
                   style={{ backgroundImage: `url(${getImage('home', 'about', haImage)})` }} 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
                 <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-between">
-                  <div className="text-white font-serif text-[4rem] leading-none font-bold">01</div>
+                  <div className="text-white font-serif text-4xl md:text-5xl leading-none font-bold">01</div>
                   <div className="flex items-end justify-between">
                     <div className="pr-4 md:pr-6 flex-1">
-                      <h3 className="text-white font-serif text-3xl md:text-4xl font-bold mb-4 leading-[1.1]">General Checkup &<br/>Consultation</h3>
-                      <p className="text-white/90 font-sans text-sm md:text-base leading-relaxed font-light">A bespoke, full-arch artistic<br/>transformation crafted to your<br/>facial harmony</p>
+                      <h3 className="text-white font-serif text-2xl md:text-3xl font-bold mb-3 leading-[1.1]">General Checkup &<br/>Consultation</h3>
+                      <p className="text-white/90 font-sans text-xs md:text-sm leading-relaxed font-light">A bespoke, full-arch artistic<br/>transformation crafted to your<br/>facial harmony</p>
                     </div>
                     <Link 
                       to="/general-checkup" 
@@ -214,7 +248,7 @@ export default function Home() {
                       aria-label="View General Checkup & Consultation"
                     >
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </Link>
                   </div>
@@ -222,15 +256,15 @@ export default function Home() {
               </div>
 
               {/* Card 2 */}
-              <div className="relative flex-none w-[85vw] md:w-[480px] lg:w-[500px] aspect-[4/5] rounded-[2.5rem] overflow-hidden group bg-gray-200">
+              <div className="relative flex-none w-[80vw] sm:w-[380px] md:w-[420px] lg:w-[460px] aspect-[4/5] max-h-[calc(100vh-210px)] rounded-[2.5rem] overflow-hidden group bg-gray-200">
                 <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style={{ backgroundImage: `url(${getImage('home', 'treatment-1', h2Image)})` }} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
                 <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-between">
-                  <div className="text-white font-serif text-[4rem] leading-none font-bold">02</div>
+                  <div className="text-white font-serif text-4xl md:text-5xl leading-none font-bold">02</div>
                   <div className="flex items-end justify-between">
                     <div className="pr-4 md:pr-6 flex-1">
-                      <h3 className="text-white font-serif text-3xl md:text-4xl font-bold mb-4 leading-[1.1]">Smile Makeover</h3>
-                      <p className="text-white/90 font-sans text-sm md:text-base leading-relaxed font-light">A bespoke, full-arch artistic<br/>transformation crafted to your<br/>facial harmony</p>
+                      <h3 className="text-white font-serif text-2xl md:text-3xl font-bold mb-3 leading-[1.1]">Smile Makeover</h3>
+                      <p className="text-white/90 font-sans text-xs md:text-sm leading-relaxed font-light">A bespoke, full-arch artistic<br/>transformation crafted to your<br/>facial harmony</p>
                     </div>
                     <Link 
                       to="/smile-makeover" 
@@ -238,7 +272,7 @@ export default function Home() {
                       aria-label="View Smile Makeover"
                     >
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </Link>
                   </div>
@@ -246,15 +280,15 @@ export default function Home() {
               </div>
 
               {/* Card 3 */}
-              <div className="relative flex-none w-[85vw] md:w-[480px] lg:w-[500px] aspect-[4/5] rounded-[2.5rem] overflow-hidden group bg-gray-200">
+              <div className="relative flex-none w-[80vw] sm:w-[380px] md:w-[420px] lg:w-[460px] aspect-[4/5] max-h-[calc(100vh-210px)] rounded-[2.5rem] overflow-hidden group bg-gray-200">
                 <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style={{ backgroundImage: `url(${getImage('home', 'treatment-2', h3Image)})` }} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
                 <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-between">
-                  <div className="text-white font-serif text-[4rem] leading-none font-bold">03</div>
+                  <div className="text-white font-serif text-4xl md:text-5xl leading-none font-bold">03</div>
                   <div className="flex items-end justify-between">
                     <div className="pr-4 md:pr-6 flex-1">
-                      <h3 className="text-white font-serif text-3xl md:text-4xl font-bold mb-4 leading-[1.1]">Invisible Aligners</h3>
-                      <p className="text-white/90 font-sans text-sm md:text-base leading-relaxed font-light">Invisible Aligners<br/>Discreet, precision-engineered<br/>alignment with zero compromise to<br/>lifestyle</p>
+                      <h3 className="text-white font-serif text-2xl md:text-3xl font-bold mb-3 leading-[1.1]">Invisible Aligners</h3>
+                      <p className="text-white/90 font-sans text-xs md:text-sm leading-relaxed font-light">Invisible Aligners<br/>Discreet, precision-engineered<br/>alignment with zero compromise to<br/>lifestyle</p>
                     </div>
                     <Link 
                       to="/invisible-aligners" 
@@ -262,7 +296,7 @@ export default function Home() {
                       aria-label="View Invisible Aligners"
                     >
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </Link>
                   </div>
@@ -270,15 +304,15 @@ export default function Home() {
               </div>
 
               {/* Card 4 */}
-              <div className="relative flex-none w-[85vw] md:w-[480px] lg:w-[500px] aspect-[4/5] rounded-[2.5rem] overflow-hidden group bg-gray-200">
+              <div className="relative flex-none w-[80vw] sm:w-[380px] md:w-[420px] lg:w-[460px] aspect-[4/5] max-h-[calc(100vh-210px)] rounded-[2.5rem] overflow-hidden group bg-gray-200">
                 <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style={{ backgroundImage: `url(${getImage('home', 'treatment-3', h4Image)})` }} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
                 <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-between">
-                  <div className="text-white font-serif text-[4rem] leading-none font-bold">04</div>
+                  <div className="text-white font-serif text-4xl md:text-5xl leading-none font-bold">04</div>
                   <div className="flex items-end justify-between">
                     <div className="pr-4 md:pr-6 flex-1">
-                      <h3 className="text-white font-serif text-3xl md:text-4xl font-bold mb-4 leading-[1.1]">Cosmetic Dentistry</h3>
-                      <p className="text-white/90 font-sans text-sm md:text-base leading-relaxed font-light">Micro-refinements — veneers,<br/>whitening, contouring — for<br/>luminous detail.</p>
+                      <h3 className="text-white font-serif text-2xl md:text-3xl font-bold mb-3 leading-[1.1]">Cosmetic Dentistry</h3>
+                      <p className="text-white/90 font-sans text-xs md:text-sm leading-relaxed font-light">Micro-refinements — veneers,<br/>whitening, contouring — for<br/>luminous detail.</p>
                     </div>
                     <Link 
                       to="/cosmetic-dentistry" 
@@ -286,7 +320,7 @@ export default function Home() {
                       aria-label="View Cosmetic Dentistry"
                     >
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </Link>
                   </div>
@@ -299,7 +333,7 @@ export default function Home() {
       </section>
 
       {/* Section 4: Meet The Artist Behind Your Smile */}
-      <section className="w-full bg-[#FAF8F3] py-24 px-6 md:px-12 lg:px-24 relative overflow-hidden">
+      <section className="w-full bg-[#FAF8F3] pt-12 md:pt-16 pb-24 px-6 md:px-12 lg:px-24 relative overflow-hidden">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24 items-center">
           
           {/* Left Column - Image */}

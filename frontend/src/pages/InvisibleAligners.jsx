@@ -86,6 +86,7 @@ const faqItems = [
 ];
 
 export default function InvisibleAligners() {
+  const { getImage } = useMedia();
   const [openFaq, setOpenFaq] = useState(null);
 
   const toggleFaq = (index) => {

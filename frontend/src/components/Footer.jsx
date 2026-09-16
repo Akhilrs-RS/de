@@ -8,12 +8,11 @@ export default function Footer() {
   const { getImage } = useMedia();
   return (
     <footer className="w-full bg-[#2A114B] text-white py-16 relative overflow-hidden">
-      {/* Background Watermark */}
       <div className="absolute inset-0 w-full flex flex-col justify-end pointer-events-none select-none z-0 opacity-[0.03]">
-        <div className="text-[10rem] md:text-[14rem] font-serif leading-[0.8] tracking-widest whitespace-nowrap overflow-hidden">
+        <div className="text-[5rem] md:text-[10rem] lg:text-[14rem] font-serif leading-[0.8] tracking-widest whitespace-nowrap overflow-hidden">
           SMILE
         </div>
-        <div className="text-[10rem] md:text-[14rem] font-serif leading-[0.8] tracking-widest whitespace-nowrap overflow-hidden">
+        <div className="text-[5rem] md:text-[10rem] lg:text-[14rem] font-serif leading-[0.8] tracking-widest whitespace-nowrap overflow-hidden">
           BEAUTIFUL
         </div>
       </div>
@@ -22,8 +21,8 @@ export default function Footer() {
         
         {/* Left Column - Branding & Hours */}
         <div className="md:col-span-5 flex flex-col space-y-8">
-          <Link to="/" className="bg-white rounded p-3 inline-block w-64 md:w-72">
-            <img src={getImage('global', 'footer-logo', marvicLogo)} alt="Manick Dental" className="w-full h-auto object-contain" />
+          <Link to="/" className="bg-white p-1 md:p-2 rounded-lg inline-flex items-center justify-center w-40 md:w-48 h-14 md:h-16 overflow-hidden">
+            <img src={getImage('global', 'footer-logo', marvicLogo)} alt="Manick Dental" className="w-full h-full object-contain scale-[3]" />
           </Link>
           
           <p className="text-white/80 font-sans text-sm max-w-sm leading-relaxed">
