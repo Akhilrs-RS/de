@@ -31,7 +31,7 @@ function MainLayout() {
   const isAdmin = pathname.startsWith('/admin');
 
   return (
-    <div className="font-sans text-gray-900 w-full overflow-x-hidden min-h-screen flex flex-col">
+    <div className="font-sans text-gray-900 w-full min-h-screen flex flex-col">
       {!isAdmin && <Navbar />}
       <main className="flex-grow">
         <Routes>

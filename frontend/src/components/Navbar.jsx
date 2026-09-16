@@ -8,8 +8,8 @@ export default function Navbar() {
   return (
     <nav className="flex items-center justify-between px-6 md:px-12 lg:px-24 py-5 bg-white relative z-20">
       {/* Logo */}
-      <Link to="/" className="flex items-center shrink-0">
-        <img src={getImage('global', 'navbar-logo', marvicLogo)} alt="Manick Dental" className="h-28 lg:h-[140px] w-auto object-contain" />
+      <Link to="/" className="flex items-center shrink-0 -my-4 lg:-my-8 z-30">
+        <img src={getImage('global', 'navbar-logo', marvicLogo)} alt="Manick Dental" className="h-28 lg:h-[140px] w-auto object-contain drop-shadow-md" />
       </Link>
 
       {/* Links */}

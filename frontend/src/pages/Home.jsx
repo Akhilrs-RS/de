@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useMedia } from '../context/MediaContext';
 
 // Image assets
@@ -56,6 +56,12 @@ const AnimatedWord = ({ word, delayIndex }) => {
 
 export default function Home() {
   const { getImage } = useMedia();
+  const section3Ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: section3Ref,
+    offset: ["start start", "end end"]
+  });
+  const xTransform = useTransform(scrollYProgress, [0, 1], ["0%", "-65%"]);
 
   return (
     <div className="w-full">
@@ -157,138 +163,138 @@ export default function Home() {
       </section>
 
       {/* Section 3: Signature Treatments */}
-      <section className="w-full bg-[#FAF8F3] py-24 relative overflow-hidden">
-        <div className="px-6 md:px-12 lg:px-24 mb-16">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
-            {/* Left Header */}
-            <div>
-              <div className="text-[#C4A47C] font-sans text-xl mb-4 font-medium">Signature Treatments</div>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-gray-900 leading-tight">
-                The Art of Transformation
-              </h2>
-            </div>
-            
-            {/* Right Header */}
-            <div className="md:max-w-md text-left md:text-right flex flex-col items-start md:items-end w-full md:w-auto">
-              <p className="text-[#C4A47C] font-sans text-lg md:text-xl leading-[1.6] mb-8 font-light">
-                Four disciplines, one philosophy — <br className="hidden md:block" />
-                each treatment is a study in precision <br className="hidden md:block" />
-                and aesthetic harmony.
-              </p>
-              <button className="text-gray-900 font-sans font-medium text-lg hover:text-[#C4A47C] transition-colors">
-                View More
-              </button>
+      <section ref={section3Ref} className="w-full bg-[#FAF8F3] h-[300vh] relative">
+        <div className="sticky top-0 h-screen py-16 md:py-24 overflow-hidden flex flex-col justify-center">
+          <div className="px-6 md:px-12 lg:px-24 mb-12 md:mb-16">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 md:gap-8">
+              {/* Left Header */}
+              <div>
+                <div className="text-[#C4A47C] font-sans text-lg md:text-xl mb-2 md:mb-4 font-medium">Signature Treatments</div>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-gray-900 leading-tight">
+                  The Art of Transformation
+                </h2>
+              </div>
+              
+              {/* Right Header */}
+              <div className="md:max-w-md text-left md:text-right flex flex-col items-start md:items-end w-full md:w-auto">
+                <p className="text-[#C4A47C] font-sans text-base md:text-lg lg:text-xl leading-[1.6] mb-6 md:mb-8 font-light">
+                  Four disciplines, one philosophy — <br className="hidden md:block" />
+                  each treatment is a study in precision <br className="hidden md:block" />
+                  and aesthetic harmony.
+                </p>
+                <button className="text-gray-900 font-sans font-medium text-base md:text-lg hover:text-[#C4A47C] transition-colors">
+                  View More
+                </button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="relative w-full pl-6 md:pl-12 lg:pl-24">
-          <div 
-            className="flex gap-6 md:gap-8 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-8 pr-6 md:pr-12 lg:pr-24"
-            style={{ scrollBehavior: 'smooth' }}
-          >
-            {/* Card 1 */}
-            <div className="relative flex-none w-[85vw] md:w-[480px] lg:w-[500px] aspect-[4/5] rounded-[2.5rem] overflow-hidden snap-start group bg-gray-200">
-              <div 
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" 
-                style={{ backgroundImage: `url(${getImage('home', 'about', haImage)})` }} 
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
-              <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-between">
-                <div className="text-white font-serif text-[4rem] leading-none font-bold">01</div>
-                <div className="flex items-end justify-between">
-                  <div className="pr-6 flex-1">
-                    <h3 className="text-white font-serif text-3xl md:text-4xl font-bold mb-4 leading-[1.1]">General Checkup &<br/>Consultation</h3>
-                    <p className="text-white/90 font-sans text-base leading-relaxed font-light">A bespoke, full-arch artistic<br/>transformation crafted to your<br/>facial harmony</p>
+          <div className="relative w-full pl-6 md:pl-12 lg:pl-24">
+            <motion.div 
+              className="flex gap-6 md:gap-8 w-max pr-6 md:pr-12 lg:pr-24"
+              style={{ x: xTransform }}
+            >
+              {/* Card 1 */}
+              <div className="relative flex-none w-[85vw] md:w-[480px] lg:w-[500px] aspect-[4/5] rounded-[2.5rem] overflow-hidden group bg-gray-200">
+                <div 
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" 
+                  style={{ backgroundImage: `url(${getImage('home', 'about', haImage)})` }} 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
+                <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-between">
+                  <div className="text-white font-serif text-[4rem] leading-none font-bold">01</div>
+                  <div className="flex items-end justify-between">
+                    <div className="pr-4 md:pr-6 flex-1">
+                      <h3 className="text-white font-serif text-3xl md:text-4xl font-bold mb-4 leading-[1.1]">General Checkup &<br/>Consultation</h3>
+                      <p className="text-white/90 font-sans text-sm md:text-base leading-relaxed font-light">A bespoke, full-arch artistic<br/>transformation crafted to your<br/>facial harmony</p>
+                    </div>
+                    <Link 
+                      to="/general-checkup" 
+                      className="w-12 h-12 rounded-full bg-white border-[3px] border-black flex items-center justify-center text-black hover:bg-gray-50 transition-colors shrink-0"
+                      aria-label="View General Checkup & Consultation"
+                    >
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </Link>
                   </div>
-                  <Link 
-                    to="/general-checkup" 
-                    className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white border-[3px] border-black flex items-center justify-center text-black hover:bg-gray-50 transition-colors shrink-0"
-                    aria-label="View General Checkup & Consultation"
-                  >
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </Link>
                 </div>
               </div>
-            </div>
 
-            {/* Card 2 */}
-            <div className="relative flex-none w-[85vw] md:w-[480px] lg:w-[500px] aspect-[4/5] rounded-[2.5rem] overflow-hidden snap-start group bg-gray-200">
-              <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style={{ backgroundImage: `url(${getImage('home', 'treatment-1', h2Image)})` }} />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
-              <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-between">
-                <div className="text-white font-serif text-[4rem] leading-none font-bold">02</div>
-                <div className="flex items-end justify-between">
-                  <div className="pr-6 flex-1">
-                    <h3 className="text-white font-serif text-3xl md:text-4xl font-bold mb-4 leading-[1.1]">Smile Makeover</h3>
-                    <p className="text-white/90 font-sans text-base leading-relaxed font-light">A bespoke, full-arch artistic<br/>transformation crafted to your<br/>facial harmony</p>
+              {/* Card 2 */}
+              <div className="relative flex-none w-[85vw] md:w-[480px] lg:w-[500px] aspect-[4/5] rounded-[2.5rem] overflow-hidden group bg-gray-200">
+                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style={{ backgroundImage: `url(${getImage('home', 'treatment-1', h2Image)})` }} />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
+                <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-between">
+                  <div className="text-white font-serif text-[4rem] leading-none font-bold">02</div>
+                  <div className="flex items-end justify-between">
+                    <div className="pr-4 md:pr-6 flex-1">
+                      <h3 className="text-white font-serif text-3xl md:text-4xl font-bold mb-4 leading-[1.1]">Smile Makeover</h3>
+                      <p className="text-white/90 font-sans text-sm md:text-base leading-relaxed font-light">A bespoke, full-arch artistic<br/>transformation crafted to your<br/>facial harmony</p>
+                    </div>
+                    <Link 
+                      to="/smile-makeover" 
+                      className="w-12 h-12 rounded-full bg-white border-[3px] border-black flex items-center justify-center text-black hover:bg-gray-50 transition-colors shrink-0"
+                      aria-label="View Smile Makeover"
+                    >
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </Link>
                   </div>
-                  <Link 
-                    to="/smile-makeover" 
-                    className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white border-[3px] border-black flex items-center justify-center text-black hover:bg-gray-50 transition-colors shrink-0"
-                    aria-label="View Smile Makeover"
-                  >
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </Link>
                 </div>
               </div>
-            </div>
 
-            {/* Card 3 */}
-            <div className="relative flex-none w-[85vw] md:w-[480px] lg:w-[500px] aspect-[4/5] rounded-[2.5rem] overflow-hidden snap-start group bg-gray-200">
-              <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style={{ backgroundImage: `url(${getImage('home', 'treatment-2', h3Image)})` }} />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
-              <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-between">
-                <div className="text-white font-serif text-[4rem] leading-none font-bold">03</div>
-                <div className="flex items-end justify-between">
-                  <div className="pr-6 flex-1">
-                    <h3 className="text-white font-serif text-3xl md:text-4xl font-bold mb-4 leading-[1.1]">Invisible Aligners</h3>
-                    <p className="text-white/90 font-sans text-base leading-relaxed font-light">Invisible Aligners<br/>Discreet, precision-engineered<br/>alignment with zero compromise to<br/>lifestyle</p>
+              {/* Card 3 */}
+              <div className="relative flex-none w-[85vw] md:w-[480px] lg:w-[500px] aspect-[4/5] rounded-[2.5rem] overflow-hidden group bg-gray-200">
+                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style={{ backgroundImage: `url(${getImage('home', 'treatment-2', h3Image)})` }} />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
+                <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-between">
+                  <div className="text-white font-serif text-[4rem] leading-none font-bold">03</div>
+                  <div className="flex items-end justify-between">
+                    <div className="pr-4 md:pr-6 flex-1">
+                      <h3 className="text-white font-serif text-3xl md:text-4xl font-bold mb-4 leading-[1.1]">Invisible Aligners</h3>
+                      <p className="text-white/90 font-sans text-sm md:text-base leading-relaxed font-light">Invisible Aligners<br/>Discreet, precision-engineered<br/>alignment with zero compromise to<br/>lifestyle</p>
+                    </div>
+                    <Link 
+                      to="/invisible-aligners" 
+                      className="w-12 h-12 rounded-full bg-white border-[3px] border-black flex items-center justify-center text-black hover:bg-gray-50 transition-colors shrink-0"
+                      aria-label="View Invisible Aligners"
+                    >
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </Link>
                   </div>
-                  <Link 
-                    to="/invisible-aligners" 
-                    className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white border-[3px] border-black flex items-center justify-center text-black hover:bg-gray-50 transition-colors shrink-0"
-                    aria-label="View Invisible Aligners"
-                  >
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </Link>
                 </div>
               </div>
-            </div>
 
-            {/* Card 4 */}
-            <div className="relative flex-none w-[85vw] md:w-[480px] lg:w-[500px] aspect-[4/5] rounded-[2.5rem] overflow-hidden snap-start group bg-gray-200">
-              <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style={{ backgroundImage: `url(${getImage('home', 'treatment-3', h4Image)})` }} />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
-              <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-between">
-                <div className="text-white font-serif text-[4rem] leading-none font-bold">04</div>
-                <div className="flex items-end justify-between">
-                  <div className="pr-6 flex-1">
-                    <h3 className="text-white font-serif text-3xl md:text-4xl font-bold mb-4 leading-[1.1]">Cosmetic Dentistry</h3>
-                    <p className="text-white/90 font-sans text-base leading-relaxed font-light">Micro-refinements — veneers,<br/>whitening, contouring — for<br/>luminous detail.</p>
+              {/* Card 4 */}
+              <div className="relative flex-none w-[85vw] md:w-[480px] lg:w-[500px] aspect-[4/5] rounded-[2.5rem] overflow-hidden group bg-gray-200">
+                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style={{ backgroundImage: `url(${getImage('home', 'treatment-3', h4Image)})` }} />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
+                <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-between">
+                  <div className="text-white font-serif text-[4rem] leading-none font-bold">04</div>
+                  <div className="flex items-end justify-between">
+                    <div className="pr-4 md:pr-6 flex-1">
+                      <h3 className="text-white font-serif text-3xl md:text-4xl font-bold mb-4 leading-[1.1]">Cosmetic Dentistry</h3>
+                      <p className="text-white/90 font-sans text-sm md:text-base leading-relaxed font-light">Micro-refinements — veneers,<br/>whitening, contouring — for<br/>luminous detail.</p>
+                    </div>
+                    <Link 
+                      to="/cosmetic-dentistry" 
+                      className="w-12 h-12 rounded-full bg-white border-[3px] border-black flex items-center justify-center text-black hover:bg-gray-50 transition-colors shrink-0"
+                      aria-label="View Cosmetic Dentistry"
+                    >
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </Link>
                   </div>
-                  <Link 
-                    to="/cosmetic-dentistry" 
-                    className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white border-[3px] border-black flex items-center justify-center text-black hover:bg-gray-50 transition-colors shrink-0"
-                    aria-label="View Cosmetic Dentistry"
-                  >
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </Link>
                 </div>
               </div>
-            </div>
-            
+              
+            </motion.div>
           </div>
-
-          {/* Navigation Controls (Bottom Right) Removed as requested */}
         </div>
       </section>
 
@@ -307,7 +313,7 @@ export default function Home() {
             </div>
             {/* Floating Badge */}
             <Link 
-              to="/our-story"
+              to="/about"
               className="absolute -bottom-6 -right-6 md:right-0 lg:-right-10 bg-[#242424] text-white w-32 h-32 rounded-full flex flex-col items-center justify-center p-4 shadow-xl border-4 border-[#FAF8F3] hover:bg-black hover:scale-105 transition-all cursor-pointer"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#C4A47C] mb-2">
@@ -420,21 +426,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section 6: Patient Stories */}
-      <section className="w-full bg-[#8A63A5] py-32 relative overflow-hidden flex flex-col items-center justify-center">
+      {/* Section 6: Patient Stories (Purple Header) */}
+      <section className="w-full bg-[#8A63A5] py-20 md:py-24 relative overflow-hidden flex flex-col items-center justify-center">
         {/* Floating Faces */}
         <div className="absolute inset-0 pointer-events-none">
           <motion.img 
             src={getImage('home', 'patient-story-1', h6Image)} alt="Patient" 
-            className="absolute top-[15%] left-[5%] w-24 h-24 md:w-48 md:h-48 object-cover rounded-full opacity-60"
-            animate={{ y: [0, -15, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0 }}
+            className="absolute top-[10%] left-[5%] w-24 h-24 md:w-40 md:h-40 object-cover rounded-full opacity-60"
+            animate={{ y: [0, -20, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
           />
           <motion.img 
             src={getImage('home', 'patient-story-2', h7Image)} alt="Patient" 
-            className="absolute top-[10%] left-[25%] w-20 h-20 md:w-40 md:h-40 object-cover rounded-full opacity-50"
-            animate={{ y: [0, -20, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute top-[40%] left-[15%] w-20 h-20 md:w-32 md:h-32 object-cover rounded-full opacity-80"
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
           />
           <motion.img 
             src={getImage('home', 'patient-story-3', h8Image)} alt="Patient" 
@@ -464,14 +470,71 @@ export default function Home() {
 
         {/* Content */}
         <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
-          <div className="text-white font-sans text-sm md:text-base mb-8">
-            Patient Stories
-          </div>
           <h2 className="text-4xl md:text-[3.5rem] lg:text-[4.5rem] font-serif font-bold text-white leading-[1.2]">
             “From the first consultation to my <br/>
             final smile,<br/>
             <span className="text-[#C4A47C] italic">every detail felt exceptional.”</span>
           </h2>
+        </div>
+      </section>
+
+      {/* Section 6b: Patient Testimonials */}
+      <section className="w-full bg-white py-24 px-6 md:px-12 lg:px-24">
+        <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
+          <div className="text-[#A67CFF] font-sans text-sm md:text-base tracking-[0.2em] uppercase font-semibold mb-6">
+            Patient Stories
+          </div>
+          <h2 className="text-4xl md:text-5xl font-serif font-bold text-gray-900 leading-tight mb-16">
+            Their Smiles. Their Stories.
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 w-full text-left">
+            {/* Card 1 */}
+            <div className="bg-[#FAF8F3] rounded-[2rem] p-8 md:p-10 flex flex-col hover:shadow-md transition-shadow duration-300">
+              <div className="text-[#A67CFF] text-[4rem] font-serif leading-none h-10 mb-4 font-bold">“</div>
+              <p className="text-gray-700 font-sans text-[15px] leading-relaxed mb-10 flex-grow font-light">
+                "I was nervous about starting my treatment, but the entire experience was comfortable and reassuring. Seeing the final transformation gave me a completely new confidence in my smile."
+              </p>
+              <div className="flex items-center gap-4">
+                <img src={getImage('home', 'patient-story-1', h8Image)} alt="Amara L." className="w-12 h-12 rounded-full object-cover shadow-sm" />
+                <div>
+                  <div className="font-semibold text-gray-900 text-sm">Amara L.</div>
+                  <div className="text-gray-500 text-xs mt-0.5">Smile Makeover</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="bg-[#FAF8F3] rounded-[2rem] p-8 md:p-10 flex flex-col hover:shadow-md transition-shadow duration-300">
+              <div className="text-[#A67CFF] text-[4rem] font-serif leading-none h-10 mb-4 font-bold">“</div>
+              <p className="text-gray-700 font-sans text-[15px] leading-relaxed mb-10 flex-grow font-light">
+                "From consultation to the last appointment, every step felt personal and unhurried. The team genuinely cared about getting it right for me."
+              </p>
+              <div className="flex items-center gap-4">
+                <img src={getImage('home', 'patient-story-2', h9Image)} alt="Daniel R." className="w-12 h-12 rounded-full object-cover shadow-sm" />
+                <div>
+                  <div className="font-semibold text-gray-900 text-sm">Daniel R.</div>
+                  <div className="text-gray-500 text-xs mt-0.5">Clear Aligners</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="bg-[#FAF8F3] rounded-[2rem] p-8 md:p-10 flex flex-col hover:shadow-md transition-shadow duration-300">
+              <div className="text-[#A67CFF] text-[4rem] font-serif leading-none h-10 mb-4 font-bold">“</div>
+              <p className="text-gray-700 font-sans text-[15px] leading-relaxed mb-10 flex-grow font-light">
+                "The results are beyond what I imagined. I finally smile in photos — something I hadn't done in years. This clinic changed that for me."
+              </p>
+              <div className="flex items-center gap-4">
+                <img src={getImage('home', 'patient-story-3', h10Image)} alt="Sophie M." className="w-12 h-12 rounded-full object-cover shadow-sm" />
+                <div>
+                  <div className="font-semibold text-gray-900 text-sm">Sophie M.</div>
+                  <div className="text-gray-500 text-xs mt-0.5">Porcelain Veneers</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
       </section>
 
