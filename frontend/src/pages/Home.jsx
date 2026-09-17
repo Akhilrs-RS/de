@@ -17,6 +17,9 @@ import h8Image from '../assets/h8.png';
 import h9Image from '../assets/h9.png';
 import h10Image from '../assets/h10.png';
 import h11Image from '../assets/h11.png';
+import avatarAmara from '../assets/avatar_amara.png';
+import avatarDaniel from '../assets/avatar_daniel.png';
+import avatarSophie from '../assets/avatar_sophie.png';
 
 const AnimatedWord = ({ word, delayIndex }) => {
   const firstLetter = word.charAt(0);
@@ -469,76 +472,128 @@ export default function Home() {
       </section>
 
       {/* Section 6: Patient Stories (Purple Header) */}
-      <section className="w-full bg-[#8A63A5] py-20 md:py-24 relative overflow-hidden flex flex-col items-center justify-center">
-        {/* Floating Faces */}
-        <div className="absolute inset-0 pointer-events-none">
-          <motion.img 
-            src={getImage('home', 'patient-story-1', h6Image)} alt="Patient" 
-            className="absolute top-[10%] left-[5%] w-24 h-24 md:w-40 md:h-40 object-cover rounded-full opacity-60"
-            animate={{ y: [0, -20, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.img 
-            src={getImage('home', 'patient-story-2', h7Image)} alt="Patient" 
-            className="absolute top-[40%] left-[15%] w-20 h-20 md:w-32 md:h-32 object-cover rounded-full opacity-80"
-            animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          />
-          <motion.img 
-            src={getImage('home', 'patient-story-3', h8Image)} alt="Patient" 
-            className="absolute bottom-[10%] left-[30%] w-24 h-24 md:w-44 md:h-44 object-cover rounded-full opacity-70"
-            animate={{ y: [0, -15, 0] }}
-            transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-          />
-          <motion.img 
-            src={getImage('home', 'patient-story-4', h9Image)} alt="Patient" 
-            className="absolute top-[5%] right-[30%] w-20 h-20 md:w-44 md:h-44 object-cover rounded-full opacity-60"
-            animate={{ y: [0, -25, 0] }}
-            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          />
-          <motion.img 
-            src={getImage('home', 'patient-story-5', h10Image)} alt="Patient" 
-            className="absolute bottom-[10%] right-[15%] w-24 h-24 md:w-56 md:h-56 object-cover rounded-full opacity-60"
-            animate={{ y: [0, -20, 0] }}
-            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-          />
-          <motion.img 
-            src={getImage('home', 'patient-story-6', h11Image)} alt="Patient" 
-            className="absolute top-[20%] right-[2%] w-28 h-28 md:w-48 md:h-48 object-cover rounded-full opacity-70"
-            animate={{ y: [0, -15, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
-          />
+      <section className="w-full bg-[#7E6399] py-20 md:py-28 relative overflow-hidden flex flex-col items-center justify-center min-h-[460px] md:min-h-[540px]">
+        {/* Floating Faces with Zooming In & Zooming Out Animation */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {/* 1. Far Left - Laughing man */}
+          <motion.div
+            className="absolute top-[28%] -left-8 sm:-left-4 md:left-[1%] lg:left-[2%] w-32 h-32 sm:w-40 sm:h-40 md:w-52 md:h-52 lg:w-60 lg:h-60 rounded-full overflow-hidden pointer-events-auto"
+            animate={{ scale: [1, 1.15, 1] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0 }}
+            whileHover={{ scale: 1.22, transition: { duration: 0.3 } }}
+          >
+            <img 
+              src={getImage('home', 'patient-story-1', h6Image)} 
+              alt="Patient" 
+              className="w-full h-full object-cover rounded-full opacity-70 hover:opacity-95 transition-opacity duration-300"
+            />
+          </motion.div>
+
+          {/* 2. Upper Left - Child in yellow shirt */}
+          <motion.div
+            className="absolute top-[4%] sm:top-[6%] left-[14%] sm:left-[16%] md:left-[18%] lg:left-[19%] w-36 h-36 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full overflow-hidden pointer-events-auto"
+            animate={{ scale: [1, 1.15, 1] }}
+            transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+            whileHover={{ scale: 1.22, transition: { duration: 0.3 } }}
+          >
+            <img 
+              src={getImage('home', 'patient-story-2', h7Image)} 
+              alt="Patient" 
+              className="w-full h-full object-cover rounded-full opacity-75 hover:opacity-95 transition-opacity duration-300"
+            />
+          </motion.div>
+
+          {/* 3. Center Lower - Blonde woman behind quote */}
+          <motion.div
+            className="absolute top-[48%] md:top-[44%] left-[50%] -translate-x-1/2 w-36 h-36 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full overflow-hidden pointer-events-auto"
+            animate={{ scale: [1, 1.14, 1] }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2.4 }}
+            whileHover={{ scale: 1.22, transition: { duration: 0.3 } }}
+          >
+            <img 
+              src={getImage('home', 'patient-story-3', h8Image)} 
+              alt="Patient" 
+              className="w-full h-full object-cover rounded-full opacity-70 hover:opacity-95 transition-opacity duration-300"
+            />
+          </motion.div>
+
+          {/* 4. Upper Right - Woman smiling */}
+          <motion.div
+            className="absolute top-[4%] sm:top-[6%] right-[32%] sm:right-[35%] md:right-[37%] lg:right-[38%] w-36 h-36 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full overflow-hidden pointer-events-auto"
+            animate={{ scale: [1, 1.15, 1] }}
+            transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+            whileHover={{ scale: 1.22, transition: { duration: 0.3 } }}
+          >
+            <img 
+              src={getImage('home', 'patient-story-4', h9Image)} 
+              alt="Patient" 
+              className="w-full h-full object-cover rounded-full opacity-75 hover:opacity-95 transition-opacity duration-300"
+            />
+          </motion.div>
+
+          {/* 5. Lower Right - Man pointing to smile */}
+          <motion.div
+            className="absolute top-[50%] md:top-[46%] right-[15%] sm:right-[17%] md:right-[18%] lg:right-[19%] w-32 h-32 sm:w-44 sm:h-44 md:w-52 md:h-52 lg:w-56 lg:h-56 rounded-full overflow-hidden pointer-events-auto"
+            animate={{ scale: [1, 1.15, 1] }}
+            transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut", delay: 2.0 }}
+            whileHover={{ scale: 1.22, transition: { duration: 0.3 } }}
+          >
+            <img 
+              src={getImage('home', 'patient-story-5', h10Image)} 
+              alt="Patient" 
+              className="w-full h-full object-cover rounded-full opacity-70 hover:opacity-95 transition-opacity duration-300"
+            />
+          </motion.div>
+
+          {/* 6. Far Right - Man looking right */}
+          <motion.div
+            className="absolute top-[22%] -right-8 sm:-right-4 md:right-[1%] lg:right-[2%] w-32 h-32 sm:w-40 sm:h-40 md:w-52 md:h-52 lg:w-60 lg:h-60 rounded-full overflow-hidden pointer-events-auto"
+            animate={{ scale: [1, 1.15, 1] }}
+            transition={{ duration: 6.8, repeat: Infinity, ease: "easeInOut", delay: 1.6 }}
+            whileHover={{ scale: 1.22, transition: { duration: 0.3 } }}
+          >
+            <img 
+              src={getImage('home', 'patient-story-6', h11Image)} 
+              alt="Patient" 
+              className="w-full h-full object-cover rounded-full opacity-70 hover:opacity-95 transition-opacity duration-300"
+            />
+          </motion.div>
         </div>
 
         {/* Content */}
-        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
-          <h2 className="text-4xl md:text-[3.5rem] lg:text-[4.5rem] font-serif font-bold text-white leading-[1.2]">
-            “From the first consultation to my <br/>
-            final smile,<br/>
-            <span className="text-[#C4A47C] italic">every detail felt exceptional.”</span>
+        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto pointer-events-none">
+          <div className="text-white/80 font-sans text-xs md:text-sm font-semibold tracking-[0.2em] uppercase mb-4 md:mb-6">
+            Patient Stories
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[4.2rem] font-serif font-bold text-white leading-[1.25] drop-shadow-sm">
+            “From the first consultation to my<br />
+            final smile,<br />
+            <span className="text-[#F6D4A5] italic font-normal">every detail felt exceptional.”</span>
           </h2>
         </div>
       </section>
 
       {/* Section 6b: Patient Testimonials */}
-      <section className="w-full bg-white py-24 px-6 md:px-12 lg:px-24">
+      <section className="w-full bg-white py-20 md:py-24 px-6 md:px-12 lg:px-24">
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
-          <div className="text-[#A67CFF] font-sans text-sm md:text-base tracking-[0.2em] uppercase font-semibold mb-6">
+          <div className="text-[#B49DFB] font-sans text-xs md:text-sm tracking-[0.2em] uppercase font-semibold mb-4">
             Patient Stories
           </div>
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-gray-900 leading-tight mb-16">
+          <h2 className="text-3xl md:text-5xl font-serif font-bold text-gray-900 leading-tight mb-14 md:mb-16">
             Their Smiles. Their Stories.
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 w-full text-left">
             {/* Card 1 */}
-            <div className="bg-[#FAF8F3] rounded-[2rem] p-8 md:p-10 flex flex-col hover:shadow-md transition-shadow duration-300">
-              <div className="text-[#A67CFF] text-[4rem] font-serif leading-none h-10 mb-4 font-bold">“</div>
-              <p className="text-gray-700 font-sans text-[15px] leading-relaxed mb-10 flex-grow font-light">
+            <div className="bg-[#F3EFE9] rounded-[2rem] p-8 md:p-10 flex flex-col hover:shadow-md transition-shadow duration-300">
+              <svg width="28" height="22" viewBox="0 0 28 22" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#B49DFB] mb-6">
+                <path d="M0 13C0 5.8 4.3 1.2 10.5 0L11.8 3.5C7.9 4.4 5.7 6.8 5.5 9.8H11V22H0V13ZM16 13C16 5.8 20.3 1.2 26.5 0L27.8 3.5C23.9 4.4 21.7 6.8 21.5 9.8H27V22H16V13Z" fill="currentColor"/>
+              </svg>
+              <p className="text-gray-800 font-sans text-[15px] leading-relaxed mb-10 flex-grow font-normal">
                 "I was nervous about starting my treatment, but the entire experience was comfortable and reassuring. Seeing the final transformation gave me a completely new confidence in my smile."
               </p>
               <div className="flex items-center gap-4">
-                <img src={getImage('home', 'patient-story-1', h8Image)} alt="Amara L." className="w-12 h-12 rounded-full object-cover shadow-sm" />
+                <img src={getImage('home', 'testimonial-1', avatarAmara)} alt="Amara L." className="w-12 h-12 rounded-full object-cover shadow-sm" />
                 <div>
                   <div className="font-semibold text-gray-900 text-sm">Amara L.</div>
                   <div className="text-gray-500 text-xs mt-0.5">Smile Makeover</div>
@@ -547,13 +602,15 @@ export default function Home() {
             </div>
 
             {/* Card 2 */}
-            <div className="bg-[#FAF8F3] rounded-[2rem] p-8 md:p-10 flex flex-col hover:shadow-md transition-shadow duration-300">
-              <div className="text-[#A67CFF] text-[4rem] font-serif leading-none h-10 mb-4 font-bold">“</div>
-              <p className="text-gray-700 font-sans text-[15px] leading-relaxed mb-10 flex-grow font-light">
+            <div className="bg-[#F3EFE9] rounded-[2rem] p-8 md:p-10 flex flex-col hover:shadow-md transition-shadow duration-300">
+              <svg width="28" height="22" viewBox="0 0 28 22" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#B49DFB] mb-6">
+                <path d="M0 13C0 5.8 4.3 1.2 10.5 0L11.8 3.5C7.9 4.4 5.7 6.8 5.5 9.8H11V22H0V13ZM16 13C16 5.8 20.3 1.2 26.5 0L27.8 3.5C23.9 4.4 21.7 6.8 21.5 9.8H27V22H16V13Z" fill="currentColor"/>
+              </svg>
+              <p className="text-gray-800 font-sans text-[15px] leading-relaxed mb-10 flex-grow font-normal">
                 "From consultation to the last appointment, every step felt personal and unhurried. The team genuinely cared about getting it right for me."
               </p>
               <div className="flex items-center gap-4">
-                <img src={getImage('home', 'patient-story-2', h9Image)} alt="Daniel R." className="w-12 h-12 rounded-full object-cover shadow-sm" />
+                <img src={getImage('home', 'testimonial-2', avatarDaniel)} alt="Daniel R." className="w-12 h-12 rounded-full object-cover shadow-sm" />
                 <div>
                   <div className="font-semibold text-gray-900 text-sm">Daniel R.</div>
                   <div className="text-gray-500 text-xs mt-0.5">Clear Aligners</div>
@@ -562,13 +619,15 @@ export default function Home() {
             </div>
 
             {/* Card 3 */}
-            <div className="bg-[#FAF8F3] rounded-[2rem] p-8 md:p-10 flex flex-col hover:shadow-md transition-shadow duration-300">
-              <div className="text-[#A67CFF] text-[4rem] font-serif leading-none h-10 mb-4 font-bold">“</div>
-              <p className="text-gray-700 font-sans text-[15px] leading-relaxed mb-10 flex-grow font-light">
+            <div className="bg-[#F3EFE9] rounded-[2rem] p-8 md:p-10 flex flex-col hover:shadow-md transition-shadow duration-300">
+              <svg width="28" height="22" viewBox="0 0 28 22" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#B49DFB] mb-6">
+                <path d="M0 13C0 5.8 4.3 1.2 10.5 0L11.8 3.5C7.9 4.4 5.7 6.8 5.5 9.8H11V22H0V13ZM16 13C16 5.8 20.3 1.2 26.5 0L27.8 3.5C23.9 4.4 21.7 6.8 21.5 9.8H27V22H16V13Z" fill="currentColor"/>
+              </svg>
+              <p className="text-gray-800 font-sans text-[15px] leading-relaxed mb-10 flex-grow font-normal">
                 "The results are beyond what I imagined. I finally smile in photos — something I hadn't done in years. This clinic changed that for me."
               </p>
               <div className="flex items-center gap-4">
-                <img src={getImage('home', 'patient-story-3', h10Image)} alt="Sophie M." className="w-12 h-12 rounded-full object-cover shadow-sm" />
+                <img src={getImage('home', 'testimonial-3', avatarSophie)} alt="Sophie M." className="w-12 h-12 rounded-full object-cover shadow-sm" />
                 <div>
                   <div className="font-semibold text-gray-900 text-sm">Sophie M.</div>
                   <div className="text-gray-500 text-xs mt-0.5">Porcelain Veneers</div>
