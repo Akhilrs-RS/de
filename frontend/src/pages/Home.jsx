@@ -58,15 +58,18 @@ export default function Home() {
   const { getImage } = useMedia();
   const section3Ref = useRef(null);
   const cardsTrackRef = useRef(null);
-  const [scrollRange, setScrollRange] = useState(0);
+  const [scrollDistance, setScrollDistance] = useState(0);
+  const [maxScroll, setMaxScroll] = useState(0);
 
   useEffect(() => {
     const calculateScrollRange = () => {
       if (cardsTrackRef.current) {
         const totalTrackWidth = cardsTrackRef.current.scrollWidth;
         const viewportWidth = window.innerWidth;
-        const maxScroll = totalTrackWidth - viewportWidth;
-        setScrollRange(Math.max(0, maxScroll));
+        const scrollDelta = Math.max(0, totalTrackWidth - viewportWidth);
+        const buffer = 160; // Dwell distance ensuring Card 04 stays comfortably locked before vertical scroll resumes
+        setMaxScroll(scrollDelta);
+        setScrollDistance(scrollDelta + buffer);
       }
     };
 
@@ -90,7 +93,12 @@ export default function Home() {
     offset: ["start start", "end end"]
   });
 
-  const xTransform = useTransform(scrollYProgress, [0, 1], [0, -scrollRange]);
+  const horizontalCompletionRatio = scrollDistance > 0 ? Math.min(0.85, maxScroll / scrollDistance) : 1;
+  const xTransform = useTransform(
+    scrollYProgress, 
+    [0, horizontalCompletionRatio, 1], 
+    [0, -maxScroll, -maxScroll]
+  );
 
   return (
     <div className="w-full">
@@ -195,7 +203,7 @@ export default function Home() {
       <section 
         ref={section3Ref} 
         className="w-full bg-[#FAF8F3] relative"
-        style={{ height: scrollRange > 0 ? `calc(100vh + ${scrollRange}px)` : 'auto' }}
+        style={{ height: scrollDistance > 0 ? `calc(100vh + ${scrollDistance}px)` : 'auto' }}
       >
         <div className="sticky top-0 h-screen overflow-hidden pt-8 md:pt-12 pb-6 md:pb-8 flex flex-col justify-between">
           <div className="px-6 md:px-12 lg:px-24 mb-4 md:mb-6 shrink-0">
@@ -333,7 +341,7 @@ export default function Home() {
       </section>
 
       {/* Section 4: Meet The Artist Behind Your Smile */}
-      <section className="w-full bg-[#FAF8F3] pt-12 md:pt-16 pb-24 px-6 md:px-12 lg:px-24 relative overflow-hidden">
+      <section className="w-full bg-[#FAF8F3] pt-6 md:pt-8 pb-24 px-6 md:px-12 lg:px-24 relative overflow-hidden">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24 items-center">
           
           {/* Left Column - Image */}
