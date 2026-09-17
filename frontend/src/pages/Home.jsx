@@ -477,7 +477,7 @@ export default function Home() {
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {/* 1. Far Left - Laughing man */}
           <motion.div
-            className="absolute top-[28%] -left-8 sm:-left-4 md:left-[1%] lg:left-[2%] w-32 h-32 sm:w-40 sm:h-40 md:w-52 md:h-52 lg:w-60 lg:h-60 rounded-full overflow-hidden pointer-events-auto"
+            className="absolute top-[32%] md:top-[34%] left-[8%] -translate-x-1/2 w-28 h-28 sm:w-36 sm:h-36 md:w-48 md:h-48 lg:w-54 lg:h-54 rounded-full overflow-hidden pointer-events-auto"
             animate={{ scale: [1, 1.15, 1] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0 }}
             whileHover={{ scale: 1.22, transition: { duration: 0.3 } }}
@@ -489,9 +489,9 @@ export default function Home() {
             />
           </motion.div>
 
-          {/* 2. Upper Left - Child in yellow shirt */}
+          {/* 2. Upper Left - Child in yellow shirt (TOP) */}
           <motion.div
-            className="absolute top-[4%] sm:top-[6%] left-[14%] sm:left-[16%] md:left-[18%] lg:left-[19%] w-36 h-36 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full overflow-hidden pointer-events-auto"
+            className="absolute top-[0%] md:top-[2%] left-[24%] -translate-x-1/2 w-32 h-32 sm:w-40 sm:h-40 md:w-50 md:h-50 lg:w-56 lg:h-56 rounded-full overflow-hidden pointer-events-auto"
             animate={{ scale: [1, 1.15, 1] }}
             transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
             whileHover={{ scale: 1.22, transition: { duration: 0.3 } }}
@@ -503,9 +503,9 @@ export default function Home() {
             />
           </motion.div>
 
-          {/* 3. Center Lower - Blonde woman behind quote */}
+          {/* 3. Center Left / Lower - Blonde woman (BOTTOM - shifted down and left) */}
           <motion.div
-            className="absolute top-[48%] md:top-[44%] left-[50%] -translate-x-1/2 w-36 h-36 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full overflow-hidden pointer-events-auto"
+            className="absolute top-[44%] md:top-[46%] left-[38%] -translate-x-1/2 w-32 h-32 sm:w-40 sm:h-40 md:w-50 md:h-50 lg:w-56 lg:h-56 rounded-full overflow-hidden pointer-events-auto"
             animate={{ scale: [1, 1.14, 1] }}
             transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2.4 }}
             whileHover={{ scale: 1.22, transition: { duration: 0.3 } }}
@@ -517,9 +517,9 @@ export default function Home() {
             />
           </motion.div>
 
-          {/* 4. Upper Right - Woman smiling */}
+          {/* 4. Center Right / Upper - Woman smiling & pointing (TOP - shifted up and right) */}
           <motion.div
-            className="absolute top-[4%] sm:top-[6%] right-[32%] sm:right-[35%] md:right-[37%] lg:right-[38%] w-36 h-36 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full overflow-hidden pointer-events-auto"
+            className="absolute top-[-2%] md:top-[0%] left-[58%] -translate-x-1/2 w-36 h-36 sm:w-44 sm:h-44 md:w-54 md:h-54 lg:w-60 lg:h-60 rounded-full overflow-hidden pointer-events-auto"
             animate={{ scale: [1, 1.15, 1] }}
             transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
             whileHover={{ scale: 1.22, transition: { duration: 0.3 } }}
@@ -531,9 +531,9 @@ export default function Home() {
             />
           </motion.div>
 
-          {/* 5. Lower Right - Man pointing to smile */}
+          {/* 5. Lower Right - Man pointing to smile (BOTTOM) */}
           <motion.div
-            className="absolute top-[50%] md:top-[46%] right-[15%] sm:right-[17%] md:right-[18%] lg:right-[19%] w-32 h-32 sm:w-44 sm:h-44 md:w-52 md:h-52 lg:w-56 lg:h-56 rounded-full overflow-hidden pointer-events-auto"
+            className="absolute top-[44%] md:top-[46%] left-[74%] -translate-x-1/2 w-30 h-30 sm:w-38 sm:h-38 md:w-48 md:h-48 lg:w-54 lg:h-54 rounded-full overflow-hidden pointer-events-auto"
             animate={{ scale: [1, 1.15, 1] }}
             transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut", delay: 2.0 }}
             whileHover={{ scale: 1.22, transition: { duration: 0.3 } }}
@@ -545,9 +545,9 @@ export default function Home() {
             />
           </motion.div>
 
-          {/* 6. Far Right - Man looking right */}
+          {/* 6. Far Right - Man looking right (TOP/MID) */}
           <motion.div
-            className="absolute top-[22%] -right-8 sm:-right-4 md:right-[1%] lg:right-[2%] w-32 h-32 sm:w-40 sm:h-40 md:w-52 md:h-52 lg:w-60 lg:h-60 rounded-full overflow-hidden pointer-events-auto"
+            className="absolute top-[16%] md:top-[18%] left-[91%] -translate-x-1/2 w-28 h-28 sm:w-36 sm:h-36 md:w-48 md:h-48 lg:w-54 lg:h-54 rounded-full overflow-hidden pointer-events-auto"
             animate={{ scale: [1, 1.15, 1] }}
             transition={{ duration: 6.8, repeat: Infinity, ease: "easeInOut", delay: 1.6 }}
             whileHover={{ scale: 1.22, transition: { duration: 0.3 } }}
@@ -561,7 +561,7 @@ export default function Home() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto pointer-events-none">
+        <div className="relative z-10 text-center px-6 max-w-6xl mx-auto pointer-events-none">
           <div className="text-white/80 font-sans text-xs md:text-sm font-semibold tracking-[0.2em] uppercase mb-4 md:mb-6">
             Patient Stories
           </div>
