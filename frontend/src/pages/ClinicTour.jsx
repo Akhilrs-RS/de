@@ -45,7 +45,7 @@ export default function ClinicTour() {
       </section>
 
       {/* Gallery Section */}
-      <section className="w-full bg-[#FAF8F3] py-24 md:py-32 px-6 md:px-12 lg:px-24">
+      <section id="gallery" className="w-full bg-[#FAF8F3] py-24 md:py-32 px-6 md:px-12 lg:px-24">
         <div className="max-w-6xl mx-auto flex flex-col space-y-24 md:space-y-32">
           
           {/* Block 1: Reception & Waiting Area */}
