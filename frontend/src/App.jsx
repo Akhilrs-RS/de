@@ -14,6 +14,7 @@ import InvisibleAligners from './pages/InvisibleAligners';
 import CosmeticDentistry from './pages/CosmeticDentistry';
 import BookAppointment from './pages/BookAppointment';
 import Admin from './pages/Admin';
+import MobileLanding from './pages/MobileLanding';
 import { MediaProvider } from './context/MediaContext';
 
 function ScrollToTop() {
@@ -39,10 +40,11 @@ function ScrollToTop() {
 function MainLayout() {
   const { pathname } = useLocation();
   const isAdmin = pathname.startsWith('/admin');
+  const isMobile = pathname.startsWith('/mobile');
 
   return (
     <div className="font-sans text-gray-900 w-full min-h-screen flex flex-col">
-      {!isAdmin && <Navbar />}
+      {!isAdmin && !isMobile && <Navbar />}
       <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -57,9 +59,10 @@ function MainLayout() {
           <Route path="/cosmetic-dentistry" element={<CosmeticDentistry />} />
           <Route path="/book-appointment" element={<BookAppointment />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/mobile" element={<MobileLanding />} />
         </Routes>
       </main>
-      {!isAdmin && <Footer />}
+      {!isAdmin && !isMobile && <Footer />}
     </div>
   );
 }
