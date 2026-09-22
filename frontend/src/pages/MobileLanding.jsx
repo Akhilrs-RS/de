@@ -21,18 +21,21 @@ import avatar3 from '../assets/avatar_sophie.png';
 import reviewImg from '../assets/s1.png';
 import MobileNavbar from '../components/MobileNavbar';
 import MobileFooter from '../components/MobileFooter';
+import { useMedia } from '../context/MediaContext';
 
 const MobileLanding = () => {
+  const { getImage } = useMedia();
+
   return (
-    <div className="min-h-screen w-full bg-neutral-900 flex justify-center items-center">
+    <div className="min-h-screen w-full bg-white sm:bg-neutral-900 flex justify-center items-center">
       {/* Mobile viewport frame container */}
-      <div className="relative w-full max-w-[430px] h-screen sm:h-[890px] sm:my-6 sm:rounded-[36px] sm:shadow-2xl overflow-y-auto scrollbar-hide bg-white flex flex-col">
+      <div className="relative w-full sm:max-w-[430px] h-screen sm:h-[890px] sm:my-6 sm:rounded-[36px] sm:shadow-2xl overflow-y-auto scrollbar-hide bg-white flex flex-col">
         
         {/* First Page / Hero Section */}
         <div className="relative w-full min-h-screen sm:min-h-[890px] flex flex-col justify-between shrink-0">
           {/* Background Image - Exactly aligned with dental clinic, doctor, patient, and tray */}
           <img 
-            src={bgImage} 
+            src={getImage('home', 'hero', bgImage)} 
             alt="Manick Dental Clinic" 
             className="absolute inset-0 w-full h-full object-cover object-top select-none pointer-events-none" 
           />
@@ -58,8 +61,8 @@ const MobileLanding = () => {
 
               <div className="flex flex-col gap-3 w-full">
                 {/* Primary Button */}
-                <button 
-                  type="button"
+                <Link 
+                  to="/mobile/book-appointment"
                   className="w-full h-[52px] bg-white text-black border-[1.5px] border-black rounded-full flex items-center justify-center gap-2.5 px-6 shadow-sm hover:bg-neutral-50 active:scale-[0.98] transition-all cursor-pointer"
                 >
                   <span className="text-[16.5px] font-normal tracking-tight">Book Appointment</span>
@@ -71,15 +74,15 @@ const MobileLanding = () => {
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                   </svg>
-                </button>
+                </Link>
 
                 {/* Secondary Button */}
-                <button 
-                  type="button"
+                <Link 
+                  to="/mobile/services"
                   className="w-full h-[52px] bg-white/20 hover:bg-white/30 backdrop-blur-sm text-black border border-black/80 rounded-full flex items-center justify-center px-6 active:scale-[0.98] transition-all cursor-pointer"
                 >
                   <span className="text-[16.5px] font-normal tracking-tight">Explore Our Care</span>
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -111,7 +114,7 @@ const MobileLanding = () => {
           {/* Image Section */}
           <div className="px-5 w-full relative z-10 -mt-2">
             <img 
-              src={h1Image} 
+              src={getImage('home', 'section-2-image', h1Image)} 
               alt="Dental care in progress" 
               className="w-full h-[220px] object-cover rounded-3xl shadow-sm"
             />
@@ -136,13 +139,13 @@ const MobileLanding = () => {
               </div>
 
               <div className="mt-4">
-                <button 
-                  type="button" 
+                <Link 
+                  to="/mobile/about"
                   className="bg-[#2D0A5C] text-white rounded-full px-5 py-2.5 flex items-center justify-between w-[150px] shadow-sm hover:bg-[#3f1082] active:scale-95 transition-all cursor-pointer"
                 >
                   <span className="text-[14px] font-medium tracking-wide">Learn More</span>
                   <ArrowRight className="w-[18px] h-[18px] text-white stroke-[2]" />
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -157,9 +160,14 @@ const MobileLanding = () => {
             <span className="text-[#A48650] text-[11px] font-semibold uppercase tracking-widest whitespace-nowrap pt-0.5">
               Signature Treatments
             </span>
-            <p className="text-[#A48650] text-[8px] sm:text-[9px] font-medium text-right leading-tight max-w-[130px]">
-              Four disciplines, one philosophy — each treatment is a study in precision and aesthetic harmony.
-            </p>
+            <div className="flex flex-col items-end gap-1">
+              <p className="text-[#A48650] text-[8px] sm:text-[9px] font-medium text-right leading-tight max-w-[130px]">
+                Four disciplines, one philosophy — each treatment is a study in precision and aesthetic harmony.
+              </p>
+              <Link to="/mobile/services" className="text-[10px] text-[#A48650] hover:text-[#2D0A5C] font-semibold transition-colors">
+                View More →
+              </Link>
+            </div>
           </div>
 
           <h2 className="font-serif text-[32px] sm:text-[34px] font-bold text-black leading-tight mb-8">
@@ -171,7 +179,7 @@ const MobileLanding = () => {
             
             {/* Card 01 */}
             <div className="relative w-full h-[360px] rounded-3xl overflow-hidden group">
-              <img src={haImage} alt="General Checkup" className="absolute inset-0 w-full h-full object-cover" />
+              <img src={getImage('home', 'about', haImage)} alt="General Checkup" className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/5"></div>
               
               <div className="absolute top-5 left-5">
@@ -187,15 +195,19 @@ const MobileLanding = () => {
                     A bespoke, full-arch artistic transformation crafted to your facial harmony
                   </p>
                 </div>
-                <div className="w-[32px] h-[32px] rounded-full border-[1.5px] border-white/70 flex items-center justify-center backdrop-blur-sm shrink-0 mb-1">
+                <Link 
+                  to="/mobile/general-checkup"
+                  className="w-[36px] h-[36px] rounded-full border-[1.5px] border-white/80 bg-black/20 hover:bg-white/20 active:scale-95 flex items-center justify-center backdrop-blur-sm shrink-0 mb-1 transition-all"
+                  aria-label="View General Checkup & Consultation"
+                >
                   <ArrowUpRight className="w-4 h-4 text-white" strokeWidth={2.5} />
-                </div>
+                </Link>
               </div>
             </div>
 
             {/* Card 02 */}
             <div className="relative w-full h-[360px] rounded-3xl overflow-hidden group">
-              <img src={h2Image} alt="Cosmetic Dentistry" className="absolute inset-0 w-full h-full object-cover" />
+              <img src={getImage('home', 'treatment-1', h2Image)} alt="Smile Makeover" className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/5"></div>
               
               <div className="absolute top-5 left-5">
@@ -205,21 +217,25 @@ const MobileLanding = () => {
               <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4">
                 <div className="flex flex-col gap-1.5">
                   <h3 className="font-serif text-[24px] font-bold text-white leading-tight drop-shadow-md">
-                    Cosmetic<br/>Dentistry
+                    Smile<br/>Makeover
                   </h3>
                   <p className="text-white/90 text-[11px] leading-relaxed max-w-[200px]">
                     A bespoke, full-arch artistic transformation crafted to your facial harmony
                   </p>
                 </div>
-                <div className="w-[32px] h-[32px] rounded-full border-[1.5px] border-white/70 flex items-center justify-center backdrop-blur-sm shrink-0 mb-1">
+                <Link 
+                  to="/mobile/smile-makeover"
+                  className="w-[36px] h-[36px] rounded-full border-[1.5px] border-white/80 bg-black/20 hover:bg-white/20 active:scale-95 flex items-center justify-center backdrop-blur-sm shrink-0 mb-1 transition-all"
+                  aria-label="View Smile Makeover"
+                >
                   <ArrowUpRight className="w-4 h-4 text-white" strokeWidth={2.5} />
-                </div>
+                </Link>
               </div>
             </div>
 
             {/* Card 03 */}
             <div className="relative w-full h-[360px] rounded-3xl overflow-hidden group">
-              <img src={h4Image} alt="Orthodontics" className="absolute inset-0 w-full h-full object-cover" />
+              <img src={getImage('home', 'treatment-2', h3Image)} alt="Invisible Aligners" className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/5"></div>
               
               <div className="absolute top-5 left-5">
@@ -229,21 +245,25 @@ const MobileLanding = () => {
               <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4">
                 <div className="flex flex-col gap-1.5">
                   <h3 className="font-serif text-[24px] font-bold text-white leading-tight drop-shadow-md">
-                    Advanced<br/>Orthodontics
+                    Invisible<br/>Aligners
                   </h3>
                   <p className="text-white/90 text-[11px] leading-relaxed max-w-[200px]">
-                    A bespoke, full-arch artistic transformation crafted to your facial harmony
+                    Discreet, precision-engineered alignment with zero compromise to lifestyle
                   </p>
                 </div>
-                <div className="w-[32px] h-[32px] rounded-full border-[1.5px] border-white/70 flex items-center justify-center backdrop-blur-sm shrink-0 mb-1">
+                <Link 
+                  to="/mobile/invisible-aligners"
+                  className="w-[36px] h-[36px] rounded-full border-[1.5px] border-white/80 bg-black/20 hover:bg-white/20 active:scale-95 flex items-center justify-center backdrop-blur-sm shrink-0 mb-1 transition-all"
+                  aria-label="View Invisible Aligners"
+                >
                   <ArrowUpRight className="w-4 h-4 text-white" strokeWidth={2.5} />
-                </div>
+                </Link>
               </div>
             </div>
 
             {/* Card 04 */}
             <div className="relative w-full h-[360px] rounded-3xl overflow-hidden group">
-              <img src={h3Image} alt="Dental Implants" className="absolute inset-0 w-full h-full object-cover" />
+              <img src={getImage('home', 'treatment-3', h4Image)} alt="Cosmetic Dentistry" className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/5"></div>
               
               <div className="absolute top-5 left-5">
@@ -253,15 +273,19 @@ const MobileLanding = () => {
               <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4">
                 <div className="flex flex-col gap-1.5">
                   <h3 className="font-serif text-[24px] font-bold text-white leading-tight drop-shadow-md">
-                    Dental<br/>Implants
+                    Cosmetic<br/>Dentistry
                   </h3>
                   <p className="text-white/90 text-[11px] leading-relaxed max-w-[200px]">
-                    A bespoke, full-arch artistic transformation crafted to your facial harmony
+                    Micro-refinements — veneers, whitening, contouring — for luminous detail.
                   </p>
                 </div>
-                <div className="w-[32px] h-[32px] rounded-full border-[1.5px] border-white/70 flex items-center justify-center backdrop-blur-sm shrink-0 mb-1">
+                <Link 
+                  to="/mobile/cosmetic-dentistry"
+                  className="w-[36px] h-[36px] rounded-full border-[1.5px] border-white/80 bg-black/20 hover:bg-white/20 active:scale-95 flex items-center justify-center backdrop-blur-sm shrink-0 mb-1 transition-all"
+                  aria-label="View Cosmetic Dentistry"
+                >
                   <ArrowUpRight className="w-4 h-4 text-white" strokeWidth={2.5} />
-                </div>
+                </Link>
               </div>
             </div>
 
@@ -339,7 +363,7 @@ const MobileLanding = () => {
               transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut", delay: 0 }}
             >
               <img 
-                src={h6Image} 
+                src={getImage('home', 'patient-story-1', h6Image)} 
                 alt="Patient Story 1" 
                 className="w-full h-full object-cover rounded-full"
               />
@@ -352,7 +376,7 @@ const MobileLanding = () => {
               transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
             >
               <img 
-                src={h7Image} 
+                src={getImage('home', 'patient-story-2', h7Image)} 
                 alt="Patient Story 2" 
                 className="w-full h-full object-cover rounded-full"
               />
@@ -365,7 +389,7 @@ const MobileLanding = () => {
               transition={{ duration: 6.6, repeat: Infinity, ease: "easeInOut", delay: 2.4 }}
             >
               <img 
-                src={h8Image} 
+                src={getImage('home', 'patient-story-3', h8Image)} 
                 alt="Patient Story 3" 
                 className="w-full h-full object-cover rounded-full"
               />
@@ -378,7 +402,7 @@ const MobileLanding = () => {
               transition={{ duration: 5.6, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
             >
               <img 
-                src={h9Image} 
+                src={getImage('home', 'patient-story-4', h9Image)} 
                 alt="Patient Story 4" 
                 className="w-full h-full object-cover rounded-full"
               />
@@ -391,7 +415,7 @@ const MobileLanding = () => {
               transition={{ duration: 6.0, repeat: Infinity, ease: "easeInOut", delay: 1.8 }}
             >
               <img 
-                src={h10Image} 
+                src={getImage('home', 'patient-story-5', h10Image)} 
                 alt="Patient Story 5" 
                 className="w-full h-full object-cover rounded-full"
               />
@@ -404,7 +428,7 @@ const MobileLanding = () => {
               transition={{ duration: 6.4, repeat: Infinity, ease: "easeInOut", delay: 2.8 }}
             >
               <img 
-                src={h11Image} 
+                src={getImage('home', 'patient-story-6', h11Image)} 
                 alt="Patient Story 6" 
                 className="w-full h-full object-cover rounded-full"
               />
@@ -445,7 +469,7 @@ const MobileLanding = () => {
                 "The results are beyond what I imagined. I finally smile in photos — something I hadn't done in years. This clinic changed that for me."
               </p>
               <div className="flex items-center gap-3">
-                <img src={avatar3} alt="Sophie M." className="w-11 h-11 rounded-full object-cover p-[1.5px] border border-[#C7B9F4]" />
+                <img src={getImage('home', 'testimonial-3', avatar3)} alt="Sophie M." className="w-11 h-11 rounded-full object-cover p-[1.5px] border border-[#C7B9F4]" />
                 <div className="flex flex-col">
                   <span className="text-black font-bold text-[13px]">Sophie M.</span>
                   <span className="text-neutral-500 text-[11px]">Porcelain Veneers</span>
@@ -462,7 +486,7 @@ const MobileLanding = () => {
                 "I was nervous about starting my treatment, but the entire experience was comfortable and reassuring. The team is truly world-class."
               </p>
               <div className="flex items-center gap-3">
-                <img src={avatar2} alt="Daniel K." className="w-11 h-11 rounded-full object-cover p-[1.5px] border border-[#C7B9F4]" />
+                <img src={getImage('home', 'testimonial-2', avatar2)} alt="Daniel K." className="w-11 h-11 rounded-full object-cover p-[1.5px] border border-[#C7B9F4]" />
                 <div className="flex flex-col">
                   <span className="text-black font-bold text-[13px]">Daniel K.</span>
                   <span className="text-neutral-500 text-[11px]">Invisalign</span>
@@ -479,7 +503,7 @@ const MobileLanding = () => {
                 "Exceptional care from start to finish. The clinic environment is serene, and the staff treated me with so much gentleness and attention to detail."
               </p>
               <div className="flex items-center gap-3">
-                <img src={avatar1} alt="Amara T." className="w-11 h-11 rounded-full object-cover p-[1.5px] border border-[#C7B9F4]" />
+                <img src={getImage('home', 'testimonial-1', avatar1)} alt="Amara T." className="w-11 h-11 rounded-full object-cover p-[1.5px] border border-[#C7B9F4]" />
                 <div className="flex flex-col">
                   <span className="text-black font-bold text-[13px]">Amara T.</span>
                   <span className="text-neutral-500 text-[11px]">Teeth Whitening</span>
@@ -501,7 +525,7 @@ const MobileLanding = () => {
             Begin your journey toward a healthier, more confident smile.
           </p>
           <Link 
-            to="/book-appointment" 
+            to="/mobile/book-appointment" 
             className="bg-[#2D0A5C] text-white px-8 py-3.5 rounded-full text-[13px] font-semibold shadow-lg inline-flex items-center gap-2 hover:bg-[#210745] active:scale-95 transition-all"
           >
             <span>Book Appointment</span>

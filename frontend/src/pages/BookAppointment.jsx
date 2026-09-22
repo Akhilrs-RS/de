@@ -24,7 +24,7 @@ export default function BookAppointment() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await fetch('http://localhost:5055/api/appointments', {
+      await fetch('/api/appointments', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

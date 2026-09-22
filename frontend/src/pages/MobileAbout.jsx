@@ -3,21 +3,24 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Check, Heart, Award, Users, ShieldCheck } from 'lucide-react';
 import MobileNavbar from '../components/MobileNavbar';
 import MobileFooter from '../components/MobileFooter';
+import { useMedia } from '../context/MediaContext';
 import a1Image from '../assets/a1.png';
 import abImage from '../assets/ab.png';
 import h5Image from '../assets/h5.png';
 import h12Image from '../assets/h12.png';
 
 const MobileAbout = () => {
+  const { getImage } = useMedia();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
-    <div className="min-h-screen w-full bg-neutral-900 flex justify-center items-center">
+    <div className="min-h-screen w-full bg-[#F3EFE9] sm:bg-neutral-900 flex justify-center items-center">
       {/* Mobile viewport frame container */}
       <div 
-        className="relative w-full max-w-[430px] h-screen sm:h-[890px] sm:my-6 sm:rounded-[36px] sm:shadow-2xl overflow-y-auto scrollbar-hide flex flex-col"
+        className="relative w-full sm:max-w-[430px] h-screen sm:h-[890px] sm:my-6 sm:rounded-[36px] sm:shadow-2xl overflow-y-auto scrollbar-hide flex flex-col"
         style={{ backgroundColor: '#F3EFE9' }}
       >
         <MobileNavbar />
@@ -81,7 +84,7 @@ const MobileAbout = () => {
               }}
             >
               <img 
-                src={a1Image} 
+                src={getImage('about', 'hero-main', getImage('about', 'hero', a1Image))} 
                 alt="Dentist and patient" 
                 className="w-full h-full object-cover"
                 style={{ objectPosition: 'center top' }}
@@ -104,7 +107,7 @@ const MobileAbout = () => {
               }}
             >
               <img 
-                src={abImage} 
+                src={getImage('about', 'hero-secondary', abImage)} 
                 alt="Tooth illustration" 
                 className="w-full h-auto object-contain"
               />
@@ -138,7 +141,7 @@ const MobileAbout = () => {
               </div>
 
               <Link 
-                to="/book-appointment" 
+                to="/mobile/book-appointment" 
                 className="text-white text-[12px] font-medium inline-flex items-center gap-2 transition-all shadow-md active:scale-95"
                 style={{
                   backgroundColor: '#391361',
@@ -409,7 +412,7 @@ const MobileAbout = () => {
               <div className="flex flex-col items-center text-center w-full">
                 <div className="w-full aspect-[4/4.3] rounded-2xl overflow-hidden mb-3.5 shadow-sm bg-gray-200">
                   <img 
-                    src={h5Image} 
+                    src={getImage('about', 'team-james', getImage('home', 'doctor', h5Image))} 
                     alt="DR. James Bennett ,DDS" 
                     className="w-full h-full object-cover"
                     style={{ objectPosition: 'center 20%' }}
@@ -430,7 +433,7 @@ const MobileAbout = () => {
               <div className="flex flex-col items-center text-center w-full">
                 <div className="w-full aspect-[4/4.3] rounded-2xl overflow-hidden mb-3.5 shadow-sm bg-gray-200">
                   <img 
-                    src={h12Image} 
+                    src={getImage('about', 'team-amelia', h12Image)} 
                     alt="Amelia Carter" 
                     className="w-full h-full object-cover"
                     style={{ objectPosition: 'center 20%' }}

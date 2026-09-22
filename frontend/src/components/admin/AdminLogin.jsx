@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import ForgotPasswordModal from './ForgotPasswordModal';
 import marvicLogo from '../../assets/marvic.png';
 
-const API_BASE_URL = 'http://localhost:5055';
+const API_BASE_URL = '';
 
 export default function AdminLogin({ onLoginSuccess }) {
-  const [email, setEmail] = useState('admin@manickdental.com');
-  const [password, setPassword] = useState('Admin@1234');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -144,7 +144,7 @@ export default function AdminLogin({ onLoginSuccess }) {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter password"
+                placeholder="••••••••"
                 className="w-full pl-11 pr-11 py-3.5 text-sm rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#C4A47C] focus:border-transparent transition-all"
               />
               <svg className="w-5 h-5 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -200,18 +200,14 @@ export default function AdminLogin({ onLoginSuccess }) {
           </button>
         </form>
 
-        {/* Quick Credentials Info Box */}
-        <div className="mt-8 pt-6 border-t border-gray-100 bg-gray-50/70 -mx-8 sm:-mx-10 -mb-8 sm:-mb-10 p-6 rounded-b-3xl">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 mb-2 flex items-center gap-1.5">
-            <svg className="w-3.5 h-3.5 text-[#C4A47C]" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+        {/* Security Notice Footer */}
+        <div className="mt-8 pt-6 border-t border-gray-100 text-center">
+          <p className="text-[11px] text-gray-400 font-medium flex items-center justify-center gap-1.5">
+            <svg className="w-3.5 h-3.5 text-[#C4A47C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
-            Default Demo Credentials
+            <span>Authorized Administrator Access Only &bull; SSL Secured</span>
           </p>
-          <div className="flex flex-col sm:flex-row justify-between text-xs text-gray-600 gap-1 font-mono">
-            <span>Email: <strong className="text-gray-900">admin@manickdental.com</strong></span>
-            <span>Password: <strong className="text-gray-900">Admin@1234</strong></span>
-          </div>
         </div>
       </div>
 
@@ -219,7 +215,6 @@ export default function AdminLogin({ onLoginSuccess }) {
       <ForgotPasswordModal
         isOpen={isForgotModalOpen}
         onClose={() => setIsForgotModalOpen(false)}
-        initialEmail={email}
       />
     </div>
   );

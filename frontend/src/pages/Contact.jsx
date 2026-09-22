@@ -19,7 +19,7 @@ export default function Contact() {
     e.preventDefault();
     setLoading(true);
     try {
-      await fetch('http://localhost:5055/api/contact', {
+      await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

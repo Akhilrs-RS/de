@@ -29,18 +29,40 @@ export default function AdminDashboard({ user, onLogout }) {
   const [messages, setMessages] = useState([]);
   const [loadingData, setLoadingData] = useState(false);
 
+  const fetchAppointments = async () => {
+    try {
+      const res = await fetch('/api/appointments');
+      const data = await res.json();
+      if (Array.isArray(data)) setAppointments(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const fetchMessages = async () => {
+    try {
+      const res = await fetch('/api/contact');
+      const data = await res.json();
+      if (Array.isArray(data)) setMessages(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Pre-load appointments & messages counts on mount
+  useEffect(() => {
+    fetchAppointments();
+    fetchMessages();
+  }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       setLoadingData(true);
       try {
         if (mainView === 'appointments') {
-          const res = await fetch('http://localhost:5055/api/appointments');
-          const data = await res.json();
-          setAppointments(data);
+          await fetchAppointments();
         } else if (mainView === 'messages') {
-          const res = await fetch('http://localhost:5055/api/contact');
-          const data = await res.json();
-          setMessages(data);
+          await fetchMessages();
         }
       } catch (err) {
         setToast({ type: 'error', message: 'Failed to load data.' });
@@ -53,6 +75,51 @@ export default function AdminDashboard({ user, onLogout }) {
       fetchData();
     }
   }, [mainView]);
+
+  const updateAppointmentStatus = async (id, newStatus) => {
+    try {
+      const res = await fetch(`/api/appointments/${id}/status`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus })
+      });
+      if (res.ok) {
+        setAppointments(prev => prev.map(a => a.id === id ? { ...a, status: newStatus } : a));
+        showToast(`Appointment status updated to ${newStatus}`);
+      }
+    } catch (err) {
+      showToast('Failed to update status', 'error');
+    }
+  };
+
+  const deleteAppointment = async (id, name) => {
+    if (!window.confirm(`Are you sure you want to delete the appointment for ${name}?`)) return;
+    try {
+      const res = await fetch(`/api/appointments/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        setAppointments(prev => prev.filter(a => a.id !== id));
+        showToast('Appointment deleted successfully');
+      }
+    } catch (err) {
+      showToast('Failed to delete appointment', 'error');
+    }
+  };
+
+  const markMessageAsRead = async (id) => {
+    try {
+      const res = await fetch(`/api/contact/${id}/read`, { method: 'PATCH' });
+      if (res.ok) {
+        setMessages(prev => prev.map(m => m.id === id ? { ...m, isRead: true } : m));
+        showToast('Message marked as read');
+      }
+    } catch (err) {
+      showToast('Failed to mark message as read', 'error');
+    }
+  };
+
+  const unreadMessagesCount = useMemo(() => {
+    return messages.filter(m => !m.isRead).length;
+  }, [messages]);
 
   const showToast = (message, type = 'success') => {
     setToast({ message, type });
@@ -184,12 +251,12 @@ export default function AdminDashboard({ user, onLogout }) {
 
       {/* Top Navigation Header */}
       <header className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
-          <div className="flex items-center gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between">
+          <div className="flex items-center gap-2 sm:gap-4">
             <Link to="/" className="flex items-center">
-              <img src={marvicLogo} alt="Manick Dental" className="h-14 lg:h-16 w-auto object-contain py-1" />
+              <img src={marvicLogo} alt="Manick Dental" className="h-10 sm:h-14 lg:h-16 w-auto object-contain py-1" />
             </Link>
-            <div className="border-l border-gray-200 pl-4 hidden sm:block">
+            <div className="border-l border-gray-200 pl-3 hidden sm:block">
               <div className="flex items-center gap-2">
                 <span className="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-full bg-[#C4A47C]/15 text-[#8f7149]">
                   Admin CMS
@@ -197,42 +264,66 @@ export default function AdminDashboard({ user, onLogout }) {
               </div>
             </div>
 
-            {/* Main Tabs */}
+            {/* Main Tabs (Desktop) */}
             <div className="ml-6 hidden md:flex items-center space-x-6 h-full">
               <button 
                 onClick={() => setMainView('media')}
-                className={`font-semibold text-sm h-full flex items-center border-b-2 transition-colors ${mainView === 'media' ? 'text-[#2D1E40] border-[#C4A47C]' : 'text-gray-500 border-transparent hover:text-gray-900'}`}>
-                Media Manager
+                className={`font-semibold text-sm h-full flex items-center gap-2 border-b-2 transition-colors ${
+                  mainView === 'media' ? 'text-[#2D1E40] border-[#C4A47C]' : 'text-gray-500 border-transparent hover:text-gray-900'
+                }`}>
+                <span>Media Manager</span>
               </button>
               <button 
                 onClick={() => setMainView('appointments')}
-                className={`font-semibold text-sm h-full flex items-center border-b-2 transition-colors ${mainView === 'appointments' ? 'text-[#2D1E40] border-[#C4A47C]' : 'text-gray-500 border-transparent hover:text-gray-900'}`}>
-                Appointments
+                className={`font-semibold text-sm h-full flex items-center gap-2 border-b-2 transition-colors ${
+                  mainView === 'appointments' ? 'text-[#2D1E40] border-[#C4A47C]' : 'text-gray-500 border-transparent hover:text-gray-900'
+                }`}>
+                <span>Appointments</span>
+                {appointments.length > 0 && (
+                  <span className={`px-2 py-0.5 rounded-full text-[11px] font-bold ${
+                    mainView === 'appointments' ? 'bg-[#2D1E40] text-white' : 'bg-gray-100 text-gray-700'
+                  }`}>
+                    {appointments.length}
+                  </span>
+                )}
               </button>
               <button 
                 onClick={() => setMainView('messages')}
-                className={`font-semibold text-sm h-full flex items-center border-b-2 transition-colors ${mainView === 'messages' ? 'text-[#2D1E40] border-[#C4A47C]' : 'text-gray-500 border-transparent hover:text-gray-900'}`}>
-                Messages
+                className={`font-semibold text-sm h-full flex items-center gap-2 border-b-2 transition-colors ${
+                  mainView === 'messages' ? 'text-[#2D1E40] border-[#C4A47C]' : 'text-gray-500 border-transparent hover:text-gray-900'
+                }`}>
+                <span>Messages</span>
+                {messages.length > 0 && (
+                  <span className={`px-2 py-0.5 rounded-full text-[11px] font-bold ${
+                    unreadMessagesCount > 0 
+                      ? 'bg-amber-500 text-white' 
+                      : (mainView === 'messages' ? 'bg-[#2D1E40] text-white' : 'bg-gray-100 text-gray-700')
+                  }`}>
+                    {messages.length}
+                  </span>
+                )}
               </button>
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <Link
               to="/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold text-gray-700 hover:text-[#2D1E40] px-3.5 py-2 rounded-xl border border-gray-200 hover:bg-gray-50 transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-700 hover:text-[#2D1E40] px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl border border-gray-200 hover:bg-gray-50 transition-colors"
+              title="View live website"
             >
-              <span>View Live Website</span>
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <span className="hidden sm:inline">View Live Website</span>
+              <span className="sm:hidden text-[11px]">Site</span>
+              <svg className="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
             </Link>
 
             <div className="h-6 w-px bg-gray-200 hidden sm:block" />
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <div className="text-right hidden md:block">
                 <div className="text-xs font-bold text-gray-800">{user?.username || 'Administrator'}</div>
                 <div className="text-[11px] text-gray-500">{user?.email || 'admin@manickdental.com'}</div>
@@ -240,21 +331,84 @@ export default function AdminDashboard({ user, onLogout }) {
 
               <button
                 onClick={onLogout}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-red-700 bg-red-50 hover:bg-red-100 transition-colors"
+                className="inline-flex items-center gap-1 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-xs font-semibold text-red-700 bg-red-50 hover:bg-red-100 transition-colors"
                 title="Sign out"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                 </svg>
-                <span>Logout</span>
+                <span className="hidden xs:inline sm:inline">Logout</span>
               </button>
             </div>
+          </div>
+        </div>
+
+        {/* Mobile Navigation Sub-bar */}
+        <div className="md:hidden bg-white/95 backdrop-blur border-t border-gray-100 px-2.5 py-2">
+          <div className="flex bg-gray-100/90 p-1 rounded-xl gap-1">
+            <button
+              onClick={() => setMainView('media')}
+              className={`flex-1 py-2 px-1 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+                mainView === 'media'
+                  ? 'bg-white text-[#2D1E40] shadow-sm font-bold'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              <svg className="w-3.5 h-3.5 shrink-0 text-[#C4A47C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span>Media</span>
+            </button>
+
+            <button
+              onClick={() => setMainView('appointments')}
+              className={`flex-1 py-2 px-1 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+                mainView === 'appointments'
+                  ? 'bg-white text-[#2D1E40] shadow-sm font-bold'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              <svg className="w-3.5 h-3.5 shrink-0 text-[#2D1E40]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span>Appointments</span>
+              {appointments.length > 0 && (
+                <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
+                  mainView === 'appointments' ? 'bg-[#2D1E40] text-white' : 'bg-gray-200 text-gray-700'
+                }`}>
+                  {appointments.length}
+                </span>
+              )}
+            </button>
+
+            <button
+              onClick={() => setMainView('messages')}
+              className={`flex-1 py-2 px-1 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+                mainView === 'messages'
+                  ? 'bg-white text-[#2D1E40] shadow-sm font-bold'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              <svg className="w-3.5 h-3.5 shrink-0 text-[#2D1E40]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <span>Messages</span>
+              {messages.length > 0 && (
+                <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
+                  unreadMessagesCount > 0 
+                    ? 'bg-amber-500 text-white' 
+                    : (mainView === 'messages' ? 'bg-[#2D1E40] text-white' : 'bg-gray-200 text-gray-700')
+                }`}>
+                  {messages.length}
+                </span>
+              )}
+            </button>
           </div>
         </div>
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-grow max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8">
         
         {mainView === 'media' && (
           <>
@@ -369,7 +523,7 @@ export default function AdminDashboard({ user, onLogout }) {
                 ? previewUrls[item.id]
                 : isCustom
                 ? item.customImageUrl.startsWith('/uploads')
-                  ? `http://localhost:5055${item.customImageUrl}`
+                  ? `${item.customImageUrl}`
                   : item.customImageUrl
                 : item.defaultAssetUrl;
 
@@ -516,53 +670,213 @@ export default function AdminDashboard({ user, onLogout }) {
         {/* Appointments View */}
         {mainView === 'appointments' && (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-            <div className="p-6 border-b border-gray-200 flex justify-between items-center">
-              <h2 className="text-lg font-bold text-[#2D1E40]">Appointments List</h2>
-              <span className="text-xs font-semibold px-2 py-1 bg-purple-50 text-purple-700 rounded-lg">{appointments.length} Total</span>
+            <div className="p-4 sm:p-6 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+              <div>
+                <h2 className="text-lg sm:text-xl font-bold text-[#2D1E40] font-serif">Patient Appointments</h2>
+                <p className="text-xs text-gray-500 mt-0.5">Manage patient bookings and schedule requests</p>
+              </div>
+              <div className="flex items-center gap-2.5 w-full sm:w-auto justify-between sm:justify-end">
+                <span className="text-xs font-semibold px-3 py-1 bg-purple-50 text-purple-700 rounded-full border border-purple-100">
+                  {appointments.length} Total Bookings
+                </span>
+                <button
+                  onClick={() => {
+                    setLoadingData(true);
+                    fetchAppointments().finally(() => setLoadingData(false));
+                  }}
+                  disabled={loadingData}
+                  className="p-2 text-gray-500 hover:text-gray-800 rounded-xl hover:bg-gray-100 border border-gray-200 transition-colors"
+                  title="Refresh Appointments"
+                >
+                  <svg className={`w-4 h-4 ${loadingData ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                </button>
+              </div>
             </div>
             
             {loadingData ? (
-              <div className="p-8 text-center text-gray-500">Loading appointments...</div>
-            ) : appointments.length === 0 ? (
-              <div className="p-8 text-center text-gray-500">No appointments booked yet.</div>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm whitespace-nowrap">
-                  <thead className="bg-gray-50 text-gray-500 font-semibold uppercase text-xs">
-                    <tr>
-                      <th className="px-6 py-4">Date / Time</th>
-                      <th className="px-6 py-4">Patient Name</th>
-                      <th className="px-6 py-4">Phone</th>
-                      <th className="px-6 py-4">Service</th>
-                      <th className="px-6 py-4">Status</th>
-                      <th className="px-6 py-4">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100">
-                    {appointments.map(app => (
-                      <tr key={app.id} className="hover:bg-gray-50 transition-colors">
-                        <td className="px-6 py-4 font-medium text-gray-900">
-                          {app.preferredDate || 'N/A'}<br/>
-                          <span className="text-xs text-gray-500 font-normal">{app.preferredTime || 'Any Time'}</span>
-                        </td>
-                        <td className="px-6 py-4">{app.fullName}</td>
-                        <td className="px-6 py-4">{app.phoneNumber}</td>
-                        <td className="px-6 py-4">{app.service}</td>
-                        <td className="px-6 py-4">
-                          <span className={`px-2 py-1 text-[10px] font-bold uppercase rounded-full ${
-                            app.status === 'Confirmed' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'
-                          }`}>
-                            {app.status || 'Pending'}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 text-xs text-gray-500 max-w-xs truncate" title={app.notes}>
-                          {app.notes || '-'}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <div className="p-12 text-center text-gray-500">
+                <svg className="animate-spin h-8 w-8 mx-auto text-[#C4A47C] mb-3" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                </svg>
+                <p className="text-sm font-medium">Loading appointments...</p>
               </div>
+            ) : appointments.length === 0 ? (
+              <div className="p-12 text-center text-gray-500">
+                <div className="w-12 h-12 rounded-2xl bg-gray-100 text-gray-400 flex items-center justify-center mx-auto mb-3">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <p className="text-sm font-medium text-gray-700">No appointments booked yet.</p>
+                <p className="text-xs text-gray-400 mt-1">New appointment requests from the website will appear here.</p>
+              </div>
+            ) : (
+              <>
+                {/* Mobile Cards View (md and below) */}
+                <div className="md:hidden divide-y divide-gray-100">
+                  {appointments.map(app => (
+                    <div key={app.id} className="p-4 hover:bg-gray-50/80 transition-colors space-y-3">
+                      <div className="flex items-start justify-between gap-2">
+                        <div>
+                          <h3 className="font-bold text-gray-900 text-base">{app.fullName}</h3>
+                          <div className="inline-block mt-1 text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#FAF6F0] text-[#8f7149] border border-[#C4A47C]/30">
+                            {app.service || 'General Consultation'}
+                          </div>
+                        </div>
+                        <span className={`px-2.5 py-1 text-[11px] font-bold uppercase rounded-full shrink-0 ${
+                          app.status === 'Confirmed' 
+                            ? 'bg-green-100 text-green-700 border border-green-200' 
+                            : 'bg-amber-100 text-amber-700 border border-amber-200'
+                        }`}>
+                          {app.status || 'Pending'}
+                        </span>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-2 text-xs bg-gray-50 p-2.5 rounded-xl border border-gray-100">
+                        <div>
+                          <span className="text-gray-400 block text-[10px] uppercase font-semibold">Date & Time</span>
+                          <span className="font-medium text-gray-800">{app.preferredDate || 'Flexible'}</span>
+                          <span className="block text-[11px] text-gray-500">{app.preferredTime || 'Any time'}</span>
+                        </div>
+                        <div>
+                          <span className="text-gray-400 block text-[10px] uppercase font-semibold">Contact</span>
+                          <a 
+                            href={`tel:${app.phoneNumber}`}
+                            className="font-bold text-[#2D1E40] hover:underline flex items-center gap-1 mt-0.5"
+                          >
+                            <svg className="w-3.5 h-3.5 text-[#C4A47C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                            <span>{app.phoneNumber}</span>
+                          </a>
+                        </div>
+                      </div>
+
+                      {app.notes && (
+                        <div className="text-xs bg-[#FAF9F5] p-2.5 rounded-xl text-gray-600 border border-[#EBE6DC]">
+                          <span className="font-semibold text-gray-700 block text-[10px] uppercase mb-0.5">Notes:</span>
+                          {app.notes}
+                        </div>
+                      )}
+
+                      {/* Status / Delete actions */}
+                      <div className="flex items-center gap-2 pt-1">
+                        {app.status !== 'Confirmed' ? (
+                          <button
+                            onClick={() => updateAppointmentStatus(app.id, 'Confirmed')}
+                            className="flex-1 py-1.5 px-3 text-xs font-semibold rounded-xl bg-green-600 hover:bg-green-700 text-white transition-colors flex items-center justify-center gap-1"
+                          >
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Confirm</span>
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => updateAppointmentStatus(app.id, 'Pending')}
+                            className="flex-1 py-1.5 px-3 text-xs font-semibold rounded-xl bg-amber-50 text-amber-800 hover:bg-amber-100 transition-colors flex items-center justify-center gap-1 border border-amber-200"
+                          >
+                            <span>Mark Pending</span>
+                          </button>
+                        )}
+                        <a
+                          href={`tel:${app.phoneNumber}`}
+                          className="py-1.5 px-3 text-xs font-semibold rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 transition-colors flex items-center gap-1"
+                        >
+                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                          </svg>
+                          <span>Call</span>
+                        </a>
+                        <button
+                          onClick={() => deleteAppointment(app.id, app.fullName)}
+                          className="p-1.5 text-xs text-red-500 hover:text-red-700 hover:bg-red-50 rounded-xl transition-colors"
+                          title="Delete appointment"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Desktop Table View (md and above) */}
+                <div className="hidden md:block overflow-x-auto">
+                  <table className="w-full text-left text-sm whitespace-nowrap">
+                    <thead className="bg-gray-50 text-gray-500 font-semibold uppercase text-xs border-b border-gray-100">
+                      <tr>
+                        <th className="px-6 py-4">Date / Time</th>
+                        <th className="px-6 py-4">Patient Name</th>
+                        <th className="px-6 py-4">Phone</th>
+                        <th className="px-6 py-4">Service</th>
+                        <th className="px-6 py-4">Status</th>
+                        <th className="px-6 py-4">Notes</th>
+                        <th className="px-6 py-4 text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100">
+                      {appointments.map(app => (
+                        <tr key={app.id} className="hover:bg-gray-50/80 transition-colors">
+                          <td className="px-6 py-4 font-medium text-gray-900">
+                            {app.preferredDate || 'Flexible'}<br/>
+                            <span className="text-xs text-gray-500 font-normal">{app.preferredTime || 'Any Time'}</span>
+                          </td>
+                          <td className="px-6 py-4 font-semibold text-gray-900">{app.fullName}</td>
+                          <td className="px-6 py-4">
+                            <a href={`tel:${app.phoneNumber}`} className="text-[#2D1E40] hover:text-[#C4A47C] font-medium flex items-center gap-1">
+                              <span>{app.phoneNumber}</span>
+                            </a>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="inline-block px-2.5 py-1 rounded-lg text-xs bg-gray-100 text-gray-700 font-medium">
+                              {app.service}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className={`px-2.5 py-1 text-[10px] font-bold uppercase rounded-full ${
+                              app.status === 'Confirmed' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'
+                            }`}>
+                              {app.status || 'Pending'}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 text-xs text-gray-500 max-w-xs truncate" title={app.notes}>
+                            {app.notes || '-'}
+                          </td>
+                          <td className="px-6 py-4 text-right space-x-2">
+                            {app.status !== 'Confirmed' ? (
+                              <button
+                                onClick={() => updateAppointmentStatus(app.id, 'Confirmed')}
+                                className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-green-50 text-green-700 hover:bg-green-100 border border-green-200 transition-colors"
+                              >
+                                Confirm
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() => updateAppointmentStatus(app.id, 'Pending')}
+                                className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
+                              >
+                                Pending
+                              </button>
+                            )}
+                            <button
+                              onClick={() => deleteAppointment(app.id, app.fullName)}
+                              className="px-2.5 py-1 text-xs font-semibold rounded-lg text-red-600 hover:bg-red-50 transition-colors"
+                              title="Delete appointment"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </>
             )}
           </div>
         )}
@@ -570,37 +884,130 @@ export default function AdminDashboard({ user, onLogout }) {
         {/* Messages View */}
         {mainView === 'messages' && (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-            <div className="p-6 border-b border-gray-200 flex justify-between items-center">
-              <h2 className="text-lg font-bold text-[#2D1E40]">Contact Messages</h2>
-              <span className="text-xs font-semibold px-2 py-1 bg-purple-50 text-purple-700 rounded-lg">{messages.length} Total</span>
+            <div className="p-4 sm:p-6 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+              <div>
+                <h2 className="text-lg sm:text-xl font-bold text-[#2D1E40] font-serif">Contact Inquiries</h2>
+                <p className="text-xs text-gray-500 mt-0.5">Patient messages and questions from website contact forms</p>
+              </div>
+              <div className="flex items-center gap-2.5 w-full sm:w-auto justify-between sm:justify-end">
+                <span className="text-xs font-semibold px-3 py-1 bg-purple-50 text-purple-700 rounded-full border border-purple-100">
+                  {messages.length} Total Messages
+                </span>
+                <button
+                  onClick={() => {
+                    setLoadingData(true);
+                    fetchMessages().finally(() => setLoadingData(false));
+                  }}
+                  disabled={loadingData}
+                  className="p-2 text-gray-500 hover:text-gray-800 rounded-xl hover:bg-gray-100 border border-gray-200 transition-colors"
+                  title="Refresh Messages"
+                >
+                  <svg className={`w-4 h-4 ${loadingData ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                </button>
+              </div>
             </div>
             
             {loadingData ? (
-              <div className="p-8 text-center text-gray-500">Loading messages...</div>
+              <div className="p-12 text-center text-gray-500">
+                <svg className="animate-spin h-8 w-8 mx-auto text-[#C4A47C] mb-3" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                </svg>
+                <p className="text-sm font-medium">Loading messages...</p>
+              </div>
             ) : messages.length === 0 ? (
-              <div className="p-8 text-center text-gray-500">No contact messages received yet.</div>
+              <div className="p-12 text-center text-gray-500">
+                <div className="w-12 h-12 rounded-2xl bg-gray-100 text-gray-400 flex items-center justify-center mx-auto mb-3">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <p className="text-sm font-medium text-gray-700">No contact messages received yet.</p>
+                <p className="text-xs text-gray-400 mt-1">Inquiries submitted on the contact page will appear here.</p>
+              </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 p-4 sm:p-6">
                 {messages.map(msg => (
-                  <div key={msg.id} className="bg-gray-50 border border-gray-200 p-5 rounded-2xl flex flex-col h-full shadow-sm">
+                  <div 
+                    key={msg.id} 
+                    className={`p-5 rounded-2xl flex flex-col h-full shadow-sm transition-all border ${
+                      !msg.isRead 
+                        ? 'bg-amber-50/40 border-amber-200' 
+                        : 'bg-white border-gray-200 hover:shadow-md'
+                    }`}
+                  >
                     <div className="flex justify-between items-start mb-3">
                       <div>
-                        <h3 className="font-bold text-gray-900">{msg.name}</h3>
-                        <p className="text-xs text-gray-500">{new Date(msg.createdAt).toLocaleDateString()}</p>
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-bold text-gray-900 text-base">{msg.name}</h3>
+                          {!msg.isRead && (
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-white uppercase">
+                              New
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs text-gray-500 mt-0.5">
+                          {new Date(msg.createdAt).toLocaleDateString(undefined, {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          })}
+                        </p>
                       </div>
-                      {!msg.isRead && (
-                        <span className="h-2.5 w-2.5 bg-blue-500 rounded-full" title="Unread"></span>
-                      )}
                     </div>
                     
-                    <div className="text-sm mb-4">
-                      <p><a href={`mailto:${msg.email}`} className="text-[#8f7149] hover:underline">{msg.email}</a></p>
-                      {msg.phone && <p><a href={`tel:${msg.phone}`} className="text-[#8f7149] hover:underline">{msg.phone}</a></p>}
+                    {msg.subject && (
+                      <div className="mb-2">
+                        <span className="text-[10px] uppercase font-bold text-gray-400 block tracking-wider">Subject</span>
+                        <h4 className="text-xs font-bold text-[#2D1E40]">{msg.subject}</h4>
+                      </div>
+                    )}
+
+                    <div className="flex-grow mb-4">
+                      <span className="text-[10px] uppercase font-bold text-gray-400 block tracking-wider mb-1">Message</span>
+                      <p className="text-xs sm:text-sm text-gray-700 bg-gray-50/90 p-3 rounded-xl border border-gray-100 whitespace-pre-wrap leading-relaxed">
+                        {msg.message}
+                      </p>
                     </div>
 
-                    <div className="flex-grow">
-                      {msg.subject && <h4 className="text-sm font-semibold text-gray-800 mb-1">{msg.subject}</h4>}
-                      <p className="text-sm text-gray-600 bg-white p-3 rounded-lg border border-gray-100">{msg.message}</p>
+                    <div className="pt-3 border-t border-gray-100 flex flex-wrap items-center justify-between gap-2 mt-auto">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        {msg.email && (
+                          <a 
+                            href={`mailto:${msg.email}`}
+                            className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1.5 rounded-xl bg-purple-50 text-[#2D1E40] hover:bg-purple-100 transition-colors"
+                          >
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <span>Email</span>
+                          </a>
+                        )}
+                        {msg.phone && (
+                          <a 
+                            href={`tel:${msg.phone}`}
+                            className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition-colors"
+                          >
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                            <span>Call</span>
+                          </a>
+                        )}
+                      </div>
+
+                      {!msg.isRead && (
+                        <button
+                          onClick={() => markMessageAsRead(msg.id)}
+                          className="text-xs font-semibold text-gray-500 hover:text-gray-900 py-1 px-2 rounded-lg hover:bg-gray-100 transition-colors"
+                        >
+                          Mark read
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}

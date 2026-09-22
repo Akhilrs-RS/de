@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const MediaContext = createContext(null);
 
-const API_BASE_URL = 'http://localhost:5055';
+const API_BASE_URL = '';
 
 export function MediaProvider({ children }) {
   const [mediaList, setMediaList] = useState([]);
@@ -10,8 +10,11 @@ export function MediaProvider({ children }) {
 
   const fetchMedia = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/media`);
-      if (res.ok) {
+      let res = await fetch('/api/media').catch(() => null);
+      if (!res || !res.ok) {
+        res = await fetch('/api/media').catch(() => null);
+      }
+      if (res && res.ok) {
         const data = await res.json();
         setMediaList(data);
       }
@@ -38,7 +41,7 @@ export function MediaProvider({ children }) {
 
     if (item.customImageUrl) {
       if (item.customImageUrl.startsWith('/uploads') || item.customImageUrl.startsWith('/api')) {
-        return `${API_BASE_URL}${item.customImageUrl}`;
+        return item.customImageUrl;
       }
       return item.customImageUrl;
     }

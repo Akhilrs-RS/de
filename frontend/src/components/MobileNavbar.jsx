@@ -68,7 +68,7 @@ const MobileNavbar = () => {
 
               <div className="mt-12">
                 <Link 
-                  to="/book-appointment" 
+                  to="/mobile/book-appointment" 
                   onClick={() => setIsOpen(false)}
                   className="bg-[#2A114B] text-white px-6 py-3.5 rounded-full text-[13px] font-semibold shadow-lg inline-flex items-center justify-center w-full hover:bg-[#210745] transition-colors"
                 >
