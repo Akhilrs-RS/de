@@ -15,6 +15,7 @@ import CosmeticDentistry from './pages/CosmeticDentistry';
 import BookAppointment from './pages/BookAppointment';
 import Admin from './pages/Admin';
 import MobileLanding from './pages/MobileLanding';
+import MobileAbout from './pages/MobileAbout';
 import { MediaProvider } from './context/MediaContext';
 
 function ScrollToTop() {
@@ -60,6 +61,7 @@ function MainLayout() {
           <Route path="/book-appointment" element={<BookAppointment />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/mobile" element={<MobileLanding />} />
+          <Route path="/mobile/about" element={<MobileAbout />} />
         </Routes>
       </main>
       {!isAdmin && !isMobile && <Footer />}
