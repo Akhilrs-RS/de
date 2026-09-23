@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Clock, Phone, Mail, ArrowRight, ArrowUpRight, ShieldCheck, Heart, Star, Stethoscope, Quote } from 'lucide-react';
-import bgImage from '../assets/mobile_home_bg.jpg';
+import bgImage from '../assets/y.png';
 import logoImage from '../assets/lo_clean.png';
 import h1Image from '../assets/h1.png';
 import haImage from '../assets/ha.png';
@@ -23,8 +23,47 @@ import MobileNavbar from '../components/MobileNavbar';
 import MobileFooter from '../components/MobileFooter';
 import { useMedia } from '../context/MediaContext';
 
+const ROTATING_WORDS = [
+  ['Beautiful', 'Smile', 'Begins'],
+  ['Beautiful', 'Smiles', 'Begin']
+];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.35,
+      delayChildren: 0.15
+    }
+  },
+  exit: {
+    opacity: 0,
+    y: -8,
+    transition: { duration: 0.35 }
+  }
+};
+
+const wordVariants = {
+  hidden: { opacity: 0, y: 14, filter: 'blur(3px)' },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    filter: 'blur(0px)',
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+  }
+};
+
 const MobileLanding = () => {
   const { getImage } = useMedia();
+  const [phraseIndex, setPhraseIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setPhraseIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
+    }, 4200);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div className="min-h-screen w-full bg-white sm:bg-neutral-900 flex justify-center items-center">
@@ -32,19 +71,21 @@ const MobileLanding = () => {
       <div className="relative w-full sm:max-w-[430px] h-screen sm:h-[890px] sm:my-6 sm:rounded-[36px] sm:shadow-2xl overflow-y-auto scrollbar-hide bg-white flex flex-col">
         
         {/* First Page / Hero Section */}
-        <div className="relative w-full min-h-screen sm:min-h-[890px] flex flex-col justify-between shrink-0">
-          {/* Background Image - Exactly aligned with dental clinic, doctor, patient, and tray */}
-          <img 
-            src={getImage('home', 'hero', bgImage)} 
-            alt="Manick Dental Clinic" 
-            className="absolute inset-0 w-full h-full object-cover object-top select-none pointer-events-none" 
-          />
+        <div className="relative w-full min-h-screen sm:min-h-[890px] flex flex-col justify-start shrink-0 overflow-hidden bg-white">
+          {/* Background Image Container with y.png */}
+          <div className="absolute inset-0 w-full h-full pointer-events-none select-none">
+            <img 
+              src={getImage('mobile-home', 'hero', bgImage)} 
+              alt="Manick Dental Clinic" 
+              className="absolute inset-0 w-full h-full object-cover object-top select-none pointer-events-none" 
+            />
+          </div>
 
           <MobileNavbar />
 
-          {/* Hero Title Section */}
-          <div className="relative z-10 px-5 pt-8 sm:pt-10 pb-4 text-center">
-            <h1 className="font-serif text-[41px] sm:text-[44px] font-normal leading-[1.12] tracking-tight select-none">
+          {/* Hero Title Section - Sits in the luminous mist area completely above doctor's head */}
+          <div className="relative z-10 px-5 pt-2 sm:pt-3 pb-1 text-center">
+            <h1 className="font-serif text-[32px] sm:text-[34px] font-normal leading-[1.14] tracking-tight select-none">
               <span className="block text-black">Where Every</span>
               <span className="text-black">Smile </span>
               <span className="text-[#2D0A5C]">Becomes</span>
@@ -52,22 +93,22 @@ const MobileLanding = () => {
             </h1>
           </div>
 
-          {/* Glassmorphism Card Section */}
-          <div className="relative z-10 px-5 pb-8 sm:pb-10 w-full mt-auto">
-            <div className="w-full bg-white/45 backdrop-blur-md border border-white/60 rounded-[1.75rem] px-5 py-7 text-center shadow-[0_8px_30px_rgb(0,0,0,0.06)]">
-              <p className="text-[15.5px] font-normal leading-[1.45] text-black mb-6 px-1 tracking-tight">
-                Experience Modern dentistry where advanced Technology meets exceptional, deeply human care.
+          {/* Glassmorphism Card Section - sits over doctor's face & upper body, leaving patient jeans & tray visible below */}
+          <div className="relative z-10 px-5 mt-3 sm:mt-4 mb-auto w-full">
+            <div className="w-full bg-white/60 backdrop-blur-md border border-white/70 rounded-[1.5rem] px-5 py-4 sm:py-5 text-center shadow-[0_8px_30px_rgb(0,0,0,0.06)]">
+              <p className="text-[14px] sm:text-[14.5px] font-normal leading-[1.45] text-black mb-4 px-1 tracking-tight">
+                Experience Modern density where advanced Technology meets exceptional, deeply human care.
               </p>
 
-              <div className="flex flex-col gap-3 w-full">
+              <div className="flex flex-col gap-2.5 w-full">
                 {/* Primary Button */}
                 <Link 
                   to="/mobile/book-appointment"
-                  className="w-full h-[52px] bg-white text-black border-[1.5px] border-black rounded-full flex items-center justify-center gap-2.5 px-6 shadow-sm hover:bg-neutral-50 active:scale-[0.98] transition-all cursor-pointer"
+                  className="w-full h-[48px] bg-white text-black border border-black rounded-2xl flex items-center justify-center gap-2.5 px-6 shadow-sm hover:bg-neutral-50 active:scale-[0.98] transition-all cursor-pointer"
                 >
-                  <span className="text-[16.5px] font-normal tracking-tight">Book Appointment</span>
+                  <span className="text-[15.5px] font-normal tracking-tight">Book Appointment</span>
                   <svg 
-                    className="w-[19px] h-[19px] text-black stroke-[1.8]" 
+                    className="w-[18px] h-[18px] text-black stroke-[1.8]" 
                     fill="none" 
                     viewBox="0 0 24 24" 
                     stroke="currentColor"
@@ -79,9 +120,9 @@ const MobileLanding = () => {
                 {/* Secondary Button */}
                 <Link 
                   to="/mobile/services"
-                  className="w-full h-[52px] bg-white/20 hover:bg-white/30 backdrop-blur-sm text-black border border-black/80 rounded-full flex items-center justify-center px-6 active:scale-[0.98] transition-all cursor-pointer"
+                  className="w-full h-[48px] bg-white/20 hover:bg-white/30 backdrop-blur-sm text-black border border-black rounded-2xl flex items-center justify-center px-6 active:scale-[0.98] transition-all cursor-pointer"
                 >
-                  <span className="text-[16.5px] font-normal tracking-tight">Explore Our Care</span>
+                  <span className="text-[15.5px] font-normal tracking-tight">Explore Our Care</span>
                 </Link>
               </div>
             </div>
@@ -100,12 +141,33 @@ const MobileLanding = () => {
               <h2 className="font-serif text-[42px] leading-none text-[#D9CDB8] uppercase tracking-widest font-normal">CARE</h2>
             </div>
             
-            {/* Foreground Title */}
-            <div className="relative z-10 w-full flex flex-col pt-8">
-              <h2 className="font-serif text-[34px] italic font-semibold text-black leading-tight ml-4">
-                Beautiful
-              </h2>
-              <h2 className="font-serif text-[28px] italic text-[#A48650] leading-tight text-center mt-1">
+            {/* Foreground Title with Word-by-Word Rotating Animation & FIXED Subtitle */}
+            <div className="relative z-10 w-full flex flex-col items-center justify-center pt-8 min-h-[110px]">
+              <div className="h-[44px] flex items-center justify-center">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={phraseIndex}
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    className="w-full flex flex-wrap items-center justify-center gap-x-2 gap-y-0.5"
+                  >
+                    {ROTATING_WORDS[phraseIndex].map((word, idx) => (
+                      <motion.span
+                        key={`${phraseIndex}-${idx}`}
+                        variants={wordVariants}
+                        className="font-serif text-[32px] sm:text-[35px] italic font-semibold text-black leading-tight tracking-tight inline-block"
+                      >
+                        {word}
+                      </motion.span>
+                    ))}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+              
+              {/* Fixed, static subtitle as explicitly requested */}
+              <h2 className="font-serif text-[24px] sm:text-[27px] italic text-[#A68A60] leading-tight text-center mt-1 font-normal select-none">
                 with extraordinary care.
               </h2>
             </div>
@@ -130,12 +192,12 @@ const MobileLanding = () => {
               </h3>
               
               <p className="text-[13px] text-neutral-600 leading-relaxed font-normal">
-                <strong className="font-semibold text-black">Manick Dental Clinic</strong> was founded with a simple mission: provide honest, gentle, and affordable dental care to the families of Kuzhuvanthitai and the surrounding community.
+                <strong className="font-semibold text-black">Manick Dental Clinic</strong> was founded with a simple mission: provide honest, gentle, and affordable dental care to the families of Kazhuvanthitai and the surrounding community.
               </p>
 
               <div className="mt-2 flex flex-col">
-                <span className="font-serif text-[15px] italic text-[#A48650] font-semibold">More Than Dentistry,</span>
-                <span className="font-serif text-[15px] italic text-[#A48650] font-semibold">A New Way To Feel Confident.</span>
+                <span className="font-serif text-[15px] text-[#222222] font-semibold">More Than Dentistry.</span>
+                <span className="font-serif text-[15px] italic text-[#A68A60] font-semibold">A New Way To Feel Confident.</span>
               </div>
 
               <div className="mt-4">
@@ -152,8 +214,8 @@ const MobileLanding = () => {
           
         </div>
 
-        {/* Third Page / Signature Treatments */}
-        <div className="w-full min-h-screen sm:min-h-[890px] bg-[#FAF8F3] flex flex-col shrink-0 px-5 py-12 relative overflow-hidden">
+        {/* Third Page / Signature Treatments - Stack-Up Animation for the 4 Cards */}
+        <div className="w-full bg-[#FAF8F3] flex flex-col shrink-0 px-5 py-12 relative">
           
           {/* Header */}
           <div className="w-full flex items-start justify-between gap-2 mb-3">
@@ -174,11 +236,11 @@ const MobileLanding = () => {
             The Art of Transformation
           </h2>
 
-          {/* Cards List */}
-          <div className="flex flex-col gap-6 w-full pb-8">
+          {/* Stacking Cards List */}
+          <div className="flex flex-col gap-6 w-full pb-16 relative">
             
-            {/* Card 01 */}
-            <div className="relative w-full h-[360px] rounded-3xl overflow-hidden group">
+            {/* Card 01 - Sticky Stack 1 */}
+            <div className="sticky top-[75px] z-10 w-full h-[360px] rounded-3xl overflow-hidden group shadow-xl border border-black/5 bg-[#FAF8F3]">
               <img src={getImage('home', 'about', haImage)} alt="General Checkup" className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/5"></div>
               
@@ -205,8 +267,8 @@ const MobileLanding = () => {
               </div>
             </div>
 
-            {/* Card 02 */}
-            <div className="relative w-full h-[360px] rounded-3xl overflow-hidden group">
+            {/* Card 02 - Sticky Stack 2 */}
+            <div className="sticky top-[95px] z-20 w-full h-[360px] rounded-3xl overflow-hidden group shadow-xl border border-black/5 bg-[#FAF8F3]">
               <img src={getImage('home', 'treatment-1', h2Image)} alt="Smile Makeover" className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/5"></div>
               
@@ -233,8 +295,8 @@ const MobileLanding = () => {
               </div>
             </div>
 
-            {/* Card 03 */}
-            <div className="relative w-full h-[360px] rounded-3xl overflow-hidden group">
+            {/* Card 03 - Sticky Stack 3 */}
+            <div className="sticky top-[115px] z-30 w-full h-[360px] rounded-3xl overflow-hidden group shadow-xl border border-black/5 bg-[#FAF8F3]">
               <img src={getImage('home', 'treatment-2', h3Image)} alt="Invisible Aligners" className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/5"></div>
               
@@ -261,8 +323,8 @@ const MobileLanding = () => {
               </div>
             </div>
 
-            {/* Card 04 */}
-            <div className="relative w-full h-[360px] rounded-3xl overflow-hidden group">
+            {/* Card 04 - Sticky Stack 4 */}
+            <div className="sticky top-[135px] z-40 w-full h-[360px] rounded-3xl overflow-hidden group shadow-xl border border-black/5 bg-[#FAF8F3]">
               <img src={getImage('home', 'treatment-3', h4Image)} alt="Cosmetic Dentistry" className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/5"></div>
               

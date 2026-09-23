@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import logoImage from '../assets/lo_clean.png';
+import logoImage from '../assets/marvic.png';
 import { X } from 'lucide-react';
 
 const MobileNavbar = () => {
@@ -9,24 +9,24 @@ const MobileNavbar = () => {
 
   return (
     <>
-      <header className="relative z-40 flex items-center justify-between px-6 pt-9 pb-2 w-full">
-        <Link to="/mobile" className="z-50">
+      <header className="relative z-40 flex items-center justify-between px-6 pt-8 sm:pt-9 pb-2 w-full">
+        <Link to="/mobile" className="z-50 flex items-center">
           <img 
             src={logoImage} 
             alt="Manick Dental" 
-            className="w-[124px] sm:w-[130px] h-auto object-contain select-none" 
+            className="w-[114px] sm:w-[122px] h-auto object-contain select-none" 
           />
         </Link>
         
         <button 
           type="button" 
           onClick={() => setIsOpen(true)}
-          className="p-1 -mr-1 text-black flex flex-col justify-center items-center gap-[4.5px] cursor-pointer focus:outline-none z-40"
+          className="p-1 text-black flex flex-col justify-center items-center gap-[3.5px] cursor-pointer focus:outline-none z-40"
           aria-label="Navigation Menu"
         >
-          <span className="block w-[24px] h-[2.5px] bg-black rounded-full"></span>
-          <span className="block w-[24px] h-[2.5px] bg-black rounded-full"></span>
-          <span className="block w-[24px] h-[2.5px] bg-black rounded-full"></span>
+          <span className="block w-[22px] h-[2px] bg-black rounded-full"></span>
+          <span className="block w-[22px] h-[2px] bg-black rounded-full"></span>
+          <span className="block w-[22px] h-[2px] bg-black rounded-full"></span>
         </button>
       </header>
 
