@@ -472,100 +472,139 @@ export default function Home() {
       </section>
 
       {/* Section 6: Patient Stories (Purple Header) */}
-      <section className="w-full bg-[#7E6399] py-20 md:py-28 relative overflow-hidden flex flex-col items-center justify-center min-h-[460px] md:min-h-[540px]">
+      <section 
+        className="w-full bg-[#7E6399] py-16 md:py-20 lg:py-24 relative overflow-hidden flex flex-col items-center justify-center min-h-[380px] md:min-h-[420px] lg:min-h-[440px]"
+        style={{ backgroundColor: '#7E6399' }}
+      >
         {/* Floating Faces with Zooming In & Zooming Out Animation */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {/* 1. Far Left - Laughing man */}
-          <motion.div
-            className="absolute top-[32%] md:top-[34%] left-[8%] -translate-x-1/2 w-28 h-28 sm:w-36 sm:h-36 md:w-48 md:h-48 lg:w-54 lg:h-54 rounded-full overflow-hidden pointer-events-auto"
-            animate={{ scale: [1, 1.15, 1] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0 }}
-            whileHover={{ scale: 1.22, transition: { duration: 0.3 } }}
-          >
-            <img 
-              src={getImage('home', 'patient-story-1', h6Image)} 
-              alt="Patient" 
-              className="w-full h-full object-cover rounded-full opacity-70 hover:opacity-95 transition-opacity duration-300"
-            />
-          </motion.div>
+          {/* 1. Far Left - Laughing man (Bottom-left, partially off-screen) */}
+          <div className="absolute top-[64%] left-[5.5%] -translate-x-1/2 -translate-y-1/2 w-14 h-14 sm:w-20 sm:h-20 md:w-26 md:h-26 lg:w-32 lg:h-32 xl:w-36 xl:h-36 pointer-events-auto">
+            <motion.div
+              className="w-full h-full rounded-full overflow-hidden"
+              animate={{ scale: [1, 1.08, 1] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0 }}
+              whileHover={{ scale: 1.15, transition: { duration: 0.3 } }}
+            >
+              <img 
+                src={getImage('home', 'patient-story-1', h6Image)} 
+                alt="Patient" 
+                className="w-full h-full object-cover rounded-full opacity-35 hover:opacity-75 transition-all duration-500 contrast-[0.95] brightness-[1.02]"
+                style={{
+                  maskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
+                  WebkitMaskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
+                }}
+              />
+            </motion.div>
+          </div>
 
-          {/* 2. Upper Left - Child in yellow shirt (TOP) */}
-          <motion.div
-            className="absolute top-[0%] md:top-[2%] left-[24%] -translate-x-1/2 w-32 h-32 sm:w-40 sm:h-40 md:w-50 md:h-50 lg:w-56 lg:h-56 rounded-full overflow-hidden pointer-events-auto"
-            animate={{ scale: [1, 1.15, 1] }}
-            transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
-            whileHover={{ scale: 1.22, transition: { duration: 0.3 } }}
-          >
-            <img 
-              src={getImage('home', 'patient-story-2', h7Image)} 
-              alt="Patient" 
-              className="w-full h-full object-cover rounded-full opacity-75 hover:opacity-95 transition-opacity duration-300"
-            />
-          </motion.div>
+          {/* 2. Upper Left - Child in yellow shirt (Mid-upper left, clear of text) */}
+          <div className="absolute top-[36%] md:top-[38%] left-[20%] md:left-[21%] -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-24 sm:h-24 md:w-30 md:h-30 lg:w-38 lg:h-38 xl:w-42 xl:h-42 pointer-events-auto">
+            <motion.div
+              className="w-full h-full rounded-full overflow-hidden"
+              animate={{ scale: [1, 1.08, 1] }}
+              transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+              whileHover={{ scale: 1.15, transition: { duration: 0.3 } }}
+            >
+              <img 
+                src={getImage('home', 'patient-story-2', h7Image)} 
+                alt="Patient" 
+                className="w-full h-full object-cover rounded-full opacity-35 hover:opacity-75 transition-all duration-500 contrast-[0.95] brightness-[1.02]"
+                style={{
+                  maskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
+                  WebkitMaskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
+                }}
+              />
+            </motion.div>
+          </div>
 
-          {/* 3. Center Left / Lower - Blonde woman (BOTTOM - shifted down and left) */}
-          <motion.div
-            className="absolute top-[44%] md:top-[46%] left-[38%] -translate-x-1/2 w-32 h-32 sm:w-40 sm:h-40 md:w-50 md:h-50 lg:w-56 lg:h-56 rounded-full overflow-hidden pointer-events-auto"
-            animate={{ scale: [1, 1.14, 1] }}
-            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2.4 }}
-            whileHover={{ scale: 1.22, transition: { duration: 0.3 } }}
-          >
-            <img 
-              src={getImage('home', 'patient-story-3', h8Image)} 
-              alt="Patient" 
-              className="w-full h-full object-cover rounded-full opacity-70 hover:opacity-95 transition-opacity duration-300"
-            />
-          </motion.div>
+          {/* 3. Center Left / Behind Text - Blonde woman */}
+          <div className="absolute top-[48%] left-[37%] md:left-[38%] -translate-x-1/2 -translate-y-1/2 w-18 h-18 sm:w-26 sm:h-26 md:w-34 md:h-34 lg:w-42 lg:h-42 xl:w-46 xl:h-46 pointer-events-auto">
+            <motion.div
+              className="w-full h-full rounded-full overflow-hidden"
+              animate={{ scale: [1, 1.08, 1] }}
+              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2.4 }}
+              whileHover={{ scale: 1.15, transition: { duration: 0.3 } }}
+            >
+              <img 
+                src={getImage('home', 'patient-story-3', h8Image)} 
+                alt="Patient" 
+                className="w-full h-full object-cover rounded-full opacity-35 hover:opacity-75 transition-all duration-500 contrast-[0.95] brightness-[1.02]"
+                style={{
+                  maskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
+                  WebkitMaskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
+                }}
+              />
+            </motion.div>
+          </div>
 
-          {/* 4. Center Right / Upper - Woman smiling & pointing (TOP - shifted up and right) */}
-          <motion.div
-            className="absolute top-[-2%] md:top-[0%] left-[58%] -translate-x-1/2 w-36 h-36 sm:w-44 sm:h-44 md:w-54 md:h-54 lg:w-60 lg:h-60 rounded-full overflow-hidden pointer-events-auto"
-            animate={{ scale: [1, 1.15, 1] }}
-            transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
-            whileHover={{ scale: 1.22, transition: { duration: 0.3 } }}
-          >
-            <img 
-              src={getImage('home', 'patient-story-4', h9Image)} 
-              alt="Patient" 
-              className="w-full h-full object-cover rounded-full opacity-75 hover:opacity-95 transition-opacity duration-300"
-            />
-          </motion.div>
+          {/* 4. Center Right / Behind Text - Woman smiling & pointing */}
+          <div className="absolute top-[42%] left-[61%] md:left-[62%] -translate-x-1/2 -translate-y-1/2 w-18 h-18 sm:w-26 sm:h-26 md:w-34 md:h-34 lg:w-42 lg:h-42 xl:w-46 xl:h-46 pointer-events-auto">
+            <motion.div
+              className="w-full h-full rounded-full overflow-hidden"
+              animate={{ scale: [1, 1.08, 1] }}
+              transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+              whileHover={{ scale: 1.15, transition: { duration: 0.3 } }}
+            >
+              <img 
+                src={getImage('home', 'patient-story-4', h9Image)} 
+                alt="Patient" 
+                className="w-full h-full object-cover rounded-full opacity-35 hover:opacity-75 transition-all duration-500 contrast-[0.95] brightness-[1.02]"
+                style={{
+                  maskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
+                  WebkitMaskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
+                }}
+              />
+            </motion.div>
+          </div>
 
-          {/* 5. Lower Right - Man pointing to smile (BOTTOM) */}
-          <motion.div
-            className="absolute top-[44%] md:top-[46%] left-[74%] -translate-x-1/2 w-30 h-30 sm:w-38 sm:h-38 md:w-48 md:h-48 lg:w-54 lg:h-54 rounded-full overflow-hidden pointer-events-auto"
-            animate={{ scale: [1, 1.15, 1] }}
-            transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut", delay: 2.0 }}
-            whileHover={{ scale: 1.22, transition: { duration: 0.3 } }}
-          >
-            <img 
-              src={getImage('home', 'patient-story-5', h10Image)} 
-              alt="Patient" 
-              className="w-full h-full object-cover rounded-full opacity-70 hover:opacity-95 transition-opacity duration-300"
-            />
-          </motion.div>
+          {/* 5. Lower Right - Man pointing to smile (Bottom-right, clear of quote) */}
+          <div className="absolute top-[64%] md:top-[66%] left-[77%] md:left-[78%] -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-24 sm:h-24 md:w-30 md:h-30 lg:w-38 lg:h-38 xl:w-42 xl:h-42 pointer-events-auto">
+            <motion.div
+              className="w-full h-full rounded-full overflow-hidden"
+              animate={{ scale: [1, 1.08, 1] }}
+              transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut", delay: 2.0 }}
+              whileHover={{ scale: 1.15, transition: { duration: 0.3 } }}
+            >
+              <img 
+                src={getImage('home', 'patient-story-5', h10Image)} 
+                alt="Patient" 
+                className="w-full h-full object-cover rounded-full opacity-35 hover:opacity-75 transition-all duration-500 contrast-[0.95] brightness-[1.02]"
+                style={{
+                  maskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
+                  WebkitMaskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
+                }}
+              />
+            </motion.div>
+          </div>
 
-          {/* 6. Far Right - Man looking right (TOP/MID) */}
-          <motion.div
-            className="absolute top-[16%] md:top-[18%] left-[91%] -translate-x-1/2 w-28 h-28 sm:w-36 sm:h-36 md:w-48 md:h-48 lg:w-54 lg:h-54 rounded-full overflow-hidden pointer-events-auto"
-            animate={{ scale: [1, 1.15, 1] }}
-            transition={{ duration: 6.8, repeat: Infinity, ease: "easeInOut", delay: 1.6 }}
-            whileHover={{ scale: 1.22, transition: { duration: 0.3 } }}
-          >
-            <img 
-              src={getImage('home', 'patient-story-6', h11Image)} 
-              alt="Patient" 
-              className="w-full h-full object-cover rounded-full opacity-70 hover:opacity-95 transition-opacity duration-300"
-            />
-          </motion.div>
+          {/* 6. Far Right - Man looking right (Mid-right, partially off-screen) */}
+          <div className="absolute top-[44%] left-[94%] -translate-x-1/2 -translate-y-1/2 w-14 h-14 sm:w-20 sm:h-20 md:w-26 md:h-26 lg:w-32 lg:h-32 xl:w-36 xl:h-36 pointer-events-auto">
+            <motion.div
+              className="w-full h-full rounded-full overflow-hidden"
+              animate={{ scale: [1, 1.08, 1] }}
+              transition={{ duration: 6.8, repeat: Infinity, ease: "easeInOut", delay: 1.6 }}
+              whileHover={{ scale: 1.15, transition: { duration: 0.3 } }}
+            >
+              <img 
+                src={getImage('home', 'patient-story-6', h11Image)} 
+                alt="Patient" 
+                className="w-full h-full object-cover rounded-full opacity-35 hover:opacity-75 transition-all duration-500 contrast-[0.95] brightness-[1.02]"
+                style={{
+                  maskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
+                  WebkitMaskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
+                }}
+              />
+            </motion.div>
+          </div>
         </div>
 
         {/* Content */}
-        <div className="relative z-10 text-center px-6 max-w-6xl mx-auto pointer-events-none">
-          <div className="text-white/80 font-sans text-xs md:text-sm font-semibold tracking-[0.2em] uppercase mb-4 md:mb-6">
+        <div className="relative z-10 text-center px-6 max-w-4xl mx-auto pointer-events-none">
+          <div className="text-white/80 font-sans text-xs md:text-sm font-semibold tracking-[0.2em] uppercase mb-3 md:mb-4">
             Patient Stories
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[4.2rem] font-serif font-bold text-white leading-[1.25] drop-shadow-sm">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-[2.15rem] xl:text-[2.35rem] font-serif font-bold text-white leading-[1.3] md:leading-[1.35] drop-shadow-sm max-w-xl sm:max-w-2xl lg:max-w-[44rem] mx-auto">
             “From the first consultation to my<br />
             final smile,<br />
             <span className="text-[#F6D4A5] italic font-normal">every detail felt exceptional.”</span>
