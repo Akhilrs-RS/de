@@ -21,8 +21,12 @@ export default function Footer() {
         
         {/* Left Column - Branding & Hours */}
         <div className="md:col-span-5 flex flex-col space-y-8">
-          <Link to="/" className="bg-white p-1 md:p-2 rounded-lg inline-flex items-center justify-center w-40 md:w-48 h-14 md:h-16 overflow-hidden">
-            <img src={getImage('global', 'footer-logo', marvicLogo)} alt="Manick Dental" className="w-full h-full object-contain scale-[3]" />
+          <Link to="/" className="bg-white px-4 py-3 rounded-xl inline-flex items-center justify-center w-fit hover:opacity-95 transition-opacity">
+            <img 
+              src={getImage('global', 'footer-logo', marvicLogo)} 
+              alt="Manick Dental" 
+              className="w-44 md:w-52 h-auto object-contain" 
+            />
           </Link>
           
           <p className="text-white/80 font-sans text-sm max-w-sm leading-relaxed">
@@ -73,7 +77,7 @@ export default function Footer() {
           <div className="flex flex-col space-y-4 font-sans text-sm text-white/80">
             {/* Address */}
             <a 
-              href="https://www.google.com/maps/search/?api=1&query=Manick+Dental+Clinic+Melpuram+Road+Kuzhithurai+Tamil+Nadu+629163" 
+              href="https://maps.app.goo.gl/Wn7qpfAhaTeNVAvF9?g_st=ic" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-start space-x-3 group hover:text-white transition-colors"
@@ -113,7 +117,7 @@ export default function Footer() {
 
           {/* Map Preview */}
           <a 
-            href="https://www.google.com/maps/search/?api=1&query=Manick+Dental+Clinic+Melpuram+Road+Kuzhithurai+Tamil+Nadu+629163" 
+            href="https://maps.app.goo.gl/Wn7qpfAhaTeNVAvF9?g_st=ic" 
             target="_blank" 
             rel="noopener noreferrer" 
             title="Open clinic location in Google Maps"

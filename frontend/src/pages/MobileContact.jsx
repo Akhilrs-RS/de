@@ -88,7 +88,7 @@ const MobileContact = () => {
           <section className="px-6 flex flex-col space-y-3.5 mb-12">
             {/* Card 1: Dental Clinic Address */}
             <a 
-              href="https://www.google.com/maps/search/?api=1&query=Manick+Dental+Clinic+Melpuram+Road+Kuzhithurai+Tamil+Nadu+629163" 
+              href="https://maps.app.goo.gl/Wn7qpfAhaTeNVAvF9?g_st=ic" 
               target="_blank" 
               rel="noopener noreferrer"
               className="bg-white rounded-[20px] p-5 shadow-sm border border-gray-100/60 flex items-start gap-4 hover:border-purple-200 active:scale-[0.99] transition-all"
@@ -308,7 +308,7 @@ const MobileContact = () => {
           {/* Map Location Section */}
           <div className="w-full overflow-hidden shadow-xs">
             <a 
-              href="https://www.google.com/maps/search/?api=1&query=Manick+Dental+Clinic+Melpuram+Road+Kuzhithurai+Tamil+Nadu+629163" 
+              href="https://maps.app.goo.gl/Wn7qpfAhaTeNVAvF9?g_st=ic" 
               target="_blank" 
               rel="noopener noreferrer"
               className="block w-full hover:opacity-95 transition-opacity"

@@ -60,7 +60,7 @@ const MobileFooter = () => {
           <h4 className="text-[#C4A47C] font-normal text-[15px] uppercase tracking-wider mb-5">Contact</h4>
           <div className="flex flex-col space-y-5 text-[13px] text-white font-light">
             <a 
-              href="https://www.google.com/maps/search/?api=1&query=Manick+Dental+Clinic+Melpuram+Road+Kuzhithurai+Tamil+Nadu+629163" 
+              href="https://maps.app.goo.gl/Wn7qpfAhaTeNVAvF9?g_st=ic" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-start gap-4 hover:text-white/80 transition-colors"
@@ -93,7 +93,7 @@ const MobileFooter = () => {
         {/* Map Section */}
         <div className="pt-2">
           <a 
-            href="https://www.google.com/maps/search/?api=1&query=Manick+Dental+Clinic+Melpuram+Road+Kuzhithurai+Tamil+Nadu+629163" 
+            href="https://maps.app.goo.gl/Wn7qpfAhaTeNVAvF9?g_st=ic" 
             target="_blank" 
             rel="noopener noreferrer"
             className="block rounded-xl overflow-hidden hover:opacity-95 transition-opacity"

@@ -79,21 +79,26 @@ export default function Contact() {
           <div className="lg:col-span-5 flex flex-col space-y-4">
             
             {/* Info Cards */}
-            <div className="bg-white rounded-2xl p-6 flex items-start space-x-4 shadow-sm border border-gray-100">
-              <div className="w-10 h-10 shrink-0 rounded-full bg-gray-50 flex items-center justify-center text-gray-600">
+            <a 
+              href="https://maps.app.goo.gl/Wn7qpfAhaTeNVAvF9?g_st=ic" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="bg-white rounded-2xl p-6 flex items-start space-x-4 shadow-sm border border-gray-100 hover:border-purple-200 transition-colors group block"
+            >
+              <div className="w-10 h-10 shrink-0 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 group-hover:text-[#431C75] transition-colors">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M12 22C16 18 20 14.4183 20 10C20 5.58172 16.4183 2 12 2C7.58172 2 4 5.58172 4 10C4 14.4183 8 18 12 22Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
               <div className="flex flex-col">
-                <h4 className="font-sans font-semibold text-gray-900 text-sm mb-1">Dental Clinic Address</h4>
+                <h4 className="font-sans font-semibold text-gray-900 text-sm mb-1 group-hover:text-[#431C75] transition-colors">Dental Clinic Address</h4>
                 <p className="font-sans text-xs text-gray-500 leading-relaxed">
                   Manick Dental, 14 Industrial Estate,<br />
                   Coimbatore, Tamil Nadu 641001
                 </p>
               </div>
-            </div>
+            </a>
 
             <div className="bg-white rounded-2xl p-6 flex items-start space-x-4 shadow-sm border border-gray-100">
               <div className="w-10 h-10 shrink-0 rounded-full bg-gray-50 flex items-center justify-center text-gray-600">
@@ -154,13 +159,18 @@ export default function Contact() {
             </div>
 
             {/* Map Image */}
-            <div className="w-full h-32 md:h-40 rounded-2xl overflow-hidden shadow-sm border border-gray-100 mt-2">
+            <a 
+              href="https://maps.app.goo.gl/Wn7qpfAhaTeNVAvF9?g_st=ic" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="w-full h-32 md:h-40 rounded-2xl overflow-hidden shadow-sm border border-gray-100 mt-2 block hover:opacity-95 transition-opacity"
+            >
               <img 
                 src={getImage('contact', 'map', cc2)} 
                 alt="Map Location" 
                 className="w-full h-full object-cover" 
               />
-            </div>
+            </a>
 
           </div>
 
