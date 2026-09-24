@@ -479,9 +479,9 @@ export default function Home() {
         {/* Floating Faces with Zooming In & Zooming Out Animation */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {/* 1. Far Left - Laughing man (Bottom-left, partially off-screen) */}
-          <div className="absolute top-[64%] left-[5.5%] -translate-x-1/2 -translate-y-1/2 w-14 h-14 sm:w-20 sm:h-20 md:w-26 md:h-26 lg:w-32 lg:h-32 xl:w-36 xl:h-36 pointer-events-auto">
+          <div className="absolute top-[50%] left-[20%] md:top-[64%] md:left-[12%] lg:left-[8%] -translate-x-1/2 -translate-y-1/2 w-10 h-10 sm:w-16 sm:h-16 md:w-26 md:h-26 lg:w-32 lg:h-32 xl:w-36 xl:h-36 pointer-events-auto">
             <motion.div
-              className="w-full h-full rounded-full overflow-hidden"
+              className="w-full h-full"
               animate={{ scale: [1, 1.08, 1] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0 }}
               whileHover={{ scale: 1.15, transition: { duration: 0.3 } }}
@@ -489,19 +489,15 @@ export default function Home() {
               <img 
                 src={getImage('home', 'patient-story-1', h6Image)} 
                 alt="Patient" 
-                className="w-full h-full object-cover rounded-full opacity-35 hover:opacity-75 transition-all duration-500 contrast-[0.95] brightness-[1.02]"
-                style={{
-                  maskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
-                  WebkitMaskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
-                }}
+                className="w-full h-full object-cover rounded-full opacity-[0.42] hover:opacity-100 transition-opacity duration-500"
               />
             </motion.div>
           </div>
 
           {/* 2. Upper Left - Child in yellow shirt (Mid-upper left, clear of text) */}
-          <div className="absolute top-[36%] md:top-[38%] left-[20%] md:left-[21%] -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-24 sm:h-24 md:w-30 md:h-30 lg:w-38 lg:h-38 xl:w-42 xl:h-42 pointer-events-auto">
+          <div className="hidden md:block absolute top-[18%] left-[15%] md:top-[38%] md:left-[21%] -translate-x-1/2 -translate-y-1/2 w-8 h-8 sm:w-12 sm:h-12 md:w-30 md:h-30 lg:w-38 lg:h-38 xl:w-42 xl:h-42 pointer-events-auto">
             <motion.div
-              className="w-full h-full rounded-full overflow-hidden"
+              className="w-full h-full"
               animate={{ scale: [1, 1.08, 1] }}
               transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
               whileHover={{ scale: 1.15, transition: { duration: 0.3 } }}
@@ -509,19 +505,15 @@ export default function Home() {
               <img 
                 src={getImage('home', 'patient-story-2', h7Image)} 
                 alt="Patient" 
-                className="w-full h-full object-cover rounded-full opacity-35 hover:opacity-75 transition-all duration-500 contrast-[0.95] brightness-[1.02]"
-                style={{
-                  maskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
-                  WebkitMaskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
-                }}
+                className="w-full h-full object-cover rounded-full opacity-[0.42] hover:opacity-100 transition-opacity duration-500"
               />
             </motion.div>
           </div>
 
           {/* 3. Center Left / Behind Text - Blonde woman */}
-          <div className="absolute top-[48%] left-[37%] md:left-[38%] -translate-x-1/2 -translate-y-1/2 w-18 h-18 sm:w-26 sm:h-26 md:w-34 md:h-34 lg:w-42 lg:h-42 xl:w-46 xl:h-46 pointer-events-auto">
+          <div className="absolute top-[85%] left-[25%] md:top-[48%] md:left-[38%] -translate-x-1/2 -translate-y-1/2 w-10 h-10 sm:w-14 sm:h-14 md:w-34 md:h-34 lg:w-42 lg:h-42 xl:w-46 xl:h-46 pointer-events-auto">
             <motion.div
-              className="w-full h-full rounded-full overflow-hidden"
+              className="w-full h-full"
               animate={{ scale: [1, 1.08, 1] }}
               transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2.4 }}
               whileHover={{ scale: 1.15, transition: { duration: 0.3 } }}
@@ -529,19 +521,15 @@ export default function Home() {
               <img 
                 src={getImage('home', 'patient-story-3', h8Image)} 
                 alt="Patient" 
-                className="w-full h-full object-cover rounded-full opacity-35 hover:opacity-75 transition-all duration-500 contrast-[0.95] brightness-[1.02]"
-                style={{
-                  maskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
-                  WebkitMaskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
-                }}
+                className="w-full h-full object-cover rounded-full opacity-[0.42] hover:opacity-100 transition-opacity duration-500"
               />
             </motion.div>
           </div>
 
           {/* 4. Center Right / Behind Text - Woman smiling & pointing */}
-          <div className="absolute top-[42%] left-[61%] md:left-[62%] -translate-x-1/2 -translate-y-1/2 w-18 h-18 sm:w-26 sm:h-26 md:w-34 md:h-34 lg:w-42 lg:h-42 xl:w-46 xl:h-46 pointer-events-auto">
+          <div className="absolute top-[15%] left-[80%] md:top-[42%] md:left-[62%] -translate-x-1/2 -translate-y-1/2 w-10 h-10 sm:w-14 sm:h-14 md:w-34 md:h-34 lg:w-42 lg:h-42 xl:w-46 xl:h-46 pointer-events-auto">
             <motion.div
-              className="w-full h-full rounded-full overflow-hidden"
+              className="w-full h-full"
               animate={{ scale: [1, 1.08, 1] }}
               transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
               whileHover={{ scale: 1.15, transition: { duration: 0.3 } }}
@@ -549,19 +537,15 @@ export default function Home() {
               <img 
                 src={getImage('home', 'patient-story-4', h9Image)} 
                 alt="Patient" 
-                className="w-full h-full object-cover rounded-full opacity-35 hover:opacity-75 transition-all duration-500 contrast-[0.95] brightness-[1.02]"
-                style={{
-                  maskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
-                  WebkitMaskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
-                }}
+                className="w-full h-full object-cover rounded-full opacity-[0.42] hover:opacity-100 transition-opacity duration-500"
               />
             </motion.div>
           </div>
 
           {/* 5. Lower Right - Man pointing to smile (Bottom-right, clear of quote) */}
-          <div className="absolute top-[64%] md:top-[66%] left-[77%] md:left-[78%] -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-24 sm:h-24 md:w-30 md:h-30 lg:w-38 lg:h-38 xl:w-42 xl:h-42 pointer-events-auto">
+          <div className="absolute top-[80%] left-[75%] md:top-[66%] md:left-[78%] -translate-x-1/2 -translate-y-1/2 w-12 h-12 sm:w-16 sm:h-16 md:w-30 md:h-30 lg:w-38 lg:h-38 xl:w-42 xl:h-42 pointer-events-auto">
             <motion.div
-              className="w-full h-full rounded-full overflow-hidden"
+              className="w-full h-full"
               animate={{ scale: [1, 1.08, 1] }}
               transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut", delay: 2.0 }}
               whileHover={{ scale: 1.15, transition: { duration: 0.3 } }}
@@ -569,19 +553,15 @@ export default function Home() {
               <img 
                 src={getImage('home', 'patient-story-5', h10Image)} 
                 alt="Patient" 
-                className="w-full h-full object-cover rounded-full opacity-35 hover:opacity-75 transition-all duration-500 contrast-[0.95] brightness-[1.02]"
-                style={{
-                  maskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
-                  WebkitMaskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
-                }}
+                className="w-full h-full object-cover rounded-full opacity-[0.42] hover:opacity-100 transition-opacity duration-500"
               />
             </motion.div>
           </div>
 
           {/* 6. Far Right - Man looking right (Mid-right, partially off-screen) */}
-          <div className="absolute top-[44%] left-[94%] -translate-x-1/2 -translate-y-1/2 w-14 h-14 sm:w-20 sm:h-20 md:w-26 md:h-26 lg:w-32 lg:h-32 xl:w-36 xl:h-36 pointer-events-auto">
+          <div className="absolute top-[18%] left-[35%] md:top-[44%] md:left-[88%] lg:left-[92%] -translate-x-1/2 -translate-y-1/2 w-12 h-12 sm:w-16 sm:h-16 md:w-26 md:h-26 lg:w-32 lg:h-32 xl:w-36 xl:h-36 pointer-events-auto">
             <motion.div
-              className="w-full h-full rounded-full overflow-hidden"
+              className="w-full h-full"
               animate={{ scale: [1, 1.08, 1] }}
               transition={{ duration: 6.8, repeat: Infinity, ease: "easeInOut", delay: 1.6 }}
               whileHover={{ scale: 1.15, transition: { duration: 0.3 } }}
@@ -589,11 +569,7 @@ export default function Home() {
               <img 
                 src={getImage('home', 'patient-story-6', h11Image)} 
                 alt="Patient" 
-                className="w-full h-full object-cover rounded-full opacity-35 hover:opacity-75 transition-all duration-500 contrast-[0.95] brightness-[1.02]"
-                style={{
-                  maskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
-                  WebkitMaskImage: 'radial-gradient(circle, black 60%, rgba(0,0,0,0.5) 80%, transparent 100%)',
-                }}
+                className="w-full h-full object-cover rounded-full opacity-[0.42] hover:opacity-100 transition-opacity duration-500"
               />
             </motion.div>
           </div>

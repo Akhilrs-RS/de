@@ -421,68 +421,68 @@ const MobileLanding = () => {
         >
           {/* Floating Faces with subtle breathe animation */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            {/* 1. Far Left - Laughing man (h6.png) */}
+            {/* 1. Far Left - Laughing man (h6.png) - brought inward away from border */}
             <motion.div
-              className="absolute top-[54%] left-[4%] -translate-x-1/2 -translate-y-1/2 w-[56px] h-[56px] rounded-full overflow-hidden"
+              className="absolute top-[52%] left-[12%] -translate-x-1/2 -translate-y-1/2 w-[52px] h-[52px] rounded-full overflow-hidden"
               animate={{ scale: [1, 1.07, 1] }}
               transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut", delay: 0 }}
             >
               <img 
                 src={getImage('home', 'patient-story-1', h6Image)} 
                 alt="Patient Story 1" 
-                className="w-full h-full object-cover rounded-full opacity-75"
+                className="w-full h-full object-cover rounded-full opacity-[0.42]"
               />
             </motion.div>
 
             {/* 2. Top Left - Man looking right / up (h11.png) */}
             <motion.div
-              className="absolute top-[28%] left-[27%] -translate-x-1/2 -translate-y-1/2 w-[68px] h-[68px] rounded-full overflow-hidden"
+              className="absolute top-[26%] left-[28%] -translate-x-1/2 -translate-y-1/2 w-[64px] h-[64px] rounded-full overflow-hidden"
               animate={{ scale: [1, 1.07, 1] }}
               transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
             >
               <img 
                 src={getImage('home', 'patient-story-6', h11Image)} 
                 alt="Patient Story 2" 
-                className="w-full h-full object-cover rounded-full opacity-75"
+                className="w-full h-full object-cover rounded-full opacity-[0.42]"
               />
             </motion.div>
 
             {/* 3. Center Bottom - Man pointing to smile (h10.png) */}
             <motion.div
-              className="absolute top-[75%] left-[51%] -translate-x-1/2 -translate-y-1/2 w-[54px] h-[54px] rounded-full overflow-hidden"
+              className="absolute top-[76%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[54px] h-[54px] rounded-full overflow-hidden"
               animate={{ scale: [1, 1.07, 1] }}
               transition={{ duration: 6.6, repeat: Infinity, ease: "easeInOut", delay: 2.4 }}
             >
               <img 
                 src={getImage('home', 'patient-story-5', h10Image)} 
                 alt="Patient Story 3" 
-                className="w-full h-full object-cover rounded-full opacity-75"
+                className="w-full h-full object-cover rounded-full opacity-[0.42]"
               />
             </motion.div>
 
             {/* 4. Top Right - Woman smiling & pointing (h9.png) */}
             <motion.div
-              className="absolute top-[28%] left-[75%] -translate-x-1/2 -translate-y-1/2 w-[70px] h-[70px] rounded-full overflow-hidden"
+              className="absolute top-[26%] left-[72%] -translate-x-1/2 -translate-y-1/2 w-[66px] h-[66px] rounded-full overflow-hidden"
               animate={{ scale: [1, 1.07, 1] }}
               transition={{ duration: 5.6, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
             >
               <img 
                 src={getImage('home', 'patient-story-4', h9Image)} 
                 alt="Patient Story 4" 
-                className="w-full h-full object-cover rounded-full opacity-75"
+                className="w-full h-full object-cover rounded-full opacity-[0.42]"
               />
             </motion.div>
 
-            {/* 5. Far Right - Blonde woman (h8.png) */}
+            {/* 5. Far Right - Blonde woman (h8.png) - brought inward away from border */}
             <motion.div
-              className="absolute top-[56%] left-[96%] -translate-x-1/2 -translate-y-1/2 w-[60px] h-[60px] rounded-full overflow-hidden"
+              className="absolute top-[52%] left-[88%] -translate-x-1/2 -translate-y-1/2 w-[54px] h-[54px] rounded-full overflow-hidden"
               animate={{ scale: [1, 1.07, 1] }}
               transition={{ duration: 6.0, repeat: Infinity, ease: "easeInOut", delay: 1.8 }}
             >
               <img 
                 src={getImage('home', 'patient-story-3', h8Image)} 
                 alt="Patient Story 5" 
-                className="w-full h-full object-cover rounded-full opacity-75"
+                className="w-full h-full object-cover rounded-full opacity-[0.42]"
               />
             </motion.div>
           </div>
