@@ -416,7 +416,7 @@ const MobileLanding = () => {
 
         {/* Patient Stories Banner */}
         <section 
-          className="relative w-full bg-[#7E6399] min-h-[195px] sm:min-h-[215px] py-7 px-3 flex flex-col items-center justify-center text-center shrink-0 overflow-hidden select-none"
+          className="relative w-full bg-[#7E6399] min-h-[210px] sm:min-h-[225px] py-8 px-2 flex flex-col items-center justify-center text-center shrink-0 overflow-hidden select-none"
           style={{ backgroundColor: '#7E6399' }}
         >
           {/* Floating Faces with subtle breathe animation */}
@@ -436,7 +436,7 @@ const MobileLanding = () => {
 
             {/* 2. Top Left - Man looking right / up (h11.png) */}
             <motion.div
-              className="absolute top-[34%] left-[28%] -translate-x-1/2 -translate-y-1/2 w-[68px] h-[68px] rounded-full overflow-hidden"
+              className="absolute top-[28%] left-[27%] -translate-x-1/2 -translate-y-1/2 w-[68px] h-[68px] rounded-full overflow-hidden"
               animate={{ scale: [1, 1.07, 1] }}
               transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
             >
@@ -449,7 +449,7 @@ const MobileLanding = () => {
 
             {/* 3. Center Bottom - Man pointing to smile (h10.png) */}
             <motion.div
-              className="absolute top-[67%] left-[52%] -translate-x-1/2 -translate-y-1/2 w-[54px] h-[54px] rounded-full overflow-hidden"
+              className="absolute top-[75%] left-[51%] -translate-x-1/2 -translate-y-1/2 w-[54px] h-[54px] rounded-full overflow-hidden"
               animate={{ scale: [1, 1.07, 1] }}
               transition={{ duration: 6.6, repeat: Infinity, ease: "easeInOut", delay: 2.4 }}
             >
@@ -462,7 +462,7 @@ const MobileLanding = () => {
 
             {/* 4. Top Right - Woman smiling & pointing (h9.png) */}
             <motion.div
-              className="absolute top-[33%] left-[75%] -translate-x-1/2 -translate-y-1/2 w-[70px] h-[70px] rounded-full overflow-hidden"
+              className="absolute top-[28%] left-[75%] -translate-x-1/2 -translate-y-1/2 w-[70px] h-[70px] rounded-full overflow-hidden"
               animate={{ scale: [1, 1.07, 1] }}
               transition={{ duration: 5.6, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
             >
@@ -489,10 +489,10 @@ const MobileLanding = () => {
 
           {/* Center Content */}
           <div className="relative z-10 flex flex-col items-center w-full px-2 pointer-events-none">
-            <span className="text-white text-[11px] font-sans font-normal mb-2 tracking-normal">
+            <span className="text-white/95 text-[12px] sm:text-[13px] font-sans font-normal mb-2.5 tracking-normal">
               Patient Stories
             </span>
-            <h2 className="font-serif text-[14.5px] font-medium text-white leading-[1.32] drop-shadow-[0_1px_4px_rgba(0,0,0,0.45)] max-w-[290px]">
+            <h2 className="font-serif text-[19px] sm:text-[21px] font-normal text-white leading-[1.3] drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)] max-w-[340px] sm:max-w-[370px]">
               <span className="block whitespace-nowrap">“From the first consultation to my final</span>
               <span className="block">smile,</span>
               <span className="block text-[#F7D6A4] italic font-normal">every detail felt exceptional.”</span>
