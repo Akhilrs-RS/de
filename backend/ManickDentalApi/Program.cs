@@ -107,11 +107,28 @@ using (var scope = app.Services.CreateScope())
                     `AspectRatio` VARCHAR(50) NOT NULL,
                     `DefaultAssetUrl` LONGTEXT NOT NULL,
                     `CustomImageUrl` LONGTEXT NULL,
+                    `ImageData` LONGBLOB NULL,
+                    `ContentType` VARCHAR(100) NULL,
                     `UpdatedAt` DATETIME(6) NOT NULL,
                     PRIMARY KEY (`Id`),
                     UNIQUE KEY `IX_PageImages_PageKey_SectionKey` (`PageKey`, `SectionKey`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
             ");
+
+            // Migration safeguard: Ensure ImageData and ContentType exist if table was created previously
+            try
+            {
+                await context.Database.ExecuteSqlRawAsync(@"
+                    ALTER TABLE `PageImages` ADD COLUMN IF NOT EXISTS `ImageData` LONGBLOB NULL;
+                ");
+                await context.Database.ExecuteSqlRawAsync(@"
+                    ALTER TABLE `PageImages` ADD COLUMN IF NOT EXISTS `ContentType` VARCHAR(100) NULL;
+                ");
+            }
+            catch (Exception alterEx)
+            {
+                logger.LogWarning("PageImages column check warning: {Message}", alterEx.Message);
+            }
 
             await DataSeeder.SeedAsync(context);
             logger.LogInformation("MySQL database successfully connected and seeded!");

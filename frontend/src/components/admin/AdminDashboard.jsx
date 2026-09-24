@@ -5,11 +5,18 @@ import marvicLogo from '../../assets/marvic.png';
 
 const PAGE_TABS = [
   { id: 'all', label: 'All Pages' },
+  { id: 'global', label: 'Global / Logos' },
   { id: 'home', label: 'Home Page' },
+  { id: 'mobile-home', label: 'Mobile Home' },
+  { id: 'about', label: 'About Us' },
   { id: 'our-story', label: 'Our Story' },
-  { id: 'services', label: 'Services (13)' },
+  { id: 'services', label: 'Services' },
   { id: 'clinic-tour', label: 'Clinic Tour' },
   { id: 'treatments', label: 'Treatments' },
+  { id: 'general-checkup', label: 'General Checkup' },
+  { id: 'smile-makeover', label: 'Smile Makeover' },
+  { id: 'invisible-aligners', label: 'Invisible Aligners' },
+  { id: 'cosmetic-dentistry', label: 'Cosmetic Dentistry' },
   { id: 'book-appointment', label: 'Book Appointment' },
   { id: 'contact', label: 'Contact' }
 ];

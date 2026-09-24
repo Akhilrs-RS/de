@@ -495,68 +495,127 @@ namespace ManickDentalApi.Data
                 await context.SaveChangesAsync();
             }
 
-            // Seed Page Image Catalog for Admin Image Management
-            if (!await context.PageImages.AnyAsync())
+            // Seed / Sync Page Image Catalog for Admin Image Management
+            var pageImages = new List<PageImage>
             {
-                var pageImages = new List<PageImage>
-                {
-                    // Home Page
-                    new PageImage { PageKey = "home", SectionKey = "hero", Label = "Home Hero Smiling Patient", AspectRatio = "1:1", DefaultAssetUrl = "/assets/hero.png" },
-                    new PageImage { PageKey = "home", SectionKey = "doctor", Label = "Lead Dentist Profile: Dr. Elena Marchetti", AspectRatio = "4:5", DefaultAssetUrl = "/assets/h5.png" },
-                    new PageImage { PageKey = "home", SectionKey = "treatment-checkup", Label = "Signature: General Checkup", AspectRatio = "4:3", DefaultAssetUrl = "/assets/s1.png" },
-                    new PageImage { PageKey = "home", SectionKey = "treatment-makeover", Label = "Signature: Smile Makeover", AspectRatio = "4:3", DefaultAssetUrl = "/assets/s.png" },
-                    new PageImage { PageKey = "home", SectionKey = "treatment-aligners", Label = "Signature: Invisible Aligners", AspectRatio = "4:3", DefaultAssetUrl = "/assets/s.png" },
-                    new PageImage { PageKey = "home", SectionKey = "treatment-cosmetic", Label = "Signature: Cosmetic Dentistry", AspectRatio = "4:3", DefaultAssetUrl = "/assets/s1.png" },
+                // Global (Logos & Footer)
+                new PageImage { PageKey = "global", SectionKey = "navbar-logo", Label = "Global: Navbar Clinic Logo", AspectRatio = "Landscape", DefaultAssetUrl = "/assets/marvic.png" },
+                new PageImage { PageKey = "global", SectionKey = "footer-logo", Label = "Global: Footer Clinic Logo", AspectRatio = "Landscape", DefaultAssetUrl = "/assets/marvic.png" },
+                new PageImage { PageKey = "global", SectionKey = "footer-map", Label = "Global: Footer Map Location Preview", AspectRatio = "16:9", DefaultAssetUrl = "/assets/map.png" },
 
-                    // Our Story Page
-                    new PageImage { PageKey = "our-story", SectionKey = "hero", Label = "Our Story Hero Image", AspectRatio = "4:5", DefaultAssetUrl = "/assets/o1.png" },
-                    new PageImage { PageKey = "our-story", SectionKey = "team-dr-james", Label = "Principal Dentist: Dr. James Bennett", AspectRatio = "4:3", DefaultAssetUrl = "/assets/h5.png" },
-                    new PageImage { PageKey = "our-story", SectionKey = "team-amelia", Label = "Senior Dental Nurse: Amelia Carter", AspectRatio = "4:3", DefaultAssetUrl = "/assets/o2.png" },
-                    new PageImage { PageKey = "our-story", SectionKey = "card-crowns", Label = "Case 1 & 5: Dental Crowns", AspectRatio = "4:3", DefaultAssetUrl = "/assets/story_dental_crowns.png" },
-                    new PageImage { PageKey = "our-story", SectionKey = "card-aligners", Label = "Case 2 & 6: Clear Aligners", AspectRatio = "4:3", DefaultAssetUrl = "/assets/story_clear_aligners.png" },
-                    new PageImage { PageKey = "our-story", SectionKey = "card-whitening", Label = "Case 3 & 4: Teeth Whitening", AspectRatio = "4:3", DefaultAssetUrl = "/assets/story_teeth_whitening.png" },
-                    new PageImage { PageKey = "our-story", SectionKey = "operatory-banner", Label = "Operatory Suite Banner: More Than Just a Treatment", AspectRatio = "16:9", DefaultAssetUrl = "/assets/our.jpg" },
+                // Mobile Landing Page
+                new PageImage { PageKey = "mobile-home", SectionKey = "hero", Label = "Mobile Home: Hero Background (y.png)", AspectRatio = "Portrait", DefaultAssetUrl = "/assets/y.png" },
 
-                    // Services Page (13 services)
-                    new PageImage { PageKey = "services", SectionKey = "s2", Label = "Service: General Checkup & Consultation", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s2.png" },
-                    new PageImage { PageKey = "services", SectionKey = "s3", Label = "Service: Scaling & Cleaning", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s3.png" },
-                    new PageImage { PageKey = "services", SectionKey = "s4", Label = "Service: Tooth Filling (Restoration)", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s4.png" },
-                    new PageImage { PageKey = "services", SectionKey = "s5", Label = "Service: Root Canal Treatment", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s5.png" },
-                    new PageImage { PageKey = "services", SectionKey = "s6", Label = "Service: Tooth Extraction", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s6.png" },
-                    new PageImage { PageKey = "services", SectionKey = "s7", Label = "Service: Cosmetic Dentistry", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s7.png" },
-                    new PageImage { PageKey = "services", SectionKey = "s8", Label = "Service: Teeth Whitening", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s8.png" },
-                    new PageImage { PageKey = "services", SectionKey = "s9", Label = "Service: Dental Implants", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s9.png" },
-                    new PageImage { PageKey = "services", SectionKey = "s10", Label = "Service: Crowns & Bridges", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s10.png" },
-                    new PageImage { PageKey = "services", SectionKey = "s11", Label = "Service: Mouth Guards", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s11.png" },
-                    new PageImage { PageKey = "services", SectionKey = "s12", Label = "Service: Tooth Reshaping", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s12.png" },
-                    new PageImage { PageKey = "services", SectionKey = "s13", Label = "Service: Veneers & Crowns", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s13.png" },
-                    new PageImage { PageKey = "services", SectionKey = "s14", Label = "Service: Digital X-Ray", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s14.png" },
+                // Home Page
+                new PageImage { PageKey = "home", SectionKey = "hero", Label = "Home Hero Smiling Patient", AspectRatio = "1:1", DefaultAssetUrl = "/assets/hero.png" },
+                new PageImage { PageKey = "home", SectionKey = "section-2-image", Label = "Home: Modern Dentistry Interior", AspectRatio = "4:3", DefaultAssetUrl = "/assets/h1.png" },
+                new PageImage { PageKey = "home", SectionKey = "about", Label = "Home: Atelier Portrait", AspectRatio = "4:5", DefaultAssetUrl = "/assets/ha.png" },
+                new PageImage { PageKey = "home", SectionKey = "treatment-1", Label = "Home: Treatment 1 Card (General Checkup)", AspectRatio = "4:3", DefaultAssetUrl = "/assets/h2.png" },
+                new PageImage { PageKey = "home", SectionKey = "treatment-2", Label = "Home: Treatment 2 Card (Invisible Aligners)", AspectRatio = "4:3", DefaultAssetUrl = "/assets/h3.png" },
+                new PageImage { PageKey = "home", SectionKey = "treatment-3", Label = "Home: Treatment 3 Card (Cosmetic Dentistry)", AspectRatio = "4:3", DefaultAssetUrl = "/assets/h4.png" },
+                new PageImage { PageKey = "home", SectionKey = "doctor", Label = "Lead Dentist Profile: Dr. Elena Marchetti", AspectRatio = "4:5", DefaultAssetUrl = "/assets/h5.png" },
+                new PageImage { PageKey = "home", SectionKey = "treatment-checkup", Label = "Signature: General Checkup", AspectRatio = "4:3", DefaultAssetUrl = "/assets/s1.png" },
+                new PageImage { PageKey = "home", SectionKey = "treatment-makeover", Label = "Signature: Smile Makeover", AspectRatio = "4:3", DefaultAssetUrl = "/assets/s.png" },
+                new PageImage { PageKey = "home", SectionKey = "treatment-aligners", Label = "Signature: Invisible Aligners", AspectRatio = "4:3", DefaultAssetUrl = "/assets/s.png" },
+                new PageImage { PageKey = "home", SectionKey = "treatment-cosmetic", Label = "Signature: Cosmetic Dentistry", AspectRatio = "4:3", DefaultAssetUrl = "/assets/s1.png" },
+                new PageImage { PageKey = "home", SectionKey = "patient-story-1", Label = "Patient Stories 1: Laughing Man", AspectRatio = "1:1", DefaultAssetUrl = "/assets/h6.png" },
+                new PageImage { PageKey = "home", SectionKey = "patient-story-2", Label = "Patient Stories 2: Child in Yellow", AspectRatio = "1:1", DefaultAssetUrl = "/assets/h7.png" },
+                new PageImage { PageKey = "home", SectionKey = "patient-story-3", Label = "Patient Stories 3: Blonde Woman", AspectRatio = "1:1", DefaultAssetUrl = "/assets/h8.png" },
+                new PageImage { PageKey = "home", SectionKey = "patient-story-4", Label = "Patient Stories 4: Woman Smiling", AspectRatio = "1:1", DefaultAssetUrl = "/assets/h9.png" },
+                new PageImage { PageKey = "home", SectionKey = "patient-story-5", Label = "Patient Stories 5: Man Pointing to Smile", AspectRatio = "1:1", DefaultAssetUrl = "/assets/h10.png" },
+                new PageImage { PageKey = "home", SectionKey = "patient-story-6", Label = "Patient Stories 6: Man Looking Up/Right", AspectRatio = "1:1", DefaultAssetUrl = "/assets/h11.png" },
+                new PageImage { PageKey = "home", SectionKey = "testimonial-1", Label = "Testimonial 1: Amara T. Avatar", AspectRatio = "1:1", DefaultAssetUrl = "/assets/avatar_amara.png" },
+                new PageImage { PageKey = "home", SectionKey = "testimonial-2", Label = "Testimonial 2: Daniel K. Avatar", AspectRatio = "1:1", DefaultAssetUrl = "/assets/avatar_daniel.png" },
+                new PageImage { PageKey = "home", SectionKey = "testimonial-3", Label = "Testimonial 3: Sophie M. Avatar", AspectRatio = "1:1", DefaultAssetUrl = "/assets/avatar_sophie.png" },
 
-                    // Clinic Tour Page (6 areas)
-                    new PageImage { PageKey = "clinic-tour", SectionKey = "c1", Label = "Clinic Tour: Reception & Waiting Lounge", AspectRatio = "16:9", DefaultAssetUrl = "/assets/c1.png" },
-                    new PageImage { PageKey = "clinic-tour", SectionKey = "c2", Label = "Clinic Tour: Reception Desk & Green Wall", AspectRatio = "1:1", DefaultAssetUrl = "/assets/c2.png" },
-                    new PageImage { PageKey = "clinic-tour", SectionKey = "c3", Label = "Clinic Tour: Private Consultation Room", AspectRatio = "3:4", DefaultAssetUrl = "/assets/c3.jpg" },
-                    new PageImage { PageKey = "clinic-tour", SectionKey = "c4", Label = "Clinic Tour: Treatment Operatory Suite", AspectRatio = "16:9", DefaultAssetUrl = "/assets/c4.png" },
-                    new PageImage { PageKey = "clinic-tour", SectionKey = "c5", Label = "Clinic Tour: Digital X-Ray & Imaging Lab", AspectRatio = "16:9", DefaultAssetUrl = "/assets/c5.png" },
-                    new PageImage { PageKey = "clinic-tour", SectionKey = "c6", Label = "Clinic Tour: Sterilization & Hygiene Facility", AspectRatio = "16:9", DefaultAssetUrl = "/assets/c6.png" },
+                // About Us Page
+                new PageImage { PageKey = "about", SectionKey = "hero-main", Label = "About: Main Doctor & Patient Photo", AspectRatio = "4:5", DefaultAssetUrl = "/assets/a1.png" },
+                new PageImage { PageKey = "about", SectionKey = "hero-secondary", Label = "About: Floating Tooth Icon", AspectRatio = "1:1", DefaultAssetUrl = "/assets/ab.png" },
+                new PageImage { PageKey = "about", SectionKey = "team-james", Label = "About: Principal Dentist Dr. James Bennett", AspectRatio = "4:3", DefaultAssetUrl = "/assets/h5.png" },
+                new PageImage { PageKey = "about", SectionKey = "team-amelia", Label = "About: Senior Dental Nurse Amelia Carter", AspectRatio = "4:3", DefaultAssetUrl = "/assets/h12.png" },
 
-                    // Treatments Pages
-                    new PageImage { PageKey = "treatments", SectionKey = "checkup-hero", Label = "General Checkup: Hero Graphic", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s1.png" },
-                    new PageImage { PageKey = "treatments", SectionKey = "checkup-banner", Label = "General Checkup: Wide Banner", AspectRatio = "3:4", DefaultAssetUrl = "/assets/g.jpg" },
-                    new PageImage { PageKey = "treatments", SectionKey = "makeover-hero", Label = "Smile Makeover: Hero Graphic", AspectRatio = "4:5", DefaultAssetUrl = "/assets/s.png" },
-                    new PageImage { PageKey = "treatments", SectionKey = "makeover-banner", Label = "Smile Makeover: Wide Banner", AspectRatio = "1:1", DefaultAssetUrl = "/assets/ss.png" },
-                    new PageImage { PageKey = "treatments", SectionKey = "aligners-hero", Label = "Invisible Aligners: Hero Graphic", AspectRatio = "4:5", DefaultAssetUrl = "/assets/s.png" },
-                    new PageImage { PageKey = "treatments", SectionKey = "aligners-banner", Label = "Invisible Aligners: Wide Banner", AspectRatio = "4:3", DefaultAssetUrl = "/assets/g.png" },
-                    new PageImage { PageKey = "treatments", SectionKey = "cosmetic-hero", Label = "Cosmetic Dentistry: Hero Graphic", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s1.png" },
-                    new PageImage { PageKey = "treatments", SectionKey = "cosmetic-banner", Label = "Cosmetic Dentistry: Wide Banner", AspectRatio = "3:4", DefaultAssetUrl = "/assets/g.jpg" },
+                // Our Story Page
+                new PageImage { PageKey = "our-story", SectionKey = "hero", Label = "Our Story Hero Image", AspectRatio = "4:5", DefaultAssetUrl = "/assets/o1.png" },
+                new PageImage { PageKey = "our-story", SectionKey = "team-dr-james", Label = "Principal Dentist: Dr. James Bennett", AspectRatio = "4:3", DefaultAssetUrl = "/assets/h5.png" },
+                new PageImage { PageKey = "our-story", SectionKey = "team-amelia", Label = "Senior Dental Nurse: Amelia Carter", AspectRatio = "4:3", DefaultAssetUrl = "/assets/o2.png" },
+                new PageImage { PageKey = "our-story", SectionKey = "card-crowns", Label = "Case 1 & 5: Dental Crowns", AspectRatio = "4:3", DefaultAssetUrl = "/assets/story_dental_crowns.png" },
+                new PageImage { PageKey = "our-story", SectionKey = "card-aligners", Label = "Case 2 & 6: Clear Aligners", AspectRatio = "4:3", DefaultAssetUrl = "/assets/story_clear_aligners.png" },
+                new PageImage { PageKey = "our-story", SectionKey = "card-whitening", Label = "Case 3 & 4: Teeth Whitening", AspectRatio = "4:3", DefaultAssetUrl = "/assets/story_teeth_whitening.png" },
+                new PageImage { PageKey = "our-story", SectionKey = "operatory-banner", Label = "Operatory Suite Banner: More Than Just a Treatment", AspectRatio = "16:9", DefaultAssetUrl = "/assets/our.jpg" },
 
-                    // Booking & Contact
-                    new PageImage { PageKey = "book", SectionKey = "side-image", Label = "Book Appointment: Side Consultation Image", AspectRatio = "3:4", DefaultAssetUrl = "/assets/book.png" },
-                    new PageImage { PageKey = "contact", SectionKey = "hero-image", Label = "Contact Page: Hero Graphic", AspectRatio = "4:5", DefaultAssetUrl = "/assets/cc1.png" },
-                    new PageImage { PageKey = "contact", SectionKey = "map-image", Label = "Contact Page: Map Location Preview", AspectRatio = "16:9", DefaultAssetUrl = "/assets/cc2.png" }
-                };
+                // Services Page (14 services & hero)
+                new PageImage { PageKey = "services", SectionKey = "s1", Label = "Services: Hero Consultation Graphic", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s1.png" },
+                new PageImage { PageKey = "services", SectionKey = "s2", Label = "Service: General Checkup & Consultation", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s2.png" },
+                new PageImage { PageKey = "services", SectionKey = "s3", Label = "Service: Scaling & Cleaning", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s3.png" },
+                new PageImage { PageKey = "services", SectionKey = "s4", Label = "Service: Tooth Filling (Restoration)", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s4.png" },
+                new PageImage { PageKey = "services", SectionKey = "s5", Label = "Service: Root Canal Treatment", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s5.png" },
+                new PageImage { PageKey = "services", SectionKey = "s6", Label = "Service: Tooth Extraction", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s6.png" },
+                new PageImage { PageKey = "services", SectionKey = "s7", Label = "Service: Cosmetic Dentistry", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s7.png" },
+                new PageImage { PageKey = "services", SectionKey = "s8", Label = "Service: Teeth Whitening", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s8.png" },
+                new PageImage { PageKey = "services", SectionKey = "s9", Label = "Service: Dental Implants", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s9.png" },
+                new PageImage { PageKey = "services", SectionKey = "s10", Label = "Service: Crowns & Bridges", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s10.png" },
+                new PageImage { PageKey = "services", SectionKey = "s11", Label = "Service: Mouth Guards", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s11.png" },
+                new PageImage { PageKey = "services", SectionKey = "s12", Label = "Service: Tooth Reshaping", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s12.png" },
+                new PageImage { PageKey = "services", SectionKey = "s13", Label = "Service: Veneers & Crowns", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s13.png" },
+                new PageImage { PageKey = "services", SectionKey = "s14", Label = "Service: Digital X-Ray", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s14.png" },
 
-                context.PageImages.AddRange(pageImages);
+                // Clinic Tour Page (6 areas)
+                new PageImage { PageKey = "clinic-tour", SectionKey = "c1", Label = "Clinic Tour: Reception & Waiting Lounge", AspectRatio = "16:9", DefaultAssetUrl = "/assets/c1.png" },
+                new PageImage { PageKey = "clinic-tour", SectionKey = "c2", Label = "Clinic Tour: Reception Desk & Green Wall", AspectRatio = "1:1", DefaultAssetUrl = "/assets/c2.png" },
+                new PageImage { PageKey = "clinic-tour", SectionKey = "c3", Label = "Clinic Tour: Private Consultation Room", AspectRatio = "3:4", DefaultAssetUrl = "/assets/c3.jpg" },
+                new PageImage { PageKey = "clinic-tour", SectionKey = "c4", Label = "Clinic Tour: Treatment Operatory Suite", AspectRatio = "16:9", DefaultAssetUrl = "/assets/c4.png" },
+                new PageImage { PageKey = "clinic-tour", SectionKey = "c5", Label = "Clinic Tour: Digital X-Ray & Imaging Lab", AspectRatio = "16:9", DefaultAssetUrl = "/assets/c5.png" },
+                new PageImage { PageKey = "clinic-tour", SectionKey = "c6", Label = "Clinic Tour: Sterilization & Hygiene Facility", AspectRatio = "16:9", DefaultAssetUrl = "/assets/c6.png" },
+
+                // Dedicated Treatment Pages
+                new PageImage { PageKey = "general-checkup", SectionKey = "hero-image", Label = "General Checkup: Hero Graphic", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s.png" },
+                new PageImage { PageKey = "general-checkup", SectionKey = "section-2-image", Label = "General Checkup: Tooth Graphic", AspectRatio = "1:1", DefaultAssetUrl = "/assets/ab.png" },
+                new PageImage { PageKey = "general-checkup", SectionKey = "footer-banner", Label = "General Checkup: Bottom Banner", AspectRatio = "3:4", DefaultAssetUrl = "/assets/g.jpg" },
+
+                new PageImage { PageKey = "smile-makeover", SectionKey = "hero-image", Label = "Smile Makeover: Hero Graphic", AspectRatio = "4:5", DefaultAssetUrl = "/assets/s.png" },
+                new PageImage { PageKey = "smile-makeover", SectionKey = "section-2-image", Label = "Smile Makeover: Tooth Graphic", AspectRatio = "1:1", DefaultAssetUrl = "/assets/ab.png" },
+                new PageImage { PageKey = "smile-makeover", SectionKey = "footer-banner", Label = "Smile Makeover: Bottom Banner", AspectRatio = "1:1", DefaultAssetUrl = "/assets/ss.png" },
+
+                new PageImage { PageKey = "invisible-aligners", SectionKey = "hero-image", Label = "Invisible Aligners: Hero Graphic", AspectRatio = "4:5", DefaultAssetUrl = "/assets/s.png" },
+                new PageImage { PageKey = "invisible-aligners", SectionKey = "section-2-image", Label = "Invisible Aligners: Tooth Graphic", AspectRatio = "1:1", DefaultAssetUrl = "/assets/ab.png" },
+                new PageImage { PageKey = "invisible-aligners", SectionKey = "footer-banner", Label = "Invisible Aligners: Bottom Banner", AspectRatio = "4:3", DefaultAssetUrl = "/assets/g.png" },
+
+                new PageImage { PageKey = "cosmetic-dentistry", SectionKey = "hero-image", Label = "Cosmetic Dentistry: Hero Graphic", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s.png" },
+                new PageImage { PageKey = "cosmetic-dentistry", SectionKey = "section-2-image", Label = "Cosmetic Dentistry: Tooth Graphic", AspectRatio = "1:1", DefaultAssetUrl = "/assets/ab.png" },
+                new PageImage { PageKey = "cosmetic-dentistry", SectionKey = "footer-banner", Label = "Cosmetic Dentistry: Bottom Banner", AspectRatio = "3:4", DefaultAssetUrl = "/assets/g.jpg" },
+
+                // Treatments Pages (Alias)
+                new PageImage { PageKey = "treatments", SectionKey = "checkup-hero", Label = "Treatments: General Checkup Hero Graphic", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s1.png" },
+                new PageImage { PageKey = "treatments", SectionKey = "checkup-banner", Label = "Treatments: General Checkup Wide Banner", AspectRatio = "3:4", DefaultAssetUrl = "/assets/g.jpg" },
+                new PageImage { PageKey = "treatments", SectionKey = "makeover-hero", Label = "Treatments: Smile Makeover Hero Graphic", AspectRatio = "4:5", DefaultAssetUrl = "/assets/s.png" },
+                new PageImage { PageKey = "treatments", SectionKey = "makeover-banner", Label = "Treatments: Smile Makeover Wide Banner", AspectRatio = "1:1", DefaultAssetUrl = "/assets/ss.png" },
+                new PageImage { PageKey = "treatments", SectionKey = "aligners-hero", Label = "Treatments: Invisible Aligners Hero Graphic", AspectRatio = "4:5", DefaultAssetUrl = "/assets/s.png" },
+                new PageImage { PageKey = "treatments", SectionKey = "aligners-banner", Label = "Treatments: Invisible Aligners Wide Banner", AspectRatio = "4:3", DefaultAssetUrl = "/assets/g.png" },
+                new PageImage { PageKey = "treatments", SectionKey = "cosmetic-hero", Label = "Treatments: Cosmetic Dentistry Hero Graphic", AspectRatio = "1:1", DefaultAssetUrl = "/assets/s1.png" },
+                new PageImage { PageKey = "treatments", SectionKey = "cosmetic-banner", Label = "Treatments: Cosmetic Dentistry Wide Banner", AspectRatio = "3:4", DefaultAssetUrl = "/assets/g.jpg" },
+
+                // Booking & Contact
+                new PageImage { PageKey = "book", SectionKey = "side-image", Label = "Book Appointment: Side Consultation Image", AspectRatio = "3:4", DefaultAssetUrl = "/assets/book.png" },
+                new PageImage { PageKey = "book-appointment", SectionKey = "book", Label = "Book Appointment: Operatory Banner", AspectRatio = "3:4", DefaultAssetUrl = "/assets/book.png" },
+                new PageImage { PageKey = "book-appointment", SectionKey = "ab", Label = "Book Appointment: Tooth Graphic", AspectRatio = "1:1", DefaultAssetUrl = "/assets/ab.png" },
+                new PageImage { PageKey = "contact", SectionKey = "hero", Label = "Contact: Hero Graphic", AspectRatio = "4:5", DefaultAssetUrl = "/assets/cc1.png" },
+                new PageImage { PageKey = "contact", SectionKey = "hero-image", Label = "Contact: Hero Graphic (Mobile)", AspectRatio = "4:5", DefaultAssetUrl = "/assets/cc1.png" },
+                new PageImage { PageKey = "contact", SectionKey = "map", Label = "Contact: Map Preview", AspectRatio = "16:9", DefaultAssetUrl = "/assets/cc2.png" },
+                new PageImage { PageKey = "contact", SectionKey = "map-image", Label = "Contact: Map Preview (Mobile)", AspectRatio = "16:9", DefaultAssetUrl = "/assets/cc2.png" }
+            };
+
+            var existingList = await context.PageImages
+                .Select(p => p.PageKey.ToLower() + "::" + p.SectionKey.ToLower())
+                .ToListAsync();
+            var existingSlots = existingList.ToHashSet();
+
+            var newImages = pageImages
+                .Where(p => !existingSlots.Contains(p.PageKey.ToLower() + "::" + p.SectionKey.ToLower()))
+                .ToList();
+
+            if (newImages.Any())
+            {
+                context.PageImages.AddRange(newImages);
                 await context.SaveChangesAsync();
             }
         }

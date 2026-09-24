@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Clock, Phone, Mail } from 'lucide-react';
+import { useMedia } from '../context/MediaContext';
 import logoImage from '../assets/lo_clean.png';
 import mapImage from '../assets/map.png';
 
 const MobileFooter = () => {
+  const { getImage } = useMedia();
+
   return (
     <footer className="w-full bg-[#391361] text-white py-14 px-6 flex flex-col shrink-0 relative overflow-hidden">
       <div className="relative z-10 flex flex-col space-y-10">
@@ -12,7 +15,7 @@ const MobileFooter = () => {
         <div>
           <div className="bg-white px-4 py-3 rounded-2xl inline-block mb-4">
             <img 
-              src={logoImage} 
+              src={getImage('global', 'footer-logo', logoImage)} 
               alt="Manick Dental" 
               className="w-[140px] h-auto object-contain" 
             />
@@ -96,7 +99,7 @@ const MobileFooter = () => {
             className="block rounded-xl overflow-hidden hover:opacity-95 transition-opacity"
           >
             <img 
-              src={mapImage} 
+              src={getImage('global', 'footer-map', mapImage)} 
               alt="Manick Dental Clinic Map Location" 
               className="w-full h-[140px] object-cover"
             />

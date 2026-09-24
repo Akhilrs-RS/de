@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useMedia } from '../context/MediaContext';
 import logoImage from '../assets/marvic.png';
 import { X } from 'lucide-react';
 
 const MobileNavbar = () => {
+  const { getImage } = useMedia();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -12,7 +14,7 @@ const MobileNavbar = () => {
       <header className="relative z-40 flex items-center justify-between px-6 pt-8 sm:pt-9 pb-2 w-full">
         <Link to="/mobile" className="z-50 flex items-center">
           <img 
-            src={logoImage} 
+            src={getImage('global', 'navbar-logo', logoImage)} 
             alt="Manick Dental" 
             className="w-[114px] sm:w-[122px] h-auto object-contain select-none" 
           />
