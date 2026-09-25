@@ -226,9 +226,12 @@ export default function Home() {
                   each treatment is a study in precision <br className="hidden md:block" />
                   and aesthetic harmony.
                 </p>
-                <button className="text-gray-900 font-sans font-medium text-sm md:text-base hover:text-[#C4A47C] transition-colors">
+                <Link 
+                  to="/services" 
+                  className="text-gray-900 font-sans font-medium text-sm md:text-base hover:text-[#C4A47C] transition-colors inline-block"
+                >
                   View More
-                </button>
+                </Link>
               </div>
             </div>
           </div>
