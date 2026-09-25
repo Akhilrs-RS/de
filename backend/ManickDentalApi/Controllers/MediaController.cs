@@ -112,6 +112,7 @@ namespace ManickDentalApi.Controllers
                         PageKey = dto.PageKey.ToLower(),
                         SectionKey = dto.SectionKey.ToLower(),
                         Label = $"{dto.PageKey} - {dto.SectionKey}",
+                        AspectRatio = "4:3",
                         DefaultAssetUrl = "",
                         ImageData = fileBytes,
                         ContentType = dto.File.ContentType,
@@ -122,7 +123,7 @@ namespace ManickDentalApi.Controllers
 
                 await _context.SaveChangesAsync();
 
-                // Generate public URL pointing to the new endpoint
+                // Generate public URL pointing to the image delivery endpoint
                 var publicUrl = $"/api/media/image/{pageImage.Id}";
                 pageImage.CustomImageUrl = publicUrl;
                 await _context.SaveChangesAsync();
@@ -130,7 +131,7 @@ namespace ManickDentalApi.Controllers
                 return Ok(new
                 {
                     success = true,
-                    message = "Image uploaded and applied successfully!",
+                    message = "Image uploaded and permanently stored in database successfully!",
                     imageUrl = publicUrl,
                     pageImage = new PageImageResponseDto
                     {
@@ -162,6 +163,33 @@ namespace ManickDentalApi.Controllers
             }
 
             pageImage.CustomImageUrl = null;
+            pageImage.ImageData = null;
+            pageImage.ContentType = null;
+            pageImage.UpdatedAt = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                success = true,
+                message = "Image reset to default asset.",
+                effectiveUrl = pageImage.DefaultAssetUrl
+            });
+        }
+
+        [HttpPost("reset-by-key")]
+        public async Task<IActionResult> ResetByKey([FromQuery] string pageKey, [FromQuery] string sectionKey)
+        {
+            var pageImage = await _context.PageImages
+                .FirstOrDefaultAsync(p => p.PageKey.ToLower() == pageKey.ToLower() && p.SectionKey.ToLower() == sectionKey.ToLower());
+
+            if (pageImage == null)
+            {
+                return NotFound(new { success = false, message = "Image slot not found." });
+            }
+
+            pageImage.CustomImageUrl = null;
+            pageImage.ImageData = null;
+            pageImage.ContentType = null;
             pageImage.UpdatedAt = DateTime.UtcNow;
             await _context.SaveChangesAsync();
 
@@ -174,6 +202,7 @@ namespace ManickDentalApi.Controllers
         }
 
         [HttpGet("image/{id}")]
+        [HttpHead("image/{id}")]
         public async Task<IActionResult> GetImageFile(int id)
         {
             var image = await _context.PageImages.FindAsync(id);
@@ -182,6 +211,7 @@ namespace ManickDentalApi.Controllers
                 return NotFound();
             }
 
+            Response.Headers.Append("Cache-Control", "no-cache, must-revalidate");
             return File(image.ImageData, image.ContentType ?? "image/jpeg");
         }
     }

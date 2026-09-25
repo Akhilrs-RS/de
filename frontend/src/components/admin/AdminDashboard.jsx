@@ -2,6 +2,46 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useMedia } from '../../context/MediaContext';
 import marvicLogo from '../../assets/marvic.png';
+import TransformationImageSlider from '../TransformationImageSlider';
+import crownsBefore from '../../assets/transformations/crowns_before.jpg';
+import crownsAfter from '../../assets/transformations/crowns_after.jpg';
+import alignersBefore from '../../assets/transformations/aligners_before.jpg';
+import alignersAfter from '../../assets/transformations/aligners_after.jpg';
+import whiteningBefore from '../../assets/transformations/whitening_before.jpg';
+import whiteningAfter from '../../assets/transformations/whitening_after.jpg';
+
+const TRANSFORMATION_PAIRS = [
+  {
+    id: 'crowns',
+    title: 'Dental Crowns',
+    category: 'Dental Crowns',
+    description: 'Precision-crafted crowns restoring damaged or fractured enamel.',
+    beforeKey: 'card-crowns-before',
+    afterKey: 'card-crowns-after',
+    defaultBefore: crownsBefore,
+    defaultAfter: crownsAfter
+  },
+  {
+    id: 'aligners',
+    title: 'Clear Aligners',
+    category: 'Clear Aligners',
+    description: 'Discreet, removable orthodontic aligners for teeth alignment.',
+    beforeKey: 'card-aligners-before',
+    afterKey: 'card-aligners-after',
+    defaultBefore: alignersBefore,
+    defaultAfter: alignersAfter
+  },
+  {
+    id: 'whitening',
+    title: 'Teeth Whitening',
+    category: 'Teeth Whitening',
+    description: 'Professional in-clinic whitening for radiant enamel luminosity.',
+    beforeKey: 'card-whitening-before',
+    afterKey: 'card-whitening-after',
+    defaultBefore: whiteningBefore,
+    defaultAfter: whiteningAfter
+  }
+];
 
 const PAGE_TABS = [
   { id: 'all', label: 'All Pages' },
@@ -216,7 +256,7 @@ export default function AdminDashboard({ user, onLogout }) {
 
     setResettingId(item.id);
     try {
-      await resetImage(item.id);
+      await resetImage(item.id, item.pageKey, item.sectionKey);
       handleCancelPreview(item.id);
       showToast(`Reset "${item.label}" back to default asset.`);
     } catch (err) {
@@ -507,6 +547,182 @@ export default function AdminDashboard({ user, onLogout }) {
           </div>
         </div>
 
+        {/* SPECIAL SECTION: OUR STORY SMILE TRANSFORMATIONS (BEFORE & AFTER PAIRS) */}
+        {(activeTab === 'our-story' || activeTab === 'all') && (
+          <div className="mb-10 bg-white p-6 sm:p-8 rounded-3xl border border-purple-200/80 shadow-md">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 mb-6 border-b border-gray-100">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 text-[#75558F] text-[11px] font-bold tracking-wider uppercase mb-2">
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l-4 3 4 3m8-6l4 3-4 3" />
+                  </svg>
+                  Unified Desktop & Mobile Sync
+                </div>
+                <h2 className="text-xl sm:text-2xl font-serif font-bold text-gray-900">
+                  Smile Transformations (Before & After Management)
+                </h2>
+                <p className="text-xs sm:text-sm text-gray-500 mt-1 max-w-2xl">
+                  Upload custom Before and After photos for patient transformations. Changes save directly to the central database and immediately update both desktop and mobile views with real-time interactive sliders.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+              {TRANSFORMATION_PAIRS.map((pair) => {
+                const beforeItem = mediaList.find(m => m.pageKey === 'our-story' && m.sectionKey === pair.beforeKey) || {
+                  id: `our-story-${pair.beforeKey}`,
+                  pageKey: 'our-story',
+                  sectionKey: pair.beforeKey,
+                  label: `${pair.title} (Before)`,
+                  defaultAssetUrl: pair.defaultBefore
+                };
+                const afterItem = mediaList.find(m => m.pageKey === 'our-story' && m.sectionKey === pair.afterKey) || {
+                  id: `our-story-${pair.afterKey}`,
+                  pageKey: 'our-story',
+                  sectionKey: pair.afterKey,
+                  label: `${pair.title} (After)`,
+                  defaultAssetUrl: pair.defaultAfter
+                };
+
+                const beforeUrl = previewUrls[beforeItem.id] || beforeItem.customImageUrl || beforeItem.defaultAssetUrl || pair.defaultBefore;
+                const afterUrl = previewUrls[afterItem.id] || afterItem.customImageUrl || afterItem.defaultAssetUrl || pair.defaultAfter;
+
+                return (
+                  <div key={pair.id} className="bg-gray-50/70 rounded-2xl border border-gray-200 p-5 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="font-bold text-base text-gray-900">{pair.title}</h3>
+                        <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full bg-purple-100 text-purple-800">
+                          {pair.category}
+                        </span>
+                      </div>
+                      <p className="text-xs text-gray-500 mb-4">{pair.description}</p>
+
+                      {/* Live Interactive Test Slider Preview */}
+                      <div className="mb-5 rounded-xl overflow-hidden border border-gray-200 shadow-xs">
+                        <div className="bg-gray-100 px-3 py-1.5 border-b border-gray-200 flex items-center justify-between text-[11px] font-medium text-gray-600">
+                          <span>Live Slider Preview</span>
+                          <span className="text-[10px] text-gray-400">Test by sliding</span>
+                        </div>
+                        <TransformationImageSlider
+                          beforeImage={beforeUrl}
+                          transformedImage={afterUrl}
+                          title={pair.title}
+                        />
+                      </div>
+
+                      {/* Side-by-Side Upload Controls */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {/* Before Upload Slot */}
+                        <div className="bg-white p-3.5 rounded-xl border border-gray-200 flex flex-col justify-between">
+                          <div>
+                            <div className="flex items-center justify-between mb-1.5">
+                              <span className="text-xs font-bold text-gray-800">Before Photo</span>
+                              {beforeItem.customImageUrl ? (
+                                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 flex items-center gap-1">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                  Database Stored
+                                </span>
+                              ) : (
+                                <span className="text-[9px] font-medium px-1.5 py-0.5 rounded bg-gray-100 text-gray-500">Default</span>
+                              )}
+                            </div>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              id={`file-${beforeItem.id}`}
+                              className="hidden"
+                              onChange={(e) => handleFileSelect(beforeItem.id, e.target.files?.[0])}
+                            />
+                            <label
+                              htmlFor={`file-${beforeItem.id}`}
+                              className="w-full block py-2 px-3 text-center text-xs font-medium rounded-lg border border-dashed border-gray-300 hover:border-purple-400 hover:bg-purple-50/50 cursor-pointer transition-colors text-gray-700 mb-2 truncate"
+                            >
+                              {selectedFiles[beforeItem.id] ? selectedFiles[beforeItem.id].name : 'Choose Before...'}
+                            </label>
+                          </div>
+                          <div className="flex gap-1.5 mt-2">
+                            {selectedFiles[beforeItem.id] && (
+                              <button
+                                onClick={() => handleUpload(beforeItem)}
+                                disabled={uploadingId === beforeItem.id}
+                                className="flex-1 py-1.5 px-2 bg-[#2D1E40] text-white text-[11px] font-semibold rounded-md shadow-xs hover:bg-[#3D2956] transition-colors"
+                              >
+                                {uploadingId === beforeItem.id ? 'Saving to DB...' : 'Upload & Save'}
+                              </button>
+                            )}
+                            {beforeItem.customImageUrl && (
+                              <button
+                                onClick={() => handleReset(beforeItem)}
+                                disabled={resettingId === beforeItem.id}
+                                className="py-1.5 px-2 border border-gray-200 text-gray-600 text-[11px] font-medium rounded-md hover:bg-gray-50 transition-colors"
+                                title="Reset Before Image"
+                              >
+                                Reset
+                              </button>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* After Upload Slot */}
+                        <div className="bg-white p-3.5 rounded-xl border border-gray-200 flex flex-col justify-between">
+                          <div>
+                            <div className="flex items-center justify-between mb-1.5">
+                              <span className="text-xs font-bold text-gray-800">After Photo</span>
+                              {afterItem.customImageUrl ? (
+                                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 flex items-center gap-1">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                  Database Stored
+                                </span>
+                              ) : (
+                                <span className="text-[9px] font-medium px-1.5 py-0.5 rounded bg-gray-100 text-gray-500">Default</span>
+                              )}
+                            </div>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              id={`file-${afterItem.id}`}
+                              className="hidden"
+                              onChange={(e) => handleFileSelect(afterItem.id, e.target.files?.[0])}
+                            />
+                            <label
+                              htmlFor={`file-${afterItem.id}`}
+                              className="w-full block py-2 px-3 text-center text-xs font-medium rounded-lg border border-dashed border-gray-300 hover:border-purple-400 hover:bg-purple-50/50 cursor-pointer transition-colors text-gray-700 mb-2 truncate"
+                            >
+                              {selectedFiles[afterItem.id] ? selectedFiles[afterItem.id].name : 'Choose After...'}
+                            </label>
+                          </div>
+                          <div className="flex gap-1.5 mt-2">
+                            {selectedFiles[afterItem.id] && (
+                              <button
+                                onClick={() => handleUpload(afterItem)}
+                                disabled={uploadingId === afterItem.id}
+                                className="flex-1 py-1.5 px-2 bg-[#2D1E40] text-white text-[11px] font-semibold rounded-md shadow-xs hover:bg-[#3D2956] transition-colors"
+                              >
+                                {uploadingId === afterItem.id ? 'Saving to DB...' : 'Upload & Save'}
+                              </button>
+                            )}
+                            {afterItem.customImageUrl && (
+                              <button
+                                onClick={() => handleReset(afterItem)}
+                                disabled={resettingId === afterItem.id}
+                                className="py-1.5 px-2 border border-gray-200 text-gray-600 text-[11px] font-medium rounded-md hover:bg-gray-50 transition-colors"
+                                title="Reset After Image"
+                              >
+                                Reset
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {/* Media Slots Grid */}
         {loading && mediaList.length === 0 ? (
           <div className="text-center py-20 bg-white rounded-3xl border border-gray-200">
@@ -559,8 +775,9 @@ export default function AdminDashboard({ user, onLogout }) {
                     </div>
 
                     {isCustom ? (
-                      <span className="shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">
-                        Custom
+                      <span className="shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        Database Stored
                       </span>
                     ) : (
                       <span className="shrink-0 text-[10px] font-medium px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">

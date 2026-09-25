@@ -538,9 +538,15 @@ namespace ManickDentalApi.Data
                 new PageImage { PageKey = "our-story", SectionKey = "hero", Label = "Our Story Hero Image", AspectRatio = "4:5", DefaultAssetUrl = "/assets/o1.png" },
                 new PageImage { PageKey = "our-story", SectionKey = "team-dr-james", Label = "Principal Dentist: Dr. James Bennett", AspectRatio = "4:3", DefaultAssetUrl = "/assets/h5.png" },
                 new PageImage { PageKey = "our-story", SectionKey = "team-amelia", Label = "Senior Dental Nurse: Amelia Carter", AspectRatio = "4:3", DefaultAssetUrl = "/assets/o2.png" },
-                new PageImage { PageKey = "our-story", SectionKey = "card-crowns", Label = "Case 1 & 5: Dental Crowns", AspectRatio = "4:3", DefaultAssetUrl = "/assets/story_dental_crowns.png" },
-                new PageImage { PageKey = "our-story", SectionKey = "card-aligners", Label = "Case 2 & 6: Clear Aligners", AspectRatio = "4:3", DefaultAssetUrl = "/assets/story_clear_aligners.png" },
-                new PageImage { PageKey = "our-story", SectionKey = "card-whitening", Label = "Case 3 & 4: Teeth Whitening", AspectRatio = "4:3", DefaultAssetUrl = "/assets/story_teeth_whitening.png" },
+                new PageImage { PageKey = "our-story", SectionKey = "card-crowns-before", Label = "Dental Crowns (Before Treatment)", AspectRatio = "4:3", DefaultAssetUrl = "/assets/transformations/crowns_before.jpg" },
+                new PageImage { PageKey = "our-story", SectionKey = "card-crowns-after", Label = "Dental Crowns (After Treatment)", AspectRatio = "4:3", DefaultAssetUrl = "/assets/transformations/crowns_after.jpg" },
+                new PageImage { PageKey = "our-story", SectionKey = "card-aligners-before", Label = "Clear Aligners (Before Treatment)", AspectRatio = "4:3", DefaultAssetUrl = "/assets/transformations/aligners_before.jpg" },
+                new PageImage { PageKey = "our-story", SectionKey = "card-aligners-after", Label = "Clear Aligners (After Treatment)", AspectRatio = "4:3", DefaultAssetUrl = "/assets/transformations/aligners_after.jpg" },
+                new PageImage { PageKey = "our-story", SectionKey = "card-whitening-before", Label = "Teeth Whitening (Before Treatment)", AspectRatio = "4:3", DefaultAssetUrl = "/assets/transformations/whitening_before.jpg" },
+                new PageImage { PageKey = "our-story", SectionKey = "card-whitening-after", Label = "Teeth Whitening (After Treatment)", AspectRatio = "4:3", DefaultAssetUrl = "/assets/transformations/whitening_after.jpg" },
+                new PageImage { PageKey = "our-story", SectionKey = "card-crowns", Label = "Dental Crowns: Legacy Composite", AspectRatio = "4:3", DefaultAssetUrl = "/assets/story_dental_crowns.png" },
+                new PageImage { PageKey = "our-story", SectionKey = "card-aligners", Label = "Clear Aligners: Legacy Composite", AspectRatio = "4:3", DefaultAssetUrl = "/assets/story_clear_aligners.png" },
+                new PageImage { PageKey = "our-story", SectionKey = "card-whitening", Label = "Teeth Whitening: Legacy Composite", AspectRatio = "4:3", DefaultAssetUrl = "/assets/story_teeth_whitening.png" },
                 new PageImage { PageKey = "our-story", SectionKey = "operatory-banner", Label = "Operatory Suite Banner: More Than Just a Treatment", AspectRatio = "16:9", DefaultAssetUrl = "/assets/our.jpg" },
 
                 // Services Page (14 services & hero)

@@ -10,6 +10,13 @@ import storyCrowns from '../assets/story_clear_aligners.png';
 import storyAligners from '../assets/story_dental_crowns.png';
 import storyWhitening from '../assets/story_teeth_whitening.png';
 import our from '../assets/our.jpg';
+import TransformationImageSlider from '../components/TransformationImageSlider';
+import crownsBefore from '../assets/transformations/crowns_before.jpg';
+import crownsAfter from '../assets/transformations/crowns_after.jpg';
+import alignersBefore from '../assets/transformations/aligners_before.jpg';
+import alignersAfter from '../assets/transformations/aligners_after.jpg';
+import whiteningBefore from '../assets/transformations/whitening_before.jpg';
+import whiteningAfter from '../assets/transformations/whitening_after.jpg';
 
 const categories = [
   'All',
@@ -26,15 +33,21 @@ const transformations = [
     title: 'Dental Crowns',
     category: 'Dental Crowns',
     description: 'Precision-crafted crowns that restore the shape, strength, and aesthetics of damaged teeth.',
-    image: storyCrowns,
-    hasSlider: false
+    beforeImage: crownsBefore,
+    transformedImage: crownsAfter,
+    mediaKeyBefore: 'card-crowns-before',
+    mediaKeyAfter: 'card-crowns-after',
+    hasSlider: true
   },
   {
     id: 2,
     title: 'Clear Aligners',
     category: 'Clear Aligners',
     description: 'Discreet, removable aligners that gradually reposition teeth into a healthy, balanced alignment.',
-    image: storyAligners,
+    beforeImage: alignersBefore,
+    transformedImage: alignersAfter,
+    mediaKeyBefore: 'card-aligners-before',
+    mediaKeyAfter: 'card-aligners-after',
     hasSlider: true
   },
   {
@@ -42,7 +55,10 @@ const transformations = [
     title: 'Teeth Whitening',
     category: 'Teeth Whitening',
     description: 'Professional-grade whitening that brightens enamel by several shades for a naturally luminous result.',
-    image: storyWhitening,
+    beforeImage: whiteningBefore,
+    transformedImage: whiteningAfter,
+    mediaKeyBefore: 'card-whitening-before',
+    mediaKeyAfter: 'card-whitening-after',
     hasSlider: true
   }
 ];
@@ -50,11 +66,12 @@ const transformations = [
 const MobileOurStory = () => {
   const { getImage } = useMedia();
 
-  const getCardImage = (item) => {
-    if (item.category === 'Dental Crowns') return getImage('our-story', 'card-crowns', storyCrowns);
-    if (item.category === 'Clear Aligners') return getImage('our-story', 'card-aligners', storyAligners);
-    if (item.category === 'Teeth Whitening') return getImage('our-story', 'card-whitening', storyWhitening);
-    return item.image;
+  const getCardBeforeImage = (item) => {
+    return getImage('our-story', item.mediaKeyBefore, item.beforeImage);
+  };
+
+  const getCardTransformedImage = (item) => {
+    return getImage('our-story', item.mediaKeyAfter || item.mediaKeyTransformed, item.transformedImage);
   };
 
   useEffect(() => {
@@ -419,20 +436,11 @@ const MobileOurStory = () => {
                   key={item.id} 
                   className="bg-white rounded-[24px] overflow-hidden shadow-sm flex flex-col"
                 >
-                  <div className="relative w-full aspect-[4/3] bg-gray-100 overflow-hidden">
-                    <img 
-                      src={getCardImage(item)} 
-                      alt={item.title} 
-                      className="w-full h-full object-cover"
-                    />
-                    {item.hasSlider && (
-                      <div className="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white shadow-md border border-purple-200 flex items-center justify-center text-[#75558F]">
-                        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l4-4 4 4m0 6l-4 4-4-4" transform="rotate(90 12 12)" />
-                        </svg>
-                      </div>
-                    )}
-                  </div>
+                  <TransformationImageSlider 
+                    beforeImage={getCardBeforeImage(item)}
+                    transformedImage={getCardTransformedImage(item)}
+                    title={item.title}
+                  />
                   <div className="p-5 flex flex-col">
                     <h3 className="font-bold text-[15px] text-[#111111] mb-1.5">
                       {item.title}

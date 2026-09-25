@@ -8,6 +8,13 @@ import storyCrowns from '../assets/story_dental_crowns.png';
 import storyAligners from '../assets/story_clear_aligners.png';
 import storyWhitening from '../assets/story_teeth_whitening.png';
 import our from '../assets/our.jpg';
+import TransformationImageSlider from '../components/TransformationImageSlider';
+import crownsBefore from '../assets/transformations/crowns_before.jpg';
+import crownsAfter from '../assets/transformations/crowns_after.jpg';
+import alignersBefore from '../assets/transformations/aligners_before.jpg';
+import alignersAfter from '../assets/transformations/aligners_after.jpg';
+import whiteningBefore from '../assets/transformations/whitening_before.jpg';
+import whiteningAfter from '../assets/transformations/whitening_after.jpg';
 
 const categories = [
   'All',
@@ -24,42 +31,60 @@ const transformations = [
     title: 'Dental Crowns',
     category: 'Dental Crowns',
     description: 'Precision-crafted crowns that restore the shape, strength, and aesthetics of damaged teeth.',
-    image: storyCrowns
+    beforeImage: crownsBefore,
+    afterImage: crownsAfter,
+    mediaKeyBefore: 'card-crowns-before',
+    mediaKeyAfter: 'card-crowns-after'
   },
   {
     id: 2,
     title: 'Clear Aligners',
     category: 'Clear Aligners',
     description: 'Discreet, removable aligners that gradually reposition teeth into a healthy, balanced alignment.',
-    image: storyAligners
+    beforeImage: alignersBefore,
+    afterImage: alignersAfter,
+    mediaKeyBefore: 'card-aligners-before',
+    mediaKeyAfter: 'card-aligners-after'
   },
   {
     id: 3,
     title: 'Teeth Whitening',
     category: 'Teeth Whitening',
     description: 'Professional-grade whitening that brightens enamel by several shades for a naturally luminous result.',
-    image: storyWhitening
+    beforeImage: whiteningBefore,
+    afterImage: whiteningAfter,
+    mediaKeyBefore: 'card-whitening-before',
+    mediaKeyAfter: 'card-whitening-after'
   },
   {
     id: 4,
     title: 'Teeth Whitening',
     category: 'Teeth Whitening',
     description: 'Professional-grade whitening that brightens enamel by several shades for a naturally luminous result.',
-    image: storyWhitening
+    beforeImage: whiteningBefore,
+    afterImage: whiteningAfter,
+    mediaKeyBefore: 'card-whitening-before',
+    mediaKeyAfter: 'card-whitening-after'
   },
   {
     id: 5,
     title: 'Dental Crowns',
     category: 'Dental Crowns',
     description: 'Precision-crafted crowns that restore the shape, strength, and aesthetics of damaged teeth.',
-    image: storyCrowns
+    beforeImage: crownsBefore,
+    afterImage: crownsAfter,
+    mediaKeyBefore: 'card-crowns-before',
+    mediaKeyAfter: 'card-crowns-after'
   },
   {
     id: 6,
     title: 'Clear Aligners',
     category: 'Clear Aligners',
     description: 'Discreet, removable aligners that gradually reposition teeth into a healthy, balanced alignment.',
-    image: storyAligners
+    beforeImage: alignersBefore,
+    afterImage: alignersAfter,
+    mediaKeyBefore: 'card-aligners-before',
+    mediaKeyAfter: 'card-aligners-after'
   }
 ];
 
@@ -67,11 +92,12 @@ export default function OurStory() {
   const { getImage } = useMedia();
   const [selectedCategory, setSelectedCategory] = useState('All');
 
-  const getTransformationImage = (item) => {
-    if (item.category === 'Dental Crowns') return getImage('our-story', 'card-crowns', storyCrowns);
-    if (item.category === 'Clear Aligners') return getImage('our-story', 'card-aligners', storyAligners);
-    if (item.category === 'Teeth Whitening') return getImage('our-story', 'card-whitening', storyWhitening);
-    return item.image;
+  const getCardBeforeImage = (item) => {
+    return getImage('our-story', item.mediaKeyBefore, item.beforeImage);
+  };
+
+  const getCardAfterImage = (item) => {
+    return getImage('our-story', item.mediaKeyAfter, item.afterImage);
   };
 
   const filteredTransformations = selectedCategory === 'All'
@@ -324,21 +350,19 @@ export default function OurStory() {
             })}
           </div>
 
-          {/* Transformation Cards Grid - Exactly Matching Screenshot */}
+          {/* Transformation Cards Grid - Interactive Before / After */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredTransformations.map((item, index) => (
               <div
                 key={`${item.id}-${index}`}
                 className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col"
               >
-                {/* Before / After Split Image Container */}
-                <div className="w-full aspect-[4/3] overflow-hidden bg-gray-100 select-none">
-                  <img
-                    src={getTransformationImage(item)}
-                    alt={item.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+                {/* Before / After Interactive Slider */}
+                <TransformationImageSlider
+                  beforeImage={getCardBeforeImage(item)}
+                  transformedImage={getCardAfterImage(item)}
+                  title={item.title}
+                />
 
                 {/* Card Text Content */}
                 <div className="p-7 sm:p-8 flex flex-col flex-grow">
