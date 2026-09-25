@@ -67,6 +67,7 @@ export default function Footer() {
             <Link to="/clinic-tour#gallery" className="hover:text-white transition-colors">Smile Gallery</Link>
             <Link to="/our-story" className="hover:text-white transition-colors">Our Story</Link>
             <Link to="/contact" className="hover:text-white transition-colors">Contact</Link>
+            <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
           </nav>
         </div>
 
@@ -134,6 +135,29 @@ export default function Footer() {
                 <span className="text-white">↗</span>
               </span>
             </div>
+          </a>
+        </div>
+      </div>
+
+      {/* Sub-Footer / Copyright & Watermark */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-24 mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-sans text-white/60">
+        <div className="flex items-center space-x-4">
+          <p>© {new Date().getFullYear()} Manick Dental Clinic. All rights reserved.</p>
+          <span className="hidden sm:inline text-white/30">•</span>
+          <Link to="/privacy-policy" className="hover:text-white transition-colors underline underline-offset-4 decoration-white/20 hover:decoration-white">
+            Privacy Policy
+          </Link>
+        </div>
+
+        <div className="flex items-center space-x-1.5 text-xs text-white/60">
+          <span>Powered by</span>
+          <a 
+            href="https://www.galletrix.com" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="text-[#C4A47C] hover:text-white font-medium transition-colors underline underline-offset-4 decoration-[#C4A47C]/40 hover:decoration-white"
+          >
+            Galletrix Innovations
           </a>
         </div>
       </div>

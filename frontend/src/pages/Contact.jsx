@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useMedia } from '../context/MediaContext';
 import cc1 from '../assets/cc1.png';
 import cc2 from '../assets/cc2.png';
@@ -258,7 +259,7 @@ export default function Contact() {
                   <div className="flex items-start space-x-3 pt-2">
                     <input type="checkbox" id="consent" required className="mt-1 w-4 h-4 rounded border-gray-300 text-[#3b1866] focus:ring-[#3b1866]" />
                     <label htmlFor="consent" className="text-[11px] font-sans text-gray-500 leading-relaxed">
-                      I consent to Manick Dental Clinic contacting me regarding this appointment request. I understand this is a request only and not a confirmed booking. I have read the Manick Dental Privacy Policy.
+                      I consent to Manick Dental Clinic contacting me regarding this appointment request. I understand this is a request only and not a confirmed booking. I have read the <Link to="/privacy-policy" className="text-[#3b1866] underline hover:text-[#2A114B] font-medium" target="_blank" rel="noopener noreferrer">Manick Dental Privacy Policy</Link>.
                     </label>
                   </div>
 

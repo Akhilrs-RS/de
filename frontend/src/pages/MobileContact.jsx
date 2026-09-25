@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Truck, Receipt, Check } from 'lucide-react';
 import MobileNavbar from '../components/MobileNavbar';
 import MobileFooter from '../components/MobileFooter';
@@ -287,7 +288,7 @@ const MobileContact = () => {
                     className="mt-1 w-4 h-4 rounded border-gray-300 text-[#391361] focus:ring-[#391361] shrink-0" 
                   />
                   <label htmlFor="contact-consent" className="text-[10.5px] text-[#666666] leading-relaxed">
-                    I consent to Manick Dental Clinic contacting me regarding this appointment request. I understand this is a request only and not a confirmed booking. I have read the Manick Dental *
+                    I consent to Manick Dental Clinic contacting me regarding this appointment request. I understand this is a request only and not a confirmed booking. I have read the <Link to="/mobile/privacy-policy" className="text-[#391361] underline font-medium">Manick Dental Privacy Policy</Link>.
                   </label>
                 </div>
 

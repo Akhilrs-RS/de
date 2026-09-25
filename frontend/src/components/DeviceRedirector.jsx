@@ -24,6 +24,7 @@ const desktopToMobileMap = {
   '/smile-makeover': '/mobile/smile-makeover',
   '/invisible-aligners': '/mobile/invisible-aligners',
   '/cosmetic-dentistry': '/mobile/cosmetic-dentistry',
+  '/privacy-policy': '/mobile/privacy-policy',
 };
 
 const mobileToDesktopMap = {
@@ -41,6 +42,7 @@ const mobileToDesktopMap = {
   '/mobile/cosmetic-dentistry': '/cosmetic-dentistry',
   '/mobile/our-doctors': '/our-story',
   '/mobile/smile-gallery': '/clinic-tour',
+  '/mobile/privacy-policy': '/privacy-policy',
 };
 
 export default function DeviceRedirector() {

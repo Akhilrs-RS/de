@@ -25,6 +25,8 @@ import MobileGeneralCheckup from './pages/MobileGeneralCheckup';
 import MobileSmileMakeover from './pages/MobileSmileMakeover';
 import MobileInvisibleAligners from './pages/MobileInvisibleAligners';
 import MobileCosmeticDentistry from './pages/MobileCosmeticDentistry';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import MobilePrivacyPolicy from './pages/MobilePrivacyPolicy';
 import DeviceRedirector from './components/DeviceRedirector';
 import { MediaProvider } from './context/MediaContext';
 
@@ -84,6 +86,8 @@ function MainLayout() {
           <Route path="/mobile/cosmetic-dentistry" element={<MobileCosmeticDentistry />} />
           <Route path="/mobile/our-doctors" element={<MobileOurStory />} />
           <Route path="/mobile/smile-gallery" element={<MobileClinicTour />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/mobile/privacy-policy" element={<MobilePrivacyPolicy />} />
         </Routes>
       </main>
       {!isAdmin && !isMobile && <Footer />}

@@ -52,6 +52,7 @@ const MobileFooter = () => {
             <Link to="/mobile/our-story" className="hover:text-white/80 transition-colors">Our Story</Link>
             <Link to="/mobile/clinic-tour" className="hover:text-white/80 transition-colors">Clinic Tour</Link>
             <Link to="/mobile/contact" className="hover:text-white/80 transition-colors">Contact</Link>
+            <Link to="/mobile/privacy-policy" className="hover:text-white/80 transition-colors">Privacy Policy</Link>
           </div>
         </div>
 
@@ -104,6 +105,29 @@ const MobileFooter = () => {
               className="w-full h-[140px] object-cover"
             />
           </a>
+        </div>
+
+        {/* Bottom Bar: Copyright & Watermark */}
+        <div className="pt-6 border-t border-white/10 flex flex-col items-center justify-center text-center space-y-3">
+          <div className="flex flex-col sm:flex-row items-center gap-2 text-[11.5px] text-white/70">
+            <p>© {new Date().getFullYear()} Manick Dental Clinic. All rights reserved.</p>
+            <span className="hidden sm:inline text-white/30">•</span>
+            <Link to="/mobile/privacy-policy" className="hover:text-white underline underline-offset-2 decoration-white/40">
+              Privacy Policy
+            </Link>
+          </div>
+
+          <div className="text-[11px] text-white/60 flex items-center justify-center gap-1.5">
+            <span>Powered by</span>
+            <a 
+              href="https://www.galletrix.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-[#C4A47C] active:text-white font-medium underline underline-offset-2 decoration-[#C4A47C]/40"
+            >
+              Galletrix Innovations
+            </a>
+          </div>
         </div>
       </div>
     </footer>
