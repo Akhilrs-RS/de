@@ -90,9 +90,9 @@ export default function MobileGeneralCheckup() {
     <div className="min-h-screen w-full bg-[#FAF8F3] sm:bg-neutral-900 flex justify-center items-center">
       {/* Mobile viewport frame container */}
       <div 
-        className="relative w-full sm:max-w-[430px] h-screen sm:h-[890px] sm:my-6 sm:rounded-[36px] sm:shadow-2xl overflow-y-auto scrollbar-hide flex flex-col bg-[#FAF8F3]"
+        className="relative w-full sm:max-w-[430px] h-screen sm:h-[890px] sm:my-6 sm:rounded-[36px] sm:shadow-2xl overflow-y-auto scrollbar-hide flex flex-col bg-white"
       >
-        <MobileNavbar />
+        <MobileNavbar bgWhite className="bg-white" />
 
         <div className="flex-grow flex flex-col w-full">
           {/* 1. Hero Section */}

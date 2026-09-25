@@ -5,13 +5,13 @@ import { useMedia } from '../context/MediaContext';
 import logoImage from '../assets/marvic.png';
 import { X } from 'lucide-react';
 
-const MobileNavbar = () => {
+const MobileNavbar = ({ className = '', bgWhite = false }) => {
   const { getImage } = useMedia();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <header className="relative z-40 flex items-center justify-between px-6 pt-8 sm:pt-9 pb-2 w-full">
+      <header className={`relative z-40 flex items-center justify-between px-6 pt-8 sm:pt-9 pb-2 w-full ${bgWhite ? 'bg-white' : ''} ${className}`}>
         <Link to="/mobile" className="z-50 flex items-center">
           <img 
             src={getImage('global', 'navbar-logo', logoImage)} 

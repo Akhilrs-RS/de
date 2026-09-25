@@ -95,8 +95,8 @@ export default function Contact() {
               <div className="flex flex-col">
                 <h4 className="font-sans font-semibold text-gray-900 text-sm mb-1 group-hover:text-[#431C75] transition-colors">Dental Clinic Address</h4>
                 <p className="font-sans text-xs text-gray-500 leading-relaxed">
-                  Manick Dental, 14 Industrial Estate,<br />
-                  Coimbatore, Tamil Nadu 641001
+                  Melpuram, Road, KAZHUVANTHITAI,<br />
+                  Kazhuvanthitai, Tamil Nadu 629168
                 </p>
               </div>
             </a>

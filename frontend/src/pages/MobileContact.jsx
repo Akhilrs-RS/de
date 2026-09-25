@@ -102,9 +102,8 @@ const MobileContact = () => {
                   Dental Clinic Address
                 </h3>
                 <p className="text-[12px] text-[#666666] leading-relaxed">
-                  Manick Dental, 14 Industrial<br />
-                  Estate, Coimbatore, Tamil Nadu<br />
-                  641001
+                  Melpuram, Road, KAZHUVANTHITAI,<br />
+                  Kazhuvanthitai, Tamil Nadu 629168
                 </p>
               </div>
             </a>
