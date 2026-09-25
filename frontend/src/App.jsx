@@ -35,13 +35,25 @@ function ScrollToTop() {
 
   useEffect(() => {
     if (hash) {
-      setTimeout(() => {
+      const scrollTarget = () => {
         const element = document.getElementById(hash.slice(1));
         if (element) {
           element.scrollIntoView({ behavior: 'smooth' });
-          return;
+          return true;
         }
-      }, 100);
+        return false;
+      };
+
+      if (!scrollTarget()) {
+        const t1 = setTimeout(scrollTarget, 100);
+        const t2 = setTimeout(scrollTarget, 300);
+        const t3 = setTimeout(scrollTarget, 600);
+        return () => {
+          clearTimeout(t1);
+          clearTimeout(t2);
+          clearTimeout(t3);
+        };
+      }
     } else {
       window.scrollTo(0, 0);
     }

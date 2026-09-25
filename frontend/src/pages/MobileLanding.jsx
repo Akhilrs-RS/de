@@ -8,6 +8,7 @@ import h1Image from '../assets/h1.png';
 import haImage from '../assets/ha.png';
 import h2Image from '../assets/h2.png';
 import h4Image from '../assets/h4.png';
+import h5Image from '../assets/h5.png';
 import h3Image from '../assets/h3.png';
 import h6Image from '../assets/h6.png';
 import h7Image from '../assets/h7.png';
@@ -354,7 +355,64 @@ const MobileLanding = () => {
           </div>
         </div>
 
-        {/* Fourth Page / Why Patients Choose Us */}
+        {/* Fourth Page / Meet The Artist Behind Your Smile */}
+        <section className="w-full bg-[#FAF8F3] flex flex-col shrink-0 px-6 pt-6 pb-12 relative overflow-hidden">
+          {/* Doctor Image Card */}
+          <div className="relative w-full max-w-[360px] mx-auto mb-9">
+            <div className="w-full aspect-[4/4.2] rounded-[24px] overflow-hidden shadow-sm bg-neutral-100">
+              <img 
+                src={getImage('home', 'doctor', h5Image)} 
+                alt="Dr. Elena Marchetti" 
+                className="w-full h-full object-cover object-top"
+              />
+            </div>
+
+            {/* Overlapping Floating Badge */}
+            <Link 
+              to="/mobile/about#our-team"
+              className="absolute -bottom-4 right-2 w-[68px] h-[68px] rounded-full bg-[#1C1C1C] border-[3px] border-[#FAF8F3] shadow-lg flex flex-col items-center justify-center cursor-pointer active:scale-95 transition-transform z-10"
+              aria-label="Discover Our Team"
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#C4A47C] mb-0.5">
+                <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span className="text-[7.5px] font-sans text-gray-300 leading-none">Discover</span>
+              <span className="text-[8px] font-sans font-bold text-white uppercase tracking-wider leading-tight mt-0.5">OUR TEAM</span>
+            </Link>
+          </div>
+
+          {/* Heading */}
+          <div className="w-full max-w-[360px] mx-auto">
+            <h2 className="font-serif text-[32px] sm:text-[34px] font-bold text-black leading-[1.15] mb-6 tracking-tight">
+              Meet The Artist<br />Behind Your Smile.
+            </h2>
+
+            {/* Doctor Details */}
+            <div className="space-y-4 mb-6">
+              <div>
+                <p className="text-[11px] font-sans text-[#777777] mb-1 font-normal">Lead Dentist</p>
+                <h3 className="font-serif font-bold text-black text-[17px] leading-tight">Dr. Elena Marchetti</h3>
+              </div>
+
+              <div>
+                <p className="text-[11px] font-sans text-[#777777] mb-1 font-normal">Specialization</p>
+                <p className="font-sans text-[13.5px] text-[#222222] font-medium leading-snug">Cosmetic & Restorative Dentistry</p>
+              </div>
+
+              <div>
+                <p className="text-[11px] font-sans text-[#777777] mb-1 font-normal">Experience</p>
+                <p className="font-sans text-[13.5px] text-[#222222] font-medium leading-snug">20+ years refining the art of the smile</p>
+              </div>
+            </div>
+
+            {/* Bio Description */}
+            <p className="font-sans text-[12.5px] sm:text-[13px] text-[#555555] leading-[1.65]">
+              Dr. Marchetti approaches each patient as a canvas — blending clinical mastery with an editorial eye for facial harmony, light, and proportion.
+            </p>
+          </div>
+        </section>
+
+        {/* Fifth Page / Why Patients Choose Us */}
         <div className="w-full bg-[#FAF8F3] flex flex-col shrink-0 px-5 pt-8 pb-12 relative overflow-hidden">
           
           <div className="w-full flex items-start justify-end mb-6">

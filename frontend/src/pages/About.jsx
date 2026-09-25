@@ -247,7 +247,7 @@ export default function About() {
           </div>
 
           {/* Our Team Section */}
-          <div className="mt-24 md:mt-32">
+          <div id="our-team" className="mt-24 md:mt-32 scroll-mt-28">
             <div className="text-center mb-16">
               <p className="text-xs font-sans font-bold text-[#C4A47C] tracking-widest uppercase mb-4">OUR TEAM</p>
               <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-serif font-bold text-gray-900 leading-tight">

@@ -358,7 +358,7 @@ export default function Home() {
             </div>
             {/* Floating Badge */}
             <Link 
-              to="/about"
+              to="/about#our-team"
               className="absolute -bottom-6 -right-6 md:right-0 lg:-right-10 bg-[#242424] text-white w-32 h-32 rounded-full flex flex-col items-center justify-center p-4 shadow-xl border-4 border-[#FAF8F3] hover:bg-black hover:scale-105 transition-all cursor-pointer"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#C4A47C] mb-2">

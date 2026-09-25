@@ -13,7 +13,17 @@ const MobileAbout = () => {
   const { getImage } = useMedia();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (window.location.hash) {
+      setTimeout(() => {
+        const id = window.location.hash.slice(1);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 150);
+    } else {
+      window.scrollTo(0, 0);
+    }
   }, []);
 
   return (
@@ -387,7 +397,8 @@ const MobileAbout = () => {
 
           {/* SECTION 6: OUR TEAM */}
           <section 
-            className="w-full px-6 pt-10 pb-16"
+            id="our-team"
+            className="w-full px-6 pt-10 pb-16 scroll-mt-16"
             style={{ backgroundColor: '#F3EFE9' }}
           >
             {/* Header */}
