@@ -20,6 +20,7 @@ import whiteningAfter from '../assets/transformations/whitening_after.jpg';
 
 const categories = [
   'All',
+  'Smile Rehabilitation',
   'Dental Crowns',
   'Clear Aligners',
   'Teeth Whitening',
@@ -82,11 +83,7 @@ const MobileOurStory = () => {
 
   const filteredTransformations = selectedCategory === 'All'
     ? transformations
-    : transformations.filter(t => 
-        t.category === selectedCategory || 
-        (selectedCategory === 'Smile Makeover' && (t.category === 'Dental Crowns' || t.category === 'Clear Aligners')) ||
-        (selectedCategory === 'Veneers' && t.category === 'Dental Crowns')
-      );
+    : transformations.filter(t => t.category === selectedCategory);
 
   return (
     <div className="min-h-screen w-full bg-[#F3EFE9] sm:bg-neutral-900 flex justify-center items-center">

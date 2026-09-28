@@ -18,6 +18,7 @@ import whiteningAfter from '../assets/transformations/whitening_after.jpg';
 
 const categories = [
   'All',
+  'Smile Rehabilitation',
   'Dental Crowns',
   'Clear Aligners',
   'Teeth Whitening',
@@ -58,8 +59,8 @@ const transformations = [
   },
   {
     id: 4,
-    title: 'Teeth Whitening',
-    category: 'Teeth Whitening',
+    title: 'Veneers',
+    category: 'Veneers',
     description: 'Professional-grade whitening that brightens enamel by several shades for a naturally luminous result.',
     beforeImage: whiteningBefore,
     afterImage: whiteningAfter,
@@ -68,8 +69,8 @@ const transformations = [
   },
   {
     id: 5,
-    title: 'Dental Crowns',
-    category: 'Dental Crowns',
+    title: 'Smile Makeovers',
+    category: 'Smile Makeover',
     description: 'Precision-crafted crowns that restore the shape, strength, and aesthetics of damaged teeth.',
     beforeImage: crownsBefore,
     afterImage: crownsAfter,
@@ -78,8 +79,8 @@ const transformations = [
   },
   {
     id: 6,
-    title: 'Clear Aligners',
-    category: 'Clear Aligners',
+    title: 'Smile Rehabilitation',
+    category: 'Smile Rehabilitation',
     description: 'Discreet, removable aligners that gradually reposition teeth into a healthy, balanced alignment.',
     beforeImage: alignersBefore,
     afterImage: alignersAfter,
@@ -102,11 +103,7 @@ export default function OurStory() {
 
   const filteredTransformations = selectedCategory === 'All'
     ? transformations
-    : transformations.filter(t => 
-        t.category === selectedCategory || 
-        (selectedCategory === 'Smile Makeover' && (t.category === 'Dental Crowns' || t.category === 'Clear Aligners')) ||
-        (selectedCategory === 'Veneers' && t.category === 'Dental Crowns')
-      );
+    : transformations.filter(t => t.category === selectedCategory);
 
   return (
     <div className="w-full bg-white">

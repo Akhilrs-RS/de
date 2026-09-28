@@ -45,7 +45,7 @@ const TRANSFORMATION_PAIRS = [
 
 const PAGE_TABS = [
   { id: 'all', label: 'All Pages' },
-  { id: 'global', label: 'Global / Logos' },
+
   { id: 'home', label: 'Home Page' },
   { id: 'mobile-home', label: 'Mobile Home' },
   { id: 'about', label: 'About Us' },
