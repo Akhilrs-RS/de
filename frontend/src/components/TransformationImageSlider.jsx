@@ -156,6 +156,17 @@ export default function TransformationImageSlider({
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
       onWheel={handleWheel}
+      onMouseEnter={() => {
+        if (!isDragging) {
+          setSliderPosition(0);
+          setHasInteracted(true);
+        }
+      }}
+      onMouseLeave={() => {
+        if (!isDragging) {
+          setSliderPosition(100);
+        }
+      }}
       role="region"
       aria-label={`${title} Before and After slider`}
     >
