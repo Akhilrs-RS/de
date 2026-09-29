@@ -10,27 +10,7 @@ const MediaContext = createContext(null);
 
 const API_BASE_URL = '';
 
-const DEFAULT_MEDIA_SLOTS = [
-  // Global
-  { id: 'global-navbar-logo', pageKey: 'global', sectionKey: 'navbar-logo', label: 'Global: Navbar Clinic Logo', aspectRatio: 'Landscape', defaultAssetUrl: '/assets/marvic.png' },
-  { id: 'global-footer-logo', pageKey: 'global', sectionKey: 'footer-logo', label: 'Global: Footer Clinic Logo', aspectRatio: 'Landscape', defaultAssetUrl: '/assets/marvic.png' },
-  { id: 'global-footer-map', pageKey: 'global', sectionKey: 'footer-map', label: 'Global: Footer Map Location Preview', aspectRatio: '16:9', defaultAssetUrl: '/assets/map.png' },
-
-  // Mobile Home
-  { id: 'mobile-home-hero', pageKey: 'mobile-home', sectionKey: 'hero', label: 'Mobile Home: Hero Background', aspectRatio: 'Portrait', defaultAssetUrl: '/assets/y.png' },
-
-  // Our Story
-  { id: 'our-story-hero', pageKey: 'our-story', sectionKey: 'hero', label: 'Our Story Hero Image', aspectRatio: '4:5', defaultAssetUrl: '/assets/o1.png' },
-  { id: 'our-story-team-dr-james', pageKey: 'our-story', sectionKey: 'team-dr-james', label: 'Principal Dentist: Dr. James Bennett', aspectRatio: '4:3', defaultAssetUrl: '/assets/h5.png' },
-  { id: 'our-story-team-amelia', pageKey: 'our-story', sectionKey: 'team-amelia', label: 'Senior Dental Nurse: Amelia Carter', aspectRatio: '4:3', defaultAssetUrl: '/assets/o2.png' },
-  { id: 'our-story-card-crowns-before', pageKey: 'our-story', sectionKey: 'card-crowns-before', label: 'Dental Crowns (Before Treatment)', aspectRatio: '4:3', defaultAssetUrl: crownsBefore },
-  { id: 'our-story-card-crowns-after', pageKey: 'our-story', sectionKey: 'card-crowns-after', label: 'Dental Crowns (After Treatment)', aspectRatio: '4:3', defaultAssetUrl: crownsAfter },
-  { id: 'our-story-card-aligners-before', pageKey: 'our-story', sectionKey: 'card-aligners-before', label: 'Clear Aligners (Before Treatment)', aspectRatio: '4:3', defaultAssetUrl: alignersBefore },
-  { id: 'our-story-card-aligners-after', pageKey: 'our-story', sectionKey: 'card-aligners-after', label: 'Clear Aligners (After Treatment)', aspectRatio: '4:3', defaultAssetUrl: alignersAfter },
-  { id: 'our-story-card-whitening-before', pageKey: 'our-story', sectionKey: 'card-whitening-before', label: 'Teeth Whitening (Before Treatment)', aspectRatio: '4:3', defaultAssetUrl: whiteningBefore },
-  { id: 'our-story-card-whitening-after', pageKey: 'our-story', sectionKey: 'card-whitening-after', label: 'Teeth Whitening (After Treatment)', aspectRatio: '4:3', defaultAssetUrl: whiteningAfter },
-  { id: 'our-story-operatory-banner', pageKey: 'our-story', sectionKey: 'operatory-banner', label: 'Operatory Suite Banner: More Than Just a Treatment', aspectRatio: '16:9', defaultAssetUrl: '/assets/our.jpg' }
-];
+const DEFAULT_MEDIA_SLOTS = [];
 
 export function MediaProvider({ children }) {
   const [mediaList, setMediaList] = useState(DEFAULT_MEDIA_SLOTS);

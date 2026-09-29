@@ -44,7 +44,6 @@ const TRANSFORMATION_PAIRS = [
 ];
 
 const PAGE_TABS = [
-  { id: 'all', label: 'All Pages' },
 
   { id: 'home', label: 'Home Page' },
   { id: 'mobile-home', label: 'Mobile Home' },
@@ -63,7 +62,7 @@ const PAGE_TABS = [
 
 export default function AdminDashboard({ user, onLogout }) {
   const { mediaList, loading, uploadImage, resetImage, refreshMedia } = useMedia();
-  const [activeTab, setActiveTab] = useState('all');
+  const [activeTab, setActiveTab] = useState('home');
   const [searchQuery, setSearchQuery] = useState('');
   const [uploadingId, setUploadingId] = useState(null);
   const [resettingId, setResettingId] = useState(null);
